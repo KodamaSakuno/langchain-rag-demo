@@ -78,6 +78,13 @@ python3 eval.py --threshold 0.3                            # 模拟线上阈值�
 
 每行一个 JSON：`{"question": "...", "expected_sources": ["xxx.mdx"]}`。命中定义为 top-k 结果中出现任一期望来源。
 
+对比向量存储后端（默认 chroma；hybrid 为向量+BM25 的 RRF 融合）：
+
+```bash
+VECTOR_STORE_BACKEND=hybrid python3 eval.py --output data/eval_report_hybrid.json
+```
+
+> 实测结论：中文查询 + 英文文档场景下 hybrid 反而更差（Recall@5 91.67% → 87.50%），BM25 跨语言几乎匹配不到关键词，还会把含高频词的无关块顶上来。默认保持 chroma。
 ## 常见问题
 
 - **首次运行很慢/下载大文件**：`bge-m3` 模型约 2.2GB，下载到 `~/.cache/huggingface`，只发生一次。
