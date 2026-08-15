@@ -22,6 +22,14 @@
         .error { color: #dc3545; }
         .hint { font-size: 0.85rem; color: #666; margin-top: 0.5rem; }
         code { background: #eee; padding: 2px 6px; border-radius: 4px; font-family: monospace; }
+        .review { margin-top: 0.5rem; }
+        .review-badge { display: inline-block; font-size: 0.85rem; padding: 2px 10px; border-radius: 999px; }
+        .review-ok .review-badge { background: #e6f4ea; color: #1e7e34; }
+        .review-warn .review-badge { background: #fff3cd; color: #856404; }
+        .review details { display: inline; }
+        .review summary { display: inline; cursor: pointer; color: #0066cc; font-size: 0.85rem; margin-left: 0.5rem; }
+        .review details[open] { display: block; }
+        .review-detail { background: #f8f9fa; padding: 0.75rem; border-radius: 6px; margin-top: 0.5rem; font-size: 0.9rem; line-height: 1.6; }
     </style>
 </head>
 <body>
@@ -120,11 +128,22 @@
                 const tools = data.tool_calls && data.tool_calls.length
                     ? `<div class="hint">🔧 Agent 调用：${data.tool_calls.map(t => `${escapeHtml(t.tool)}("${escapeHtml(t.query)}")`).join(" → ")}</div>`
                     : `<div class="hint">🔧 Agent 直接回答（未检索）</div>`;
-                // 多 Agent 模式：审校员结论徽标（通过=绿，存疑=黄）
-                const review = data.review
-                    ? `<div class="hint">${data.review.startsWith("存疑") ? "🟡" : "🟢"} 审校员：${escapeHtml(data.review)}</div>`
-                    : "";
                 const hasMarked = typeof window.marked !== "undefined" && typeof window.DOMPurify !== "undefined";
+                // 多 Agent 模式：审校员结论——徽标（通过=绿/存疑=黄）+ 可折叠的核查明细
+                let review = "";
+                if (data.review) {
+                    const nl = data.review.indexOf("\n");
+                    const verdict = (nl === -1 ? data.review : data.review.slice(0, nl)).trim();
+                    const detail = nl === -1 ? "" : data.review.slice(nl + 1).trim();
+                    const ok = !verdict.startsWith("存疑");
+                    const detailHtml = detail
+                        ? (hasMarked ? DOMPurify.sanitize(marked.parse(detail)) : escapeHtml(detail))
+                        : "";
+                    review = `<div class="review ${ok ? "review-ok" : "review-warn"}">`
+                        + `<span class="review-badge">${ok ? "审校通过" : "审校存疑"}</span>`
+                        + (detail ? `<details><summary>核查明细</summary><div class="review-detail markdown">${detailHtml}</div></details>` : "")
+                        + `</div>`;
+                }
                 let ansHtml, ansClass;
                 if (hasMarked) {
                     marked.setOptions({ gfm: true, breaks: true });
