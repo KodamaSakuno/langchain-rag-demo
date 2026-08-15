@@ -136,6 +136,8 @@ QUERY_REWRITE=1 python3 compare_baseline.py   # 8 道题 × 直答/RAG 各一次
 
 > **供应商实测**：硅基流动的 bge-m3 服务端 query↔doc 对齐异常（余弦 0.26 vs 本地 0.59），检索不可用；Gitee AI 的 bge-m3 正常（0.59，Recall@5 91.67% 与本地一致），默认 `EMBEDDING_BASE_URL` 即 Gitee AI。Gitee AI 限流会返回误导性的 400"token 计算失败"，代码已内置小批量（16 条/批）+ 指数退避重试。换 embedding 供应商或模型后必须用同一后端重建索引（`--rebuild`），不同实现的向量空间不互通。
 
+> **模型选型实测**（同 24 题评测集、同 pgvector 后端、同 collection 隔离对比）：bge-m3 Recall@5 91.67% / MRR 0.7354，Qwen3-Embedding-0.6B Recall@5 87.50% / MRR 0.6493。本语料为英文文档，bge-m3 胜出，默认模型保持不变；中文为主的语料可再测 Qwen3（支持 MRL 维度截断，可省 pgvector 存储）。对比方法：设 `PG_COLLECTION=langchain_docs_qwen3` 建新 collection 后分别跑 `indexer.py` 与 `eval.py`。
+
 ## 常见问题
 
 - **首次运行很慢/下载大文件**：`bge-m3` 模型约 2.2GB，下载到 `~/.cache/huggingface`，只发生一次。
