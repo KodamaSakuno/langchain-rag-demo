@@ -26,3 +26,7 @@ QUERY_REWRITE = os.getenv("QUERY_REWRITE", "0") == "1"
 # ==================== 向量存储 ====================
 VECTOR_STORE_BACKEND = os.getenv("VECTOR_STORE_BACKEND", "chroma").lower()
 CHROMA_PERSIST_DIR = os.getenv("CHROMA_PERSIST_DIR", "chroma_db")
+PG_CONNECTION = os.getenv("PG_CONNECTION", "postgresql+psycopg:///rag_demo")
+
+# ==================== 记忆 ====================
+MEMORY_BACKEND = os.getenv("MEMORY_BACKEND", "memory").lower()

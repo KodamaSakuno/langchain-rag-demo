@@ -91,6 +91,21 @@ VECTOR_STORE_BACKEND=hybrid python3 eval.py --output data/eval_report_hybrid.jso
 
 > 实测结论：中文查询 + 英文文档场景下 hybrid 反而更差（Recall@5 91.67% → 87.50%），BM25 跨语言几乎匹配不到关键词，还会把含高频词的无关块顶上来。默认保持 chroma。
 
+pgvector 后端（适合部署：向量与记忆共用一个 Postgres，状态全外置）：
+
+```bash
+# 一次性准备：PostgreSQL 装 pgvector 扩展，建库
+psql -d postgres -c "CREATE DATABASE rag_demo;"
+psql -d rag_demo -c "CREATE EXTENSION vector;"
+# 向量表（langchain_pg_*）与记忆表（checkpoints 等）首次运行自动创建
+
+VECTOR_STORE_BACKEND=pgvector python3 indexer.py            # 建库
+VECTOR_STORE_BACKEND=pgvector python3 eval.py --output data/eval_report_pgvector.json
+VECTOR_STORE_BACKEND=pgvector MEMORY_BACKEND=postgres python3 api.py   # 记忆跨重启保留
+```
+
+> 实测：pgvector 与 chroma 召回一致（Recall@5 91.67%），但分数为余弦相似度，尺度不同（0.56~0.75），阈值建议 `RETRIEVAL_SCORE_THRESHOLD=0.5`。
+
 对比查询改写（检索前用 LLM 把问题改写成英文技术查询，需 `CHAT_API_KEY`）：
 
 ```bash

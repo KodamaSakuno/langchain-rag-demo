@@ -7,3 +7,8 @@ langchain-core>=1.0,<2.0
 langchain-openai>=1.0,<2.0
 langchain-huggingface[full]>=1.2.2
 langchain-chroma>=1.0,<2.0
+
+# pgvector 后端 + Postgres 记忆（可选，VECTOR_STORE_BACKEND=pgvector / MEMORY_BACKEND=postgres）
+langchain-postgres>=0.0.17
+langgraph-checkpoint-postgres>=3.0
+psycopg[binary]>=3.2

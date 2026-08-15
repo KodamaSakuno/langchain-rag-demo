@@ -2,11 +2,25 @@ from langchain.agents import create_agent
 from langchain.tools import tool
 from langgraph.checkpoint.memory import InMemorySaver
 
-from config import RETRIEVAL_SCORE_THRESHOLD
+from config import MEMORY_BACKEND, PG_CONNECTION, RETRIEVAL_SCORE_THRESHOLD
 from llm_providers import get_chat_llm
 from vector_stores import get_vector_store
 
 TOP_K = 5
+
+
+def _build_checkpointer():
+    if MEMORY_BACKEND == "postgres":
+        import psycopg
+        from langgraph.checkpoint.postgres import PostgresSaver
+
+        # 直连 psycopg 连接（autocommit 是 checkpointer 的要求）；
+        # 不用 PostgresSaver.from_conn_string：那个上下文管理器被 GC 后会关掉连接
+        conn = psycopg.connect(PG_CONNECTION.replace("+psycopg", ""), autocommit=True)
+        saver = PostgresSaver(conn)
+        saver.setup()  # 首次运行自动建表
+        return saver
+    return InMemorySaver()
 
 SYSTEM_PROMPT = """你是 LangChain 开发助手，回答基于 LangChain 官方文档。
 1. 技术问题必须先调用 search_docs 工具查证；可多次调用、换关键词重查。
@@ -43,6 +57,6 @@ def build_agent():
         model=llm,
         tools=[search_docs],
         system_prompt=SYSTEM_PROMPT,
-        checkpointer=InMemorySaver(),
+        checkpointer=_build_checkpointer(),
     )
     return agent, chat_provider, store
