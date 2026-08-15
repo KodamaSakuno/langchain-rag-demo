@@ -115,9 +115,16 @@ def root():
     }
 
 
-from fastapi.staticfiles import StaticFiles
+# 前端单页（同源部署时访问 /ui）。不用 StaticFiles 挂载：Mangum/Lambda 下
+# StaticFiles 的目录斜杠重定向会因 scope 路径重构问题形成 307 循环，
+# 前端是单文件，显式 FileResponse 路由在任何 ASGI 适配层下行为都确定
+from fastapi.responses import FileResponse
 
-app.mount("/ui", StaticFiles(directory="frontend", html=True), name="frontend")
+
+@app.get("/ui", include_in_schema=False)
+@app.get("/ui/", include_in_schema=False)
+def ui():
+    return FileResponse("frontend/index.html")
 
 
 if __name__ == "__main__":
