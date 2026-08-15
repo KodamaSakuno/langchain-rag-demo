@@ -20,6 +20,8 @@ graph LR
 
 Agent 模式：技术问题由 LLM 自主决定调用 `search_docs`（可自行构造英文查询、多次调用），闲聊直接回答；`thread_id` 保持多轮记忆（`InMemorySaver`，重启丢失）。请求示例：`{"question": "...", "thread_id": "可选"}`，响应含 `tool_calls`（Agent 的检索记录）。
 
+多 Agent 模式（`MULTI_AGENT=1`）：主 Agent 输出前把回答草稿交给**审校员 subagent**（tool-per-agent 模式，上下文隔离，可自行再检索查证）做事实核查，发现问题则修正后输出；响应含 `review` 字段（审校结论），前端显示审校徽标。
+
 ## 快速开始
 
 建议 Python 3.14

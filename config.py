@@ -43,3 +43,6 @@ MEMORY_BACKEND = os.getenv("MEMORY_BACKEND", "memory").lower()
 WARMUP = os.getenv("WARMUP", "1") == "1"
 # pgvector 连接池：Lambda 单实例串行处理请求，池开大会打爆托管库连接数
 PG_POOL_SIZE = int(os.getenv("PG_POOL_SIZE", "5"))
+
+# 多 Agent 协作：开启后主 Agent 输出前会把回答草稿交给审校员 subagent 核对
+MULTI_AGENT = os.getenv("MULTI_AGENT", "0") == "1"

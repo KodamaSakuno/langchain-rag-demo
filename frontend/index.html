@@ -120,6 +120,10 @@
                 const tools = data.tool_calls && data.tool_calls.length
                     ? `<div class="hint">🔧 Agent 调用：${data.tool_calls.map(t => `${escapeHtml(t.tool)}("${escapeHtml(t.query)}")`).join(" → ")}</div>`
                     : `<div class="hint">🔧 Agent 直接回答（未检索）</div>`;
+                // 多 Agent 模式：审校员结论徽标（通过=绿，存疑=黄）
+                const review = data.review
+                    ? `<div class="hint">${data.review.startsWith("存疑") ? "🟡" : "🟢"} 审校员：${escapeHtml(data.review)}</div>`
+                    : "";
                 const hasMarked = typeof window.marked !== "undefined" && typeof window.DOMPurify !== "undefined";
                 let ansHtml, ansClass;
                 if (hasMarked) {
@@ -135,6 +139,7 @@
                     <div class="sources">📚 来源文件：${escapeHtml(srcs)}</div>
                     ${cites}
                     ${tools}
+                    ${review}
                     <div class="hint">Token 用量：输入 ${escapeHtml(data.token_usage.prompt_tokens ?? "-")} / 输出 ${escapeHtml(data.token_usage.completion_tokens ?? "-")} / 总计 ${escapeHtml(data.token_usage.total_tokens ?? "-")}</div>
                 `;
             } else {

@@ -41,6 +41,7 @@ def _parse_agent_result(messages: list) -> dict[str, Any]:
     answer = ""
     results = []
     tool_calls = []
+    review = ""
     for m in messages:
         if isinstance(m, AIMessage):
             if m.content:
@@ -49,6 +50,8 @@ def _parse_agent_result(messages: list) -> dict[str, Any]:
                 tool_calls.append({"tool": tc["name"], "query": tc["args"].get("query", "")})
         elif isinstance(m, ToolMessage) and m.name == "search_docs":
             results.extend(getattr(m, "artifact", None) or [])
+        elif isinstance(m, ToolMessage) and m.name == "review_answer":
+            review = str(m.content)
 
     sources = list(dict.fromkeys(r["source"] for r in results))
     citations = []
@@ -63,6 +66,7 @@ def _parse_agent_result(messages: list) -> dict[str, Any]:
         "sources": sources,
         "citations": citations,
         "tool_calls": tool_calls,
+        "review": review,
     }
 
 
@@ -77,6 +81,7 @@ class QueryResponse(BaseModel):
     sources: list[str]
     citations: list[dict[str, Any]]
     tool_calls: list[dict[str, str]]
+    review: str = ""   # 多 Agent 模式下审校员的结论；未开启时为空
     model_info: dict[str, Any]
     token_usage: dict[str, Any]
 
