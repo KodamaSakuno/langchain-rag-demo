@@ -2,13 +2,12 @@ from typing import Any
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel, Field
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.output_parsers import StrOutputParser
+from pydantic import BaseModel, Field
 
 from config import EMBEDDING_MODEL
-from vector_stores import get_vector_store
 from llm_providers import get_chat_llm
+from vector_stores import get_vector_store
 
 app = FastAPI(title="LangChain 文档 RAG 助手")
 
@@ -37,7 +36,24 @@ PROMPT = ChatPromptTemplate.from_template("""你是 LangChain 开发专家助手
 
 回答：""")
 
-chain = PROMPT | llm | StrOutputParser()
+chain = PROMPT | llm
+
+
+def _extract_token_usage(message) -> dict[str, Any]:
+    um = getattr(message, "usage_metadata", None) or {}
+    ru = (getattr(message, "response_metadata", None) or {}).get("token_usage", {}) or {}
+
+    def pick(*candidates):
+        for c in candidates:
+            if c is not None:
+                return c
+        return None
+
+    return {
+        "prompt_tokens": pick(um.get("input_tokens"), ru.get("prompt_tokens")),
+        "completion_tokens": pick(um.get("output_tokens"), ru.get("completion_tokens")),
+        "total_tokens": pick(um.get("total_tokens"), ru.get("total_tokens")),
+    }
 
 
 class QueryRequest(BaseModel):
@@ -50,6 +66,7 @@ class QueryResponse(BaseModel):
     sources: list[str]
     index_stats: dict[str, Any]
     model_info: dict[str, Any]
+    token_usage: dict[str, Any]
 
 
 @app.post("/query", response_model=QueryResponse)
@@ -60,7 +77,8 @@ def query(req: QueryRequest):
             answer="索引为空。请先运行：python3 ingest.py && python3 indexer.py",
             sources=[],
             index_stats=stats,
-            model_info={"chat": chat_provider, "embedding": EMBEDDING_MODEL}
+            model_info={"chat": chat_provider, "embedding": EMBEDDING_MODEL},
+            token_usage={}
         )
 
     try:
@@ -73,22 +91,24 @@ def query(req: QueryRequest):
             answer="未检索到相关文档。",
             sources=[],
             index_stats=stats,
-            model_info={"chat": chat_provider, "embedding": EMBEDDING_MODEL}
+            model_info={"chat": chat_provider, "embedding": EMBEDDING_MODEL},
+            token_usage={}
         )
 
     context_text = "\n\n---\n\n".join(r["content"] for r in results)
     sources = list(dict.fromkeys(r["source"] for r in results))
 
     try:
-        answer = chain.invoke({"context": context_text, "question": req.question})
+        message = chain.invoke({"context": context_text, "question": req.question})
     except Exception as e:
         raise HTTPException(status_code=502, detail=f"LLM 生成失败，请检查 CHAT_API_KEY 与网络：{e}")
 
     return QueryResponse(
-        answer=answer,
+        answer=str(message.content),
         sources=sources,
         index_stats=stats,
-        model_info={"chat": chat_provider, "embedding": EMBEDDING_MODEL}
+        model_info={"chat": chat_provider, "embedding": EMBEDDING_MODEL},
+        token_usage=_extract_token_usage(message),
     )
 
 

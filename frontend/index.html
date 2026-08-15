@@ -93,6 +93,7 @@
                     <div class="answer">${escapeHtml(data.answer)}</div>
                     <div class="sources">📚 来源文件：${escapeHtml(srcs)}</div>
                     <div class="hint">索引库共 ${escapeHtml(data.index_stats.total_chunks)} 个文本块</div>
+                    <div class="hint">Token 用量：输入 ${escapeHtml(data.token_usage.prompt_tokens ?? "-")} / 输出 ${escapeHtml(data.token_usage.completion_tokens ?? "-")} / 总计 ${escapeHtml(data.token_usage.total_tokens ?? "-")}</div>
                 `;
             } else {
                 result.innerHTML = `<p class="error">❌ 错误：${escapeHtml(data.detail)}</p>`;
