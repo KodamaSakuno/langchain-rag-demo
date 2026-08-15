@@ -14,6 +14,9 @@
         button:hover { background: #0052a3; }
         .btn-secondary { background: #6c757d; }
         .answer { background: #f8f9fa; padding: 1rem; border-radius: 6px; margin-top: 1rem; line-height: 1.6; white-space: pre-wrap; }
+        .answer.markdown { white-space: normal; }
+        .answer.markdown pre { background: #eee; padding: 0.75rem; border-radius: 6px; overflow-x: auto; }
+        .answer.markdown pre code { padding: 0; background: none; }
         .sources { margin-top: 0.5rem; font-size: 0.9rem; color: #666; }
         .loading { color: #0066cc; }
         .error { color: #dc3545; }
@@ -43,6 +46,8 @@
         <div id="query-result"></div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
     <script>
     const API_BASE = "http://localhost:8000";
 
@@ -94,8 +99,18 @@
                         `<div class="sources">&nbsp;&nbsp;· ${escapeHtml(c.source)}${c.section ? " > " + escapeHtml(c.section) : ""}</div>`
                       ).join("")
                     : "";
+                const hasMarked = typeof window.marked !== "undefined" && typeof window.DOMPurify !== "undefined";
+                let ansHtml, ansClass;
+                if (hasMarked) {
+                    marked.setOptions({ gfm: true, breaks: true });
+                    ansHtml = DOMPurify.sanitize(marked.parse(data.answer));
+                    ansClass = "answer markdown";
+                } else {
+                    ansHtml = escapeHtml(data.answer);
+                    ansClass = "answer";
+                }
                 result.innerHTML = `
-                    <div class="answer">${escapeHtml(data.answer)}</div>
+                    <div class="${ansClass}">${ansHtml}</div>
                     <div class="sources">📚 来源文件：${escapeHtml(srcs)}</div>
                     ${cites}
                     <div class="hint">索引库共 ${escapeHtml(data.index_stats.total_chunks)} 个文本块</div>
