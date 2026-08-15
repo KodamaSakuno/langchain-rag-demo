@@ -7,7 +7,7 @@ class BaseVectorStore(ABC):
         pass
 
     @abstractmethod
-    def similarity_search(self, query_text: str, k: int = 5) -> List[Dict[str, Any]]:
+    def similarity_search(self, query_text: str, k: int = 5, score_threshold: float = 0.0) -> List[Dict[str, Any]]:
         pass
 
     @abstractmethod

@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field
 
-from config import EMBEDDING_MODEL
+from config import EMBEDDING_MODEL, RETRIEVAL_SCORE_THRESHOLD
 from llm_providers import get_chat_llm
 from vector_stores import get_vector_store
 
@@ -64,7 +64,7 @@ class QueryRequest(BaseModel):
 class QueryResponse(BaseModel):
     answer: str
     sources: list[str]
-    citations: list[dict[str, str]]
+    citations: list[dict[str, Any]]
     index_stats: dict[str, Any]
     model_info: dict[str, Any]
     token_usage: dict[str, Any]
@@ -84,7 +84,7 @@ def query(req: QueryRequest):
         )
 
     try:
-        results = store.similarity_search(req.question, k=req.top_k)
+        results = store.similarity_search(req.question, k=req.top_k, score_threshold=RETRIEVAL_SCORE_THRESHOLD)
     except Exception as e:
         raise HTTPException(status_code=503, detail=f"文档检索失败：{e}")
 
@@ -101,10 +101,12 @@ def query(req: QueryRequest):
     context_text = "\n\n---\n\n".join(r["content"] for r in results)
     sources = list(dict.fromkeys(r["source"] for r in results))
     citations = []
+    seen = set()
     for r in results:
-        item = {"source": r["source"], "section": r["metadata"].get("header_path", "")}
-        if item not in citations:
-            citations.append(item)
+        key = (r["source"], r["metadata"].get("header_path", ""))
+        if key not in seen:
+            seen.add(key)
+            citations.append({"source": key[0], "section": key[1], "score": r["similarity"]})
 
     try:
         message = chain.invoke({"context": context_text, "question": req.question})

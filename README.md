@@ -73,3 +73,4 @@ rag-demo/
 - **`Collection expecting embedding with dimension ...`**：索引与当前嵌入模型维度不一致（换过模型），`python3 indexer.py --rebuild` 重建。
 - **`LLM 生成失败`**：检查 `CHAT_API_KEY` 与网络，或 `CHAT_BASE_URL` 是否指向正确的兼容接口。
 - **重复运行 `indexer.py` 会重复插入**：加 `--rebuild` 先清空再建。
+- **不相关的问题也返回了回答**：检索按 `RETRIEVAL_SCORE_THRESHOLD`（默认 0.3）过滤低相关度结果，全被过滤时会直接回复"未检索到相关文档"；可调低阈值放宽。

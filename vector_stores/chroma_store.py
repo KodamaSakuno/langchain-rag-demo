@@ -26,17 +26,19 @@ class ChromaVectorStore(BaseVectorStore):
     def add_documents(self, texts: List[str], metadatas: List[Dict[str, Any]]) -> None:
         self.store.add_texts(texts=texts, metadatas=metadatas)
 
-    def similarity_search(self, query_text: str, k: int = 5) -> List[Dict[str, Any]]:
-        docs = self.store.similarity_search(query=query_text, k=k)
-        return [
+    def similarity_search(self, query_text: str, k: int = 5, score_threshold: float = 0.0) -> List[Dict[str, Any]]:
+        docs_and_scores = self.store.similarity_search_with_relevance_scores(query=query_text, k=k)
+        results = [
             {
                 "content": doc.page_content,
                 "metadata": doc.metadata,
                 "source": doc.metadata.get("source", "unknown"),
-                "similarity": None
+                "similarity": round(float(score), 4)
             }
-            for doc in docs
+            for doc, score in docs_and_scores
+            if score >= score_threshold
         ]
+        return results
 
     def clear(self) -> None:
         self.store.delete_collection()

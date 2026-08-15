@@ -19,6 +19,9 @@ CHAT_API_KEY = os.getenv("CHAT_API_KEY")
 CHAT_BASE_URL = os.getenv("CHAT_BASE_URL", "https://api.openai.com/v1")
 CHAT_MODEL = os.getenv("CHAT_MODEL", "gpt-4o-mini")
 
+# ==================== 检索 ====================
+RETRIEVAL_SCORE_THRESHOLD = float(os.getenv("RETRIEVAL_SCORE_THRESHOLD", "0.3"))
+
 # ==================== 向量存储 ====================
 VECTOR_STORE_BACKEND = os.getenv("VECTOR_STORE_BACKEND", "chroma").lower()
 CHROMA_PERSIST_DIR = os.getenv("CHROMA_PERSIST_DIR", "chroma_db")
