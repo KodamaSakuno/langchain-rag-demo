@@ -9,7 +9,8 @@
         h1 { color: #1a1a1a; }
         .card { background: white; padding: 1.5rem; border-radius: 8px; margin-bottom: 1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
         input, button { padding: 0.75rem; font-size: 1rem; border-radius: 6px; border: 1px solid #ddd; }
-        input { width: 70%; margin-right: 0.5rem; }
+        input[type="text"] { width: 60%; margin-right: 0.5rem; }
+        input[type="checkbox"] { padding: 0; width: auto; }
         button { background: #0066cc; color: white; border: none; cursor: pointer; }
         button:hover { background: #0052a3; }
         .btn-secondary { background: #6c757d; }
@@ -41,6 +42,9 @@
         <input type="text" id="question" placeholder="例如：如何给 agent 添加短期记忆？">
         <button onclick="askQuestion()">提问</button>
         <button class="btn-secondary" onclick="newSession()">新会话</button>
+        <label class="hint" style="display: inline-flex; align-items: center; gap: 0.3rem; margin-left: 0.5rem; cursor: pointer; white-space: nowrap;">
+            <input type="checkbox" id="multi-agent-toggle" onchange="toggleMultiAgent()"> 审校员核查（多 Agent，较慢）
+        </label>
     </div>
 
     <div class="card">
@@ -63,6 +67,14 @@
 
     // 会话 ID：相同 ID 保持多轮上下文，"新会话"按钮重置
     let threadId = localStorage.getItem("rag_thread_id") || null;
+
+    // 审校员开关：localStorage 记忆，默认关
+    const maToggle = document.getElementById("multi-agent-toggle");
+    maToggle.checked = localStorage.getItem("rag_multi_agent") === "1";
+
+    function toggleMultiAgent() {
+        localStorage.setItem("rag_multi_agent", maToggle.checked ? "1" : "0");
+    }
 
     function newSession() {
         threadId = null;
@@ -113,7 +125,7 @@
             const res = await fetch(`${API_BASE}/query`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ question: q, thread_id: threadId })
+                body: JSON.stringify({ question: q, thread_id: threadId, multi_agent: maToggle.checked })
             });
             const data = await res.json();
             if (res.ok) {

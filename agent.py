@@ -2,7 +2,7 @@ from langchain.agents import create_agent
 from langchain.tools import tool
 from langgraph.checkpoint.memory import InMemorySaver
 
-from config import MEMORY_BACKEND, MULTI_AGENT, PG_CONNECTION, RETRIEVAL_SCORE_THRESHOLD, WARMUP
+from config import MEMORY_BACKEND, PG_CONNECTION, RETRIEVAL_SCORE_THRESHOLD, WARMUP
 from llm_providers import get_chat_llm
 from vector_stores import get_vector_store
 
@@ -68,33 +68,35 @@ def build_agent():
         return content, results
 
     llm, chat_provider = get_chat_llm(temperature=0)
-
-    tools = [search_docs]
-    system_prompt = SYSTEM_PROMPT
-
-    if MULTI_AGENT:
-        # 多 Agent 协作（tool-per-agent 模式）：审校员是独立 Agent，
-        # 包装成工具交给主 Agent 编排；子 Agent 无 checkpointer，上下文隔离
-        reviewer = create_agent(
-            model=llm,
-            tools=[search_docs],
-            system_prompt=REVIEWER_PROMPT,
-        )
-
-        @tool("review_answer", description="把回答草稿交给审校员做事实核查。参数为原始问题与草稿全文，返回审校结论（通过/存疑点）。")
-        def review_answer(question: str, draft: str) -> str:
-            result = reviewer.invoke({
-                "messages": [{"role": "user", "content": f"用户问题：{question}\n\n待审校的回答草稿：\n{draft}"}]
-            })
-            return str(result["messages"][-1].content)
-
-        tools.append(review_answer)
-        system_prompt += MULTI_AGENT_SUFFIX
+    checkpointer = _build_checkpointer()  # 两个 Agent 共享：开关切换时会话历史无缝衔接
 
     agent = create_agent(
         model=llm,
-        tools=tools,
-        system_prompt=system_prompt,
-        checkpointer=_build_checkpointer(),
+        tools=[search_docs],
+        system_prompt=SYSTEM_PROMPT,
+        checkpointer=checkpointer,
     )
-    return agent, chat_provider, store
+
+    # 多 Agent 协作（tool-per-agent 模式）：审校员是独立 Agent，
+    # 包装成工具交给主 Agent 编排；子 Agent 无 checkpointer，上下文隔离。
+    # 始终构建，由请求级开关决定是否使用（构图无网络开销）
+    reviewer = create_agent(
+        model=llm,
+        tools=[search_docs],
+        system_prompt=REVIEWER_PROMPT,
+    )
+
+    @tool("review_answer", description="把回答草稿交给审校员做事实核查。参数为原始问题与草稿全文，返回审校结论（通过/存疑点）。")
+    def review_answer(question: str, draft: str) -> str:
+        result = reviewer.invoke({
+            "messages": [{"role": "user", "content": f"用户问题：{question}\n\n待审校的回答草稿：\n{draft}"}]
+        })
+        return str(result["messages"][-1].content)
+
+    agent_reviewed = create_agent(
+        model=llm,
+        tools=[search_docs, review_answer],
+        system_prompt=SYSTEM_PROMPT + MULTI_AGENT_SUFFIX,
+        checkpointer=checkpointer,
+    )
+    return agent, agent_reviewed, chat_provider, store

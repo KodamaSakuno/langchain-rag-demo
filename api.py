@@ -18,7 +18,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-agent, chat_provider, store = build_agent()
+agent, agent_reviewed, chat_provider, store = build_agent()
 print(f"服务启动 | Chat: {chat_provider} | Embedding: {EMBEDDING_MODEL} | 模式: Agent")
 
 
@@ -73,6 +73,7 @@ def _parse_agent_result(messages: list) -> dict[str, Any]:
 class QueryRequest(BaseModel):
     question: str = Field(..., min_length=1, max_length=2000, description="用户问题")
     thread_id: str | None = Field(None, description="会话 ID，相同 ID 保持多轮上下文；不传则每次新建")
+    multi_agent: bool | None = Field(None, description="是否启用审校员 subagent；不传或 false 为关")
 
 
 class QueryResponse(BaseModel):
@@ -89,11 +90,13 @@ class QueryResponse(BaseModel):
 @app.post("/query", response_model=QueryResponse)
 def query(req: QueryRequest):
     thread_id = req.thread_id or uuid.uuid4().hex
+    use_multi_agent = bool(req.multi_agent)  # None/False 都视为关，由前端复选框显式开启
+    selected = agent_reviewed if use_multi_agent else agent
     config = {"configurable": {"thread_id": thread_id}}
     # checkpointer 会返回完整会话历史，记录调用前的消息数以便只解析本轮新增
-    prev_len = len(agent.get_state(config).values.get("messages", []))
+    prev_len = len(selected.get_state(config).values.get("messages", []))
     try:
-        result = agent.invoke(
+        result = selected.invoke(
             {"messages": [{"role": "user", "content": req.question}]},
             config=config,
         )
@@ -105,7 +108,7 @@ def query(req: QueryRequest):
     return QueryResponse(
         **parsed,
         thread_id=thread_id,
-        model_info={"chat": chat_provider, "embedding": EMBEDDING_MODEL},
+        model_info={"chat": chat_provider, "embedding": EMBEDDING_MODEL, "multi_agent": use_multi_agent},
         token_usage=_extract_token_usage(messages),
     )
 
