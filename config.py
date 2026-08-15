@@ -36,3 +36,10 @@ PG_COLLECTION = os.getenv("PG_COLLECTION", "langchain_docs")
 
 # ==================== 记忆 ====================
 MEMORY_BACKEND = os.getenv("MEMORY_BACKEND", "memory").lower()
+
+# ==================== 部署形态 ====================
+# 启动时预热向量库与嵌入模型（本地/EC2 需要，避免子线程首次推理竞态）；
+# Lambda 冷启动场景设为 0 跳过，首次请求时惰性初始化
+WARMUP = os.getenv("WARMUP", "1") == "1"
+# pgvector 连接池：Lambda 单实例串行处理请求，池开大会打爆托管库连接数
+PG_POOL_SIZE = int(os.getenv("PG_POOL_SIZE", "5"))

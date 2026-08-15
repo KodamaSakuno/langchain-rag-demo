@@ -14,11 +14,13 @@ class PgVectorStore(BaseVectorStore):
     与 chroma 后端的分数尺度不同，切换后端后需用 eval.py 重新校准阈值。
     """
 
-    def __init__(self, connection: str, embedding_function: Embeddings, collection: str = "langchain_docs"):
+    def __init__(self, connection: str, embedding_function: Embeddings, collection: str = "langchain_docs",
+                 pool_size: int = 5):
         self.connection = connection
         self.collection = collection
         self.embedding_function = embedding_function
-        self._engine = create_engine(connection)
+        # Lambda 等 serverless 场景实例并发为 1，传 pool_size=1 避免打爆托管库连接数
+        self._engine = create_engine(connection, pool_size=pool_size, max_overflow=0)
         self._store = self._make_store()
 
     def _make_store(self) -> PGVector:

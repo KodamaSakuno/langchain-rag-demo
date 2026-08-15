@@ -2,7 +2,7 @@ from langchain.agents import create_agent
 from langchain.tools import tool
 from langgraph.checkpoint.memory import InMemorySaver
 
-from config import MEMORY_BACKEND, PG_CONNECTION, RETRIEVAL_SCORE_THRESHOLD
+from config import MEMORY_BACKEND, PG_CONNECTION, RETRIEVAL_SCORE_THRESHOLD, WARMUP
 from llm_providers import get_chat_llm
 from vector_stores import get_vector_store
 
@@ -32,11 +32,12 @@ SYSTEM_PROMPT = """你是 LangChain 开发助手，回答基于 LangChain 官方
 
 def build_agent():
     store = get_vector_store()
-    # 主线程预热：初始化 Chroma 客户端并完成首次嵌入推理。
-    # 否则首次嵌入发生在 langgraph 工具线程里，会触发 chromadb SharedSystemClient
-    # 竞态 KeyError，或 torch 在 macOS 子线程首次推理时段错误
-    store.get_stats()
-    store.similarity_search("warmup", k=1)
+    if WARMUP:
+        # 主线程预热：初始化 Chroma 客户端并完成首次嵌入推理。
+        # 否则首次嵌入发生在 langgraph 工具线程里，会触发 chromadb SharedSystemClient
+        # 竞态 KeyError，或 torch 在 macOS 子线程首次推理时段错误
+        store.get_stats()
+        store.similarity_search("warmup", k=1)
 
     @tool(response_format="content_and_artifact")
     def search_docs(query: str) -> tuple[str, list[dict]]:
