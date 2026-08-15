@@ -61,6 +61,7 @@ rag-demo/
 ├── indexer.py           # 向量化和入库
 ├── api.py               # FastAPI 服务：/query（检索 + 生成）、/（状态）
 ├── eval.py              # 检索质量评测：Recall@k / MRR@k
+├── compare_baseline.py  # 裸 LLM 直答 vs RAG 对照（产出 Markdown 报告）
 ├── config.py             # 全局配置
 ├── llm_providers/       # 聊天 LLM（ChatOpenAI）与本地 Embedding（HF）工厂
 ├── vector_stores/       # 向量存储实现
@@ -93,6 +94,14 @@ python3 eval.py --rewrite --output data/eval_report_rewrite.json
 ```
 
 线上开启：`QUERY_REWRITE=1`（默认 0 关闭）。
+
+## 裸 LLM vs RAG 对照
+
+```bash
+QUERY_REWRITE=1 python3 compare_baseline.py   # 8 道题 × 直答/RAG 各一次 → data/baseline_comparison.md
+```
+
+实测（[data/baseline_comparison.md](data/baseline_comparison.md)）：裸模型倾向给旧版 API（`AgentExecutor`、`RunnableWithMessageHistory`、`create_react_agent`），RAG 严格按 LangChain 1.x 文档回答（`create_agent` + `checkpointer`、`HumanInTheLoopMiddleware` 等），文档未涵盖时明确回答"未找到"而非凭记忆补全。
 
 ## 常见问题
 
