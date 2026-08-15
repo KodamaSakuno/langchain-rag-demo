@@ -110,6 +110,7 @@ QUERY_REWRITE=1 python3 compare_baseline.py   # 8 道题 × 直答/RAG 各一次
 ## 常见问题
 
 - **首次运行很慢/下载大文件**：`bge-m3` 模型约 2.2GB，下载到 `~/.cache/huggingface`，只发生一次。
+- **模型已缓存但启动卡死不动**：HuggingFace 每次启动会联网检查更新，网络不可达时会长时间挂起。模型已在本地时可用离线模式跳过：`HF_HUB_OFFLINE=1 python3 api.py`。
 - **`Collection expecting embedding with dimension ...`**：索引与当前嵌入模型维度不一致（换过模型），`python3 indexer.py --rebuild` 重建。
 - **`LLM 生成失败`**：检查 `CHAT_API_KEY` 与网络，或 `CHAT_BASE_URL` 是否指向正确的兼容接口。
 - **重复运行 `indexer.py` 会重复插入**：加 `--rebuild` 先清空再建。
