@@ -1,0 +1,9 @@
+.git
+.venv
+__pycache__
+data/chroma_db
+data/docs
+data/raw
+data/*.json
+data/*.md
+.env

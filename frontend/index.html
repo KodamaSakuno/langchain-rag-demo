@@ -50,7 +50,8 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
     <script>
-    const API_BASE = "http://localhost:8000";
+    // 由 FastAPI 挂载服务时走同源相对路径；本地 file:// 双击打开时回退到本地后端
+    const API_BASE = location.protocol === "file:" ? "http://localhost:8000" : "";
 
     // 会话 ID：相同 ID 保持多轮上下文，"新会话"按钮重置
     let threadId = localStorage.getItem("rag_thread_id") || null;

@@ -115,6 +115,11 @@ def root():
     }
 
 
+from fastapi.staticfiles import StaticFiles
+
+app.mount("/ui", StaticFiles(directory="frontend", html=True), name="frontend")
+
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)

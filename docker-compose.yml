@@ -1,0 +1,31 @@
+services:
+  db:
+    image: pgvector/pgvector:pg18
+    environment:
+      POSTGRES_DB: rag_demo
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/18/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d rag_demo"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  app:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file: .env
+    environment:
+      VECTOR_STORE_BACKEND: pgvector
+      MEMORY_BACKEND: postgres
+      EMBEDDING_BACKEND: api
+      RETRIEVAL_SCORE_THRESHOLD: "0.5"
+      PG_CONNECTION: postgresql+psycopg://postgres:postgres@db:5432/rag_demo
+    ports:
+      - "8000:8000"
+
+volumes:
+  pgdata:

@@ -138,6 +138,14 @@ QUERY_REWRITE=1 python3 compare_baseline.py   # 8 道题 × 直答/RAG 各一次
 
 > **模型选型实测**（同 24 题评测集、同 pgvector 后端、同 collection 隔离对比）：bge-m3 Recall@5 91.67% / MRR 0.7354，Qwen3-Embedding-0.6B Recall@5 87.50% / MRR 0.6493。本语料为英文文档，bge-m3 胜出，默认模型保持不变；中文为主的语料可再测 Qwen3（支持 MRL 维度截断，可省 pgvector 存储）。对比方法：设 `PG_COLLECTION=langchain_docs_qwen3` 建新 collection 后分别跑 `indexer.py` 与 `eval.py`。
 
+```bash
+cp .env.example .env   # 填好 CHAT_API_KEY 与 EMBEDDING_API_KEY（EMBEDDING_MODEL 保持 BAAI/bge-m3 则与本地索引同空间）
+docker compose up -d --build
+docker compose exec app python3 indexer.py   # 首次：建库（向量入 Postgres）
+```
+
+镜像用 `requirements-docker.txt`（不含 torch/chroma），体积几百 MB。向量表与记忆表首次运行自动创建。访问 `http://<服务器IP>:8000/ui/` 打开前端。
+
 ## 常见问题
 
 - **首次运行很慢/下载大文件**：`bge-m3` 模型约 2.2GB，下载到 `~/.cache/huggingface`，只发生一次。
