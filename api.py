@@ -24,10 +24,10 @@ llm, chat_provider = get_chat_llm(temperature=0)
 store_backend = store.get_stats()["backend"]
 print(f"服务启动 | Chat: {chat_provider} | Embedding: {EMBEDDING_MODEL} | Store: {store_backend}")
 
-PROMPT = ChatPromptTemplate.from_template("""你是 LangChain 开发专家助手。
-请严格根据以下检索到的文档上下文回答用户问题。
-如果上下文中没有足够信息，请明确回答："根据现有文档，我无法回答这个问题。"
-回答要求简洁、准确、技术性强。
+PROMPT = ChatPromptTemplate.from_template("""你是 LangChain 开发助手。严格依据用户消息中提供的官方文档片段回答问题：
+1. 只使用文档片段中的 API 与写法；文档未涵盖的，明确回答"当前文档中未找到"，不要凭记忆补全。
+2. 涉及代码时，给出一个可直接运行的最小示例。
+3. 先给结论，再给依据，正文控制在 300 字以内（代码除外）。
 
 检索到的文档上下文：
 {context}
@@ -64,6 +64,7 @@ class QueryRequest(BaseModel):
 class QueryResponse(BaseModel):
     answer: str
     sources: list[str]
+    citations: list[dict[str, str]]
     index_stats: dict[str, Any]
     model_info: dict[str, Any]
     token_usage: dict[str, Any]
@@ -76,6 +77,7 @@ def query(req: QueryRequest):
         return QueryResponse(
             answer="索引为空。请先运行：python3 ingest.py && python3 indexer.py",
             sources=[],
+            citations=[],
             index_stats=stats,
             model_info={"chat": chat_provider, "embedding": EMBEDDING_MODEL},
             token_usage={}
@@ -90,6 +92,7 @@ def query(req: QueryRequest):
         return QueryResponse(
             answer="未检索到相关文档。",
             sources=[],
+            citations=[],
             index_stats=stats,
             model_info={"chat": chat_provider, "embedding": EMBEDDING_MODEL},
             token_usage={}
@@ -97,6 +100,11 @@ def query(req: QueryRequest):
 
     context_text = "\n\n---\n\n".join(r["content"] for r in results)
     sources = list(dict.fromkeys(r["source"] for r in results))
+    citations = []
+    for r in results:
+        item = {"source": r["source"], "section": r["metadata"].get("header_path", "")}
+        if item not in citations:
+            citations.append(item)
 
     try:
         message = chain.invoke({"context": context_text, "question": req.question})
@@ -106,6 +114,7 @@ def query(req: QueryRequest):
     return QueryResponse(
         answer=str(message.content),
         sources=sources,
+        citations=citations,
         index_stats=stats,
         model_info={"chat": chat_provider, "embedding": EMBEDDING_MODEL},
         token_usage=_extract_token_usage(message),

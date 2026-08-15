@@ -89,9 +89,15 @@
             const data = await res.json();
             if (res.ok) {
                 const srcs = data.sources.length ? data.sources.join(", ") : "无";
+                const cites = data.citations && data.citations.length
+                    ? `<div class="sources">📎 来源依据：</div>` + data.citations.map(c =>
+                        `<div class="sources">&nbsp;&nbsp;· ${escapeHtml(c.source)}${c.section ? " > " + escapeHtml(c.section) : ""}</div>`
+                      ).join("")
+                    : "";
                 result.innerHTML = `
                     <div class="answer">${escapeHtml(data.answer)}</div>
                     <div class="sources">📚 来源文件：${escapeHtml(srcs)}</div>
+                    ${cites}
                     <div class="hint">索引库共 ${escapeHtml(data.index_stats.total_chunks)} 个文本块</div>
                     <div class="hint">Token 用量：输入 ${escapeHtml(data.token_usage.prompt_tokens ?? "-")} / 输出 ${escapeHtml(data.token_usage.completion_tokens ?? "-")} / 总计 ${escapeHtml(data.token_usage.total_tokens ?? "-")}</div>
                 `;
