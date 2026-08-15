@@ -7,7 +7,7 @@ from langchain_core.messages import AIMessage, ToolMessage
 from pydantic import BaseModel, Field
 
 from agent import build_agent
-from config import EMBEDDING_MODEL
+from config import EMBEDDING_MODEL, RETRIEVAL_SCORE_THRESHOLD
 
 app = FastAPI(title="LangChain 文档 RAG 助手")
 
@@ -110,7 +110,8 @@ def root():
     return {
         "message": "LangChain 文档 RAG 助手（Agent 模式）",
         "store": store.get_stats(),
-        "models": {"chat": chat_provider, "embedding": EMBEDDING_MODEL}
+        "models": {"chat": chat_provider, "embedding": EMBEDDING_MODEL},
+        "retrieval": {"score_threshold": RETRIEVAL_SCORE_THRESHOLD}
     }
 
 

@@ -28,23 +28,23 @@
     <h1>LangChain 本地文档 RAG</h1>
 
     <div class="card">
-        <h3>1. 本地建库</h3>
-        <p>文档放入 <code>data/docs</code>，运行 <code>python3 ingest.py && python3 indexer.py</code></p>
-        <p class="hint">
-            Chat LLM: <strong id="chat-model">检测中...</strong> |
-            Embedding: <strong id="emb-model">检测中...</strong> |
-            向量存储: <strong id="store-backend">检测中...</strong>
-        </p>
-        <button class="btn-secondary" onclick="checkStatus()">检查状态</button>
-        <div id="status-result"></div>
-    </div>
-
-    <div class="card">
-        <h3>2. 查询文档（多轮对话）</h3>
+        <h3>1. 查询文档（多轮对话）</h3>
+        <div id="query-result"></div>
         <input type="text" id="question" placeholder="例如：如何给 agent 添加短期记忆？">
         <button onclick="askQuestion()">提问</button>
         <button class="btn-secondary" onclick="newSession()">新会话</button>
-        <div id="query-result"></div>
+    </div>
+
+    <div class="card">
+        <h3>2. 服务与索引状态</h3>
+        <p class="hint">
+            Chat LLM: <strong id="chat-model">检测中...</strong> |
+            Embedding: <strong id="emb-model">检测中...</strong> |
+            向量存储: <strong id="store-backend">检测中...</strong> |
+            检索阈值: <strong id="score-threshold">-</strong>
+        </p>
+        <button class="btn-secondary" onclick="checkStatus()">刷新状态</button>
+        <div id="status-result"></div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -80,9 +80,14 @@
             document.getElementById("chat-model").textContent = data.models.chat;
             document.getElementById("emb-model").textContent = data.models.embedding;
             document.getElementById("store-backend").textContent = data.store.backend;
-            result.innerHTML = `<p style="color: green;">
-                ✅ 服务正常 | 索引块数: ${escapeHtml(data.store.total_chunks)} | 路径: ${escapeHtml(data.store.persist_dir)}
-            </p>`;
+            document.getElementById("score-threshold").textContent = data.retrieval?.score_threshold ?? "-";
+            if (data.store.total_chunks === 0) {
+                result.innerHTML = `<p class="error">⚠️ 索引为空，查询不可用。请先运行：<code>python3 ingest.py && python3 indexer.py</code></p>`;
+            } else {
+                result.innerHTML = `<p style="color: green;">
+                    ✅ 服务正常 | 索引块数: ${escapeHtml(data.store.total_chunks)} | 路径: ${escapeHtml(data.store.persist_dir)}
+                </p>`;
+            }
         } catch (e) {
             result.innerHTML = `<p class="error">❌ 无法连接后端，请确认 python3 api.py 已启动</p>`;
         }
