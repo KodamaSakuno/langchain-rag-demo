@@ -21,6 +21,7 @@ CHAT_MODEL = os.getenv("CHAT_MODEL", "gpt-4o-mini")
 
 # ==================== 检索 ====================
 RETRIEVAL_SCORE_THRESHOLD = float(os.getenv("RETRIEVAL_SCORE_THRESHOLD", "0.3"))
+QUERY_REWRITE = os.getenv("QUERY_REWRITE", "0") == "1"
 
 # ==================== 向量存储 ====================
 VECTOR_STORE_BACKEND = os.getenv("VECTOR_STORE_BACKEND", "chroma").lower()

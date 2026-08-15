@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 
 from config import RETRIEVAL_SCORE_THRESHOLD
+from llm_providers import rewrite_query
 from vector_stores import get_vector_store
 
 EVAL_QUESTIONS_PATH = Path("data/eval_questions.jsonl")
@@ -18,14 +19,15 @@ def load_questions(path: Path) -> list[dict]:
     return questions
 
 
-def evaluate(store, questions: list[dict], k: int, threshold: float) -> dict:
+def evaluate(store, questions: list[dict], k: int, threshold: float, rewrite: bool = False) -> dict:
     details = []
     hits = 0
     rr_sum = 0.0
 
     for q in questions:
         expected = set(q["expected_sources"])
-        results = store.similarity_search(q["question"], k=k, score_threshold=threshold)
+        query_text = rewrite_query(q["question"]) if rewrite else q["question"]
+        results = store.similarity_search(query_text, k=k, score_threshold=threshold)
         sources = [r["source"] for r in results]
 
         rank = next((i + 1 for i, s in enumerate(sources) if s in expected), None)
@@ -36,6 +38,7 @@ def evaluate(store, questions: list[dict], k: int, threshold: float) -> dict:
 
         details.append({
             "question": q["question"],
+            "query_text": query_text,
             "expected_sources": q["expected_sources"],
             "retrieved_sources": sources,
             "scores": [r["similarity"] for r in results],
@@ -47,6 +50,7 @@ def evaluate(store, questions: list[dict], k: int, threshold: float) -> dict:
     return {
         "k": k,
         "threshold": threshold,
+        "rewrite": rewrite,
         "num_questions": n,
         "recall_at_k": hits / n if n else 0.0,
         "mrr_at_k": rr_sum / n if n else 0.0,
@@ -56,7 +60,7 @@ def evaluate(store, questions: list[dict], k: int, threshold: float) -> dict:
 
 def print_report(report: dict, verbose: bool) -> None:
     print(f"\n===== 检索评测结果 =====")
-    print(f"问题数: {report['num_questions']} | k={report['k']} | 阈值={report['threshold']}")
+    print(f"问题数: {report['num_questions']} | k={report['k']} | 阈值={report['threshold']} | 查询改写={'开' if report['rewrite'] else '关'}")
     print(f"Recall@{report['k']}: {report['recall_at_k']:.2%}")
     print(f"MRR@{report['k']}:    {report['mrr_at_k']:.4f}")
 
@@ -81,6 +85,7 @@ def main():
     parser.add_argument("--threshold", type=float, default=0.0,
                         help=f"相关度阈值（默认 0=不过滤，用于测原始检索能力；线上生效值 {RETRIEVAL_SCORE_THRESHOLD}）")
     parser.add_argument("--output", type=Path, help="把完整报告存为 JSON")
+    parser.add_argument("--rewrite", action="store_true", help="检索前用 LLM 改写查询（每题一次 LLM 调用）")
     parser.add_argument("--verbose", action="store_true", help="打印每题明细")
     args = parser.parse_args()
 
@@ -93,7 +98,7 @@ def main():
     stats = store.get_stats()
     print(f"向量存储: {stats['backend']}, 存量: {stats.get('total_chunks', 0)} 块")
 
-    report = evaluate(store, questions, k=args.k, threshold=args.threshold)
+    report = evaluate(store, questions, k=args.k, threshold=args.threshold, rewrite=args.rewrite)
     print_report(report, verbose=args.verbose)
 
     if args.output:

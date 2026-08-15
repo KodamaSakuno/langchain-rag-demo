@@ -28,3 +28,20 @@ def get_embeddings():
         ),
         EMBEDDING_MODEL,
     )
+
+
+REWRITE_INSTRUCTION = (
+    "把用户问题改写为用于检索 LangChain 英文技术文档的英文关键词查询。"
+    "保留问题中的专有名词（如 checkpointer、middleware），只输出查询本身，不要解释。\n\n"
+    "用户问题：{question}"
+)
+
+
+def rewrite_query(question: str) -> str:
+    try:
+        llm, _ = get_chat_llm(temperature=0)
+        rewritten = str(llm.invoke(REWRITE_INSTRUCTION.format(question=question)).content).strip()
+        return rewritten or question
+    except Exception:
+        return question
+

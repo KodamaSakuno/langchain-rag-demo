@@ -5,8 +5,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field
 
-from config import EMBEDDING_MODEL, RETRIEVAL_SCORE_THRESHOLD
-from llm_providers import get_chat_llm
+from config import EMBEDDING_MODEL, QUERY_REWRITE, RETRIEVAL_SCORE_THRESHOLD
+from llm_providers import get_chat_llm, rewrite_query
 from vector_stores import get_vector_store
 
 app = FastAPI(title="LangChain 文档 RAG 助手")
@@ -84,7 +84,8 @@ def query(req: QueryRequest):
         )
 
     try:
-        results = store.similarity_search(req.question, k=req.top_k, score_threshold=RETRIEVAL_SCORE_THRESHOLD)
+        query_text = rewrite_query(req.question) if QUERY_REWRITE else req.question
+        results = store.similarity_search(query_text, k=req.top_k, score_threshold=RETRIEVAL_SCORE_THRESHOLD)
     except Exception as e:
         raise HTTPException(status_code=503, detail=f"文档检索失败：{e}")
 

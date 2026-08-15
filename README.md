@@ -85,6 +85,15 @@ VECTOR_STORE_BACKEND=hybrid python3 eval.py --output data/eval_report_hybrid.jso
 ```
 
 > 实测结论：中文查询 + 英文文档场景下 hybrid 反而更差（Recall@5 91.67% → 87.50%），BM25 跨语言几乎匹配不到关键词，还会把含高频词的无关块顶上来。默认保持 chroma。
+
+对比查询改写（检索前用 LLM 把问题改写成英文技术查询，需 `CHAT_API_KEY`）：
+
+```bash
+python3 eval.py --rewrite --output data/eval_report_rewrite.json
+```
+
+线上开启：`QUERY_REWRITE=1`（默认 0 关闭）。
+
 ## 常见问题
 
 - **首次运行很慢/下载大文件**：`bge-m3` 模型约 2.2GB，下载到 `~/.cache/huggingface`，只发生一次。
