@@ -13,6 +13,10 @@ CHUNK_OVERLAP_CHARS = 150
 
 # ==================== Embedding ====================
 EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "BAAI/bge-m3")
+# hf = 本地 HuggingFace（默认）；api = OpenAI 兼容接口
+EMBEDDING_BACKEND = os.getenv("EMBEDDING_BACKEND", "hf").lower()
+EMBEDDING_API_KEY = os.getenv("EMBEDDING_API_KEY")
+EMBEDDING_BASE_URL = os.getenv("EMBEDDING_BASE_URL", "https://ai.gitee.com/v1")
 
 # ==================== 聊天 LLM ====================
 CHAT_API_KEY = os.getenv("CHAT_API_KEY")
@@ -27,6 +31,8 @@ QUERY_REWRITE = os.getenv("QUERY_REWRITE", "0") == "1"
 VECTOR_STORE_BACKEND = os.getenv("VECTOR_STORE_BACKEND", "chroma").lower()
 CHROMA_PERSIST_DIR = os.getenv("CHROMA_PERSIST_DIR", "chroma_db")
 PG_CONNECTION = os.getenv("PG_CONNECTION", "postgresql+psycopg:///rag_demo")
+# pgvector collection 名；对比不同 embedding 模型时可用独立 collection 隔离索引
+PG_COLLECTION = os.getenv("PG_COLLECTION", "langchain_docs")
 
 # ==================== 记忆 ====================
 MEMORY_BACKEND = os.getenv("MEMORY_BACKEND", "memory").lower()

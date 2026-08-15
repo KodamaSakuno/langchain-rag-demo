@@ -122,6 +122,20 @@ QUERY_REWRITE=1 python3 compare_baseline.py   # 8 道题 × 直答/RAG 各一次
 
 实测（[data/baseline_comparison.md](data/baseline_comparison.md)）：裸模型倾向给旧版 API（`AgentExecutor`、`RunnableWithMessageHistory`、`create_react_agent`），RAG 严格按 LangChain 1.x 文档回答（`create_agent` + `checkpointer`、`HumanInTheLoopMiddleware` 等），文档未涵盖时明确回答"未找到"而非凭记忆补全。
 
+## 部署（小内存服务器 / serverless 友好）
+
+本地开发默认形态（Chroma 文件 + 本地 HF 模型 + 进程内存记忆）有三个部署障碍：torch 占 ~3GB 内存、Chroma 依赖本地文件、记忆随进程消失。对应的可切换后端：
+
+| 组件 | 本地默认 | 部署形态 |
+|---|---|---|
+| Embedding | `EMBEDDING_BACKEND=hf`（本地 bge-m3） | `api`（OpenAI 兼容接口，无需 torch） |
+| 向量存储 | `VECTOR_STORE_BACKEND=chroma` | `pgvector`（Postgres） |
+| Agent 记忆 | `MEMORY_BACKEND=memory` | `postgres`（PostgresSaver，跨重启保留） |
+
+一个 Postgres 同时承载向量与记忆，应用本身无状态。
+
+> **供应商实测**：硅基流动的 bge-m3 服务端 query↔doc 对齐异常（余弦 0.26 vs 本地 0.59），检索不可用；Gitee AI 的 bge-m3 正常（0.59，Recall@5 91.67% 与本地一致），默认 `EMBEDDING_BASE_URL` 即 Gitee AI。Gitee AI 限流会返回误导性的 400"token 计算失败"，代码已内置小批量（16 条/批）+ 指数退避重试。换 embedding 供应商或模型后必须用同一后端重建索引（`--rebuild`），不同实现的向量空间不互通。
+
 ## 常见问题
 
 - **首次运行很慢/下载大文件**：`bge-m3` 模型约 2.2GB，下载到 `~/.cache/huggingface`，只发生一次。

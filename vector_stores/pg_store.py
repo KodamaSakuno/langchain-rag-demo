@@ -17,10 +17,14 @@ class PgVectorStore(BaseVectorStore):
     def __init__(self, connection: str, embedding_function: Embeddings, collection: str = "langchain_docs"):
         self.connection = connection
         self.collection = collection
+        self.embedding_function = embedding_function
         self._engine = create_engine(connection)
-        self._store = PGVector(
-            embeddings=embedding_function,
-            collection_name=collection,
+        self._store = self._make_store()
+
+    def _make_store(self) -> PGVector:
+        return PGVector(
+            embeddings=self.embedding_function,
+            collection_name=self.collection,
             connection=self._engine,
             use_jsonb=True,
         )
@@ -43,6 +47,8 @@ class PgVectorStore(BaseVectorStore):
 
     def clear(self) -> None:
         self._store.delete_collection()
+        # delete_collection 后旧实例无法再写入（langchain-postgres 0.0.x），重建 collection
+        self._store = self._make_store()
 
     def get_stats(self) -> Dict[str, Any]:
         with self._engine.connect() as conn:
