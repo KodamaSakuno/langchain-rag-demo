@@ -13,9 +13,12 @@
 graph LR
     A[data/docs<br/>.md/.mdx/.txt 文档] -->|python3 ingest.py| B[data/chunks.jsonl<br/>每行一个分块]
     B -->|python3 indexer.py| C[data/chroma_db<br/>bge-m3 向量]
-    C -->|文本检索| D[python3 api.py]
-    D --> E[frontend/index.html]
+    C -->|search_docs 工具| D[agent.py<br/>create_agent + checkpointer]
+    D --> E[api.py /query<br/>多轮对话]
+    E --> F[frontend/index.html]
 ```
+
+Agent 模式：技术问题由 LLM 自主决定调用 `search_docs`（可自行构造英文查询、多次调用），闲聊直接回答；`thread_id` 保持多轮记忆（`InMemorySaver`，重启丢失）。请求示例：`{"question": "...", "thread_id": "可选"}`，响应含 `tool_calls`（Agent 的检索记录）。
 
 ## 快速开始
 
@@ -59,7 +62,8 @@ open frontend/index.html                      # macOS
 rag-demo/
 ├── ingest.py            # 文档清洗和切分
 ├── indexer.py           # 向量化和入库
-├── api.py               # FastAPI 服务：/query（检索 + 生成）、/（状态）
+├── agent.py             # Agent：create_agent + search_docs 工具 + checkpointer 记忆
+├── api.py               # FastAPI 服务：/query（Agent 多轮对话）、/（状态）
 ├── eval.py              # 检索质量评测：Recall@k / MRR@k
 ├── compare_baseline.py  # 裸 LLM 直答 vs RAG 对照（产出 Markdown 报告）
 ├── config.py             # 全局配置

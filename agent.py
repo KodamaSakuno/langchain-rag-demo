@@ -1,0 +1,48 @@
+from langchain.agents import create_agent
+from langchain.tools import tool
+from langgraph.checkpoint.memory import InMemorySaver
+
+from config import RETRIEVAL_SCORE_THRESHOLD
+from llm_providers import get_chat_llm
+from vector_stores import get_vector_store
+
+TOP_K = 5
+
+SYSTEM_PROMPT = """你是 LangChain 开发助手，回答基于 LangChain 官方文档。
+1. 技术问题必须先调用 search_docs 工具查证；可多次调用、换关键词重查。
+2. 严格依据工具返回的文档片段回答；文档未涵盖的，明确回答"当前文档中未找到"，不要凭记忆补全。
+3. 涉及代码时，给出一个可直接运行的最小示例。
+4. 先给结论，再给依据，正文控制在 300 字以内（代码除外）。
+5. 闲聊、澄清性问题直接回答，不要调用工具。"""
+
+
+def build_agent():
+    store = get_vector_store()
+    # 主线程预热：初始化 Chroma 客户端并完成首次嵌入推理。
+    # 否则首次嵌入发生在 langgraph 工具线程里，会触发 chromadb SharedSystemClient
+    # 竞态 KeyError，或 torch 在 macOS 子线程首次推理时段错误
+    store.get_stats()
+    store.similarity_search("warmup", k=1)
+
+    @tool(response_format="content_and_artifact")
+    def search_docs(query: str) -> tuple[str, list[dict]]:
+        """搜索 LangChain 官方文档。输入英文技术关键词查询效果最好。返回相关文档片段及其来源。"""
+        results = store.similarity_search(
+            query, k=TOP_K, score_threshold=RETRIEVAL_SCORE_THRESHOLD
+        )
+        if not results:
+            return "未检索到相关文档。", []
+        content = "\n\n---\n\n".join(
+            f"[来源: {r['source']} | 章节: {r['metadata'].get('header_path', '')}]\n{r['content']}"
+            for r in results
+        )
+        return content, results
+
+    llm, chat_provider = get_chat_llm(temperature=0)
+    agent = create_agent(
+        model=llm,
+        tools=[search_docs],
+        system_prompt=SYSTEM_PROMPT,
+        checkpointer=InMemorySaver(),
+    )
+    return agent, chat_provider, store

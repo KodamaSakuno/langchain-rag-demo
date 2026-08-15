@@ -1,13 +1,13 @@
+import uuid
 from typing import Any
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.messages import AIMessage, ToolMessage
 from pydantic import BaseModel, Field
 
-from config import EMBEDDING_MODEL, QUERY_REWRITE, RETRIEVAL_SCORE_THRESHOLD
-from llm_providers import get_chat_llm, rewrite_query
-from vector_stores import get_vector_store
+from agent import build_agent
+from config import EMBEDDING_MODEL
 
 app = FastAPI(title="LangChain 文档 RAG 助手")
 
@@ -18,88 +18,38 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-store = get_vector_store()
-llm, chat_provider = get_chat_llm(temperature=0)
-
-store_backend = store.get_stats()["backend"]
-print(f"服务启动 | Chat: {chat_provider} | Embedding: {EMBEDDING_MODEL} | Store: {store_backend}")
-
-PROMPT = ChatPromptTemplate.from_template("""你是 LangChain 开发助手。严格依据用户消息中提供的官方文档片段回答问题：
-1. 只使用文档片段中的 API 与写法；文档未涵盖的，明确回答"当前文档中未找到"，不要凭记忆补全。
-2. 涉及代码时，给出一个可直接运行的最小示例。
-3. 先给结论，再给依据，正文控制在 300 字以内（代码除外）。
-
-检索到的文档上下文：
-{context}
-
-用户问题：{question}
-
-回答：""")
-
-chain = PROMPT | llm
+agent, chat_provider, store = build_agent()
+print(f"服务启动 | Chat: {chat_provider} | Embedding: {EMBEDDING_MODEL} | 模式: Agent")
 
 
-def _extract_token_usage(message) -> dict[str, Any]:
-    um = getattr(message, "usage_metadata", None) or {}
-    ru = (getattr(message, "response_metadata", None) or {}).get("token_usage", {}) or {}
-
-    def pick(*candidates):
-        for c in candidates:
-            if c is not None:
-                return c
-        return None
-
-    return {
-        "prompt_tokens": pick(um.get("input_tokens"), ru.get("prompt_tokens")),
-        "completion_tokens": pick(um.get("output_tokens"), ru.get("completion_tokens")),
-        "total_tokens": pick(um.get("total_tokens"), ru.get("total_tokens")),
-    }
+def _extract_token_usage(messages: list) -> dict[str, Any]:
+    usage = {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}
+    for m in messages:
+        if not isinstance(m, AIMessage):
+            continue
+        um = getattr(m, "usage_metadata", None) or {}
+        if not um:
+            continue
+        usage["prompt_tokens"] += um.get("input_tokens") or 0
+        usage["completion_tokens"] += um.get("output_tokens") or 0
+        usage["total_tokens"] += um.get("total_tokens") or 0
+    return usage
 
 
-class QueryRequest(BaseModel):
-    question: str = Field(..., min_length=1, max_length=2000, description="用户问题")
-    top_k: int = Field(5, ge=1, le=20, description="检索返回的上下文块数")
+def _parse_agent_result(messages: list) -> dict[str, Any]:
+    """从 Agent 的消息序列中提取答案、引用与工具调用记录。"""
+    answer = ""
+    results = []
+    tool_calls = []
+    for m in messages:
+        if isinstance(m, AIMessage):
+            if m.content:
+                answer = str(m.content)
+            for tc in getattr(m, "tool_calls", None) or []:
+                tool_calls.append({"tool": tc["name"], "query": tc["args"].get("query", "")})
+        elif isinstance(m, ToolMessage) and m.name == "search_docs":
+            results.extend(getattr(m, "artifact", None) or [])
 
-
-class QueryResponse(BaseModel):
-    answer: str
-    sources: list[str]
-    citations: list[dict[str, Any]]
-    index_stats: dict[str, Any]
-    model_info: dict[str, Any]
-    token_usage: dict[str, Any]
-
-
-@app.post("/query", response_model=QueryResponse)
-def query(req: QueryRequest):
-    stats = store.get_stats()
-    if stats.get("total_chunks", 0) == 0:
-        return QueryResponse(
-            answer="索引为空。请先运行：python3 ingest.py && python3 indexer.py",
-            sources=[],
-            citations=[],
-            index_stats=stats,
-            model_info={"chat": chat_provider, "embedding": EMBEDDING_MODEL},
-            token_usage={}
-        )
-
-    try:
-        query_text = rewrite_query(req.question) if QUERY_REWRITE else req.question
-        results = store.similarity_search(query_text, k=req.top_k, score_threshold=RETRIEVAL_SCORE_THRESHOLD)
-    except Exception as e:
-        raise HTTPException(status_code=503, detail=f"文档检索失败：{e}")
-
-    if not results:
-        return QueryResponse(
-            answer="未检索到相关文档。",
-            sources=[],
-            citations=[],
-            index_stats=stats,
-            model_info={"chat": chat_provider, "embedding": EMBEDDING_MODEL},
-            token_usage={}
-        )
-
-    context_text = "\n\n---\n\n".join(r["content"] for r in results)
     sources = list(dict.fromkeys(r["source"] for r in results))
     citations = []
     seen = set()
@@ -108,26 +58,57 @@ def query(req: QueryRequest):
         if key not in seen:
             seen.add(key)
             citations.append({"source": key[0], "section": key[1], "score": r["similarity"]})
+    return {
+        "answer": answer,
+        "sources": sources,
+        "citations": citations,
+        "tool_calls": tool_calls,
+    }
 
+
+class QueryRequest(BaseModel):
+    question: str = Field(..., min_length=1, max_length=2000, description="用户问题")
+    thread_id: str | None = Field(None, description="会话 ID，相同 ID 保持多轮上下文；不传则每次新建")
+
+
+class QueryResponse(BaseModel):
+    answer: str
+    thread_id: str
+    sources: list[str]
+    citations: list[dict[str, Any]]
+    tool_calls: list[dict[str, str]]
+    model_info: dict[str, Any]
+    token_usage: dict[str, Any]
+
+
+@app.post("/query", response_model=QueryResponse)
+def query(req: QueryRequest):
+    thread_id = req.thread_id or uuid.uuid4().hex
+    config = {"configurable": {"thread_id": thread_id}}
+    # checkpointer 会返回完整会话历史，记录调用前的消息数以便只解析本轮新增
+    prev_len = len(agent.get_state(config).values.get("messages", []))
     try:
-        message = chain.invoke({"context": context_text, "question": req.question})
+        result = agent.invoke(
+            {"messages": [{"role": "user", "content": req.question}]},
+            config=config,
+        )
     except Exception as e:
-        raise HTTPException(status_code=502, detail=f"LLM 生成失败，请检查 CHAT_API_KEY 与网络：{e}")
+        raise HTTPException(status_code=502, detail=f"Agent 执行失败，请检查 CHAT_API_KEY 与网络：{e}")
 
+    messages = result["messages"][prev_len:]
+    parsed = _parse_agent_result(messages)
     return QueryResponse(
-        answer=str(message.content),
-        sources=sources,
-        citations=citations,
-        index_stats=stats,
+        **parsed,
+        thread_id=thread_id,
         model_info={"chat": chat_provider, "embedding": EMBEDDING_MODEL},
-        token_usage=_extract_token_usage(message),
+        token_usage=_extract_token_usage(messages),
     )
 
 
 @app.get("/")
 def root():
     return {
-        "message": "LangChain 文档 RAG 助手",
+        "message": "LangChain 文档 RAG 助手（Agent 模式）",
         "store": store.get_stats(),
         "models": {"chat": chat_provider, "embedding": EMBEDDING_MODEL}
     }
