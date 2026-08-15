@@ -1,0 +1,24 @@
+{"question": "如何给 agent 添加短期记忆，让它记住当前对话的历史？", "expected_sources": ["short-term-memory.mdx"]}
+{"question": "怎样跨会话记住用户的偏好信息？", "expected_sources": ["long-term-memory.mdx", "short-term-memory.mdx"]}
+{"question": "如何定义一个自定义工具交给 agent 调用？", "expected_sources": ["tools.mdx"]}
+{"question": "工具执行报错时怎么处理错误？", "expected_sources": ["tools.mdx"]}
+{"question": "如何让模型输出符合指定 schema 的结构化结果？", "expected_sources": ["structured-output.mdx"]}
+{"question": "ProviderStrategy 和 ToolStrategy 有什么区别？", "expected_sources": ["structured-output.mdx"]}
+{"question": "创建 agent 时需要指定 checkpointer 是为什么？", "expected_sources": ["short-term-memory.mdx", "agents.mdx"]}
+{"question": "如何中断 agent 的执行，等待人工审批后再继续？", "expected_sources": ["human-in-the-loop.mdx"]}
+{"question": "stream 有哪些模式？怎么流式输出 LLM 的 token？", "expected_sources": ["streaming.mdx"]}
+{"question": "如何构建一个能查询 SQL 数据库的 agent？", "expected_sources": ["sql-agent.mdx"]}
+{"question": "多 agent 系统有哪些常见的协作模式？", "expected_sources": ["multi-agent/index.mdx"]}
+{"question": "subagents 模式适合什么场景，怎么实现？", "expected_sources": ["multi-agent/subagents.mdx"]}
+{"question": "router 模式下有状态和无状态有什么区别？", "expected_sources": ["multi-agent/router.mdx"]}
+{"question": "handoffs 模式怎么实现客服工单在机器人之间的流转？", "expected_sources": ["multi-agent/handoffs.mdx", "multi-agent/handoffs-customer-support.mdx"]}
+{"question": "如何用自定义 workflow 编排多个 agent 组成 RAG 流水线？", "expected_sources": ["multi-agent/custom-workflow.mdx"]}
+{"question": "如何编写自定义 middleware，有哪些钩子可以用？", "expected_sources": ["middleware/custom.mdx"]}
+{"question": "LangChain 提供了哪些内置 middleware？", "expected_sources": ["middleware/built-in.mdx"]}
+{"question": "middleware 在 agent loop 中处于什么位置、起什么作用？", "expected_sources": ["middleware/overview.mdx"]}
+{"question": "LangChain 的聊天消息有哪些类型？", "expected_sources": ["messages.mdx"]}
+{"question": "模型的 tool calling 是如何工作的？", "expected_sources": ["models.mdx", "tools.mdx"]}
+{"question": "如何快速搭建并运行第一个 agent？", "expected_sources": ["quickstart.mdx", "agents.mdx", "overview.mdx"]}
+{"question": "如何用 embeddings 把文档构建成可检索的知识库？", "expected_sources": ["knowledge-base.mdx"]}
+{"question": "什么是上下文工程？agent 的上下文分为哪些类型？", "expected_sources": ["context-engineering.mdx"]}
+{"question": "怎么获取 agent 的推理过程（reasoning content）流式输出？", "expected_sources": ["event-streaming.mdx", "streaming.mdx"]}

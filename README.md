@@ -60,12 +60,23 @@ rag-demo/
 ├── ingest.py            # 文档清洗和切分
 ├── indexer.py           # 向量化和入库
 ├── api.py               # FastAPI 服务：/query（检索 + 生成）、/（状态）
+├── eval.py              # 检索质量评测：Recall@k / MRR@k
 ├── config.py             # 全局配置
 ├── llm_providers/       # 聊天 LLM（ChatOpenAI）与本地 Embedding（HF）工厂
 ├── vector_stores/       # 向量存储实现
 ├── frontend/index.html  # 查询页面
 ├── data/docs/           # LangChain 文档
+├── data/eval_questions.jsonl  # 评测问题集（question + expected_sources）
 ```
+
+## 检索评测
+
+```bash
+python3 eval.py --verbose --output data/eval_report.json   # 原始检索能力（不过滤）
+python3 eval.py --threshold 0.3                            # 模拟线上阈值过滤后的表现
+```
+
+每行一个 JSON：`{"question": "...", "expected_sources": ["xxx.mdx"]}`。命中定义为 top-k 结果中出现任一期望来源。
 
 ## 常见问题
 
