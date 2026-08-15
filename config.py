@@ -1,0 +1,24 @@
+import os
+from pathlib import Path
+
+from dotenv import load_dotenv
+
+load_dotenv()
+
+# ==================== 文档与分块 ====================
+DOCS_DIR = Path("data/docs")
+CHUNKS_PATH = Path("data/chunks.jsonl")
+CHUNK_MAX_CHARS = 800
+CHUNK_OVERLAP_CHARS = 150
+
+# ==================== Embedding ====================
+EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "BAAI/bge-m3")
+
+# ==================== 聊天 LLM ====================
+CHAT_API_KEY = os.getenv("CHAT_API_KEY")
+CHAT_BASE_URL = os.getenv("CHAT_BASE_URL", "https://api.openai.com/v1")
+CHAT_MODEL = os.getenv("CHAT_MODEL", "gpt-4o-mini")
+
+# ==================== 向量存储 ====================
+VECTOR_STORE_BACKEND = os.getenv("VECTOR_STORE_BACKEND", "chroma").lower()
+CHROMA_PERSIST_DIR = os.getenv("CHROMA_PERSIST_DIR", "chroma_db")

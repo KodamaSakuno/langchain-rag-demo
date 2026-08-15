@@ -1,0 +1,4 @@
+docs/
+raw/
+chroma_db/
+chunks.jsonl
