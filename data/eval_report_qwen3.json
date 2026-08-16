@@ -2,9 +2,9 @@
   "k": 5,
   "threshold": 0.0,
   "rewrite": false,
-  "num_questions": 24,
-  "recall_at_k": 0.875,
-  "mrr_at_k": 0.6493055555555556,
+  "num_questions": 33,
+  "recall_at_k": 0.9090909090909091,
+  "mrr_at_k": 0.7045454545454546,
   "details": [
     {
       "question": "如何给 agent 添加短期记忆，让它记住当前对话的历史？",
@@ -44,11 +44,11 @@
         "context-engineering.mdx"
       ],
       "scores": [
-        0.5874,
-        0.5822,
-        0.5694,
-        0.5497,
-        0.5467
+        0.5891,
+        0.5828,
+        0.5713,
+        0.5494,
+        0.5486
       ],
       "hit": false,
       "rank": null
@@ -113,11 +113,11 @@
         "models.mdx"
       ],
       "scores": [
-        0.7505,
+        0.7513,
         0.7278,
-        0.7235,
-        0.716,
-        0.7142
+        0.7238,
+        0.7164,
+        0.7144
       ],
       "hit": true,
       "rank": 2
@@ -206,11 +206,11 @@
         "streaming.mdx"
       ],
       "scores": [
-        0.7895,
-        0.7294,
-        0.7019,
-        0.6737,
-        0.6638
+        0.7889,
+        0.7289,
+        0.7014,
+        0.6729,
+        0.664
       ],
       "hit": true,
       "rank": 1
@@ -229,11 +229,11 @@
         "multi-agent/skills-sql-assistant.mdx"
       ],
       "scores": [
-        0.7371,
-        0.7192,
-        0.715,
-        0.706,
-        0.7005
+        0.7373,
+        0.7185,
+        0.7138,
+        0.7056,
+        0.6989
       ],
       "hit": true,
       "rank": 1
@@ -275,11 +275,11 @@
         "event-streaming.mdx"
       ],
       "scores": [
-        0.6684,
-        0.6539,
-        0.6495,
-        0.6389,
-        0.6377
+        0.6673,
+        0.6526,
+        0.6465,
+        0.6364,
+        0.6355
       ],
       "hit": true,
       "rank": 1
@@ -298,11 +298,11 @@
         "multi-agent/router.mdx"
       ],
       "scores": [
-        0.5581,
-        0.5425,
-        0.5319,
-        0.5246,
-        0.5139
+        0.5567,
+        0.5422,
+        0.5307,
+        0.5229,
+        0.5112
       ],
       "hit": true,
       "rank": 2
@@ -368,11 +368,11 @@
         "middleware/overview.mdx"
       ],
       "scores": [
-        0.6859,
-        0.6687,
-        0.6664,
-        0.633,
-        0.6295
+        0.6874,
+        0.6716,
+        0.6679,
+        0.6353,
+        0.6328
       ],
       "hit": true,
       "rank": 1
@@ -391,11 +391,11 @@
         "context-engineering.mdx"
       ],
       "scores": [
-        0.8286,
-        0.8234,
-        0.7714,
-        0.7667,
-        0.7375
+        0.829,
+        0.8232,
+        0.7709,
+        0.7678,
+        0.74
       ],
       "hit": true,
       "rank": 2
@@ -461,11 +461,11 @@
         "messages.mdx"
       ],
       "scores": [
-        0.7873,
-        0.7646,
-        0.7428,
-        0.7359,
-        0.7331
+        0.787,
+        0.7651,
+        0.7421,
+        0.7356,
+        0.7332
       ],
       "hit": true,
       "rank": 1
@@ -480,20 +480,20 @@
       ],
       "retrieved_sources": [
         "multi-agent/router-knowledge-base.mdx",
-        "sql-agent.mdx",
         "quickstart.mdx",
+        "sql-agent.mdx",
         "agents.mdx",
         "sql-agent.mdx"
       ],
       "scores": [
-        0.6517,
-        0.6489,
-        0.6483,
-        0.6248,
-        0.613
+        0.6507,
+        0.6477,
+        0.6472,
+        0.6256,
+        0.6117
       ],
       "hit": true,
-      "rank": 3
+      "rank": 2
     },
     {
       "question": "如何用 embeddings 把文档构建成可检索的知识库？",
@@ -561,6 +561,216 @@
         0.7435,
         0.7332,
         0.7253
+      ],
+      "hit": true,
+      "rank": 1
+    },
+    {
+      "question": "多 agent 系统里的 skills 模式是什么？什么时候适合用？",
+      "query_text": "多 agent 系统里的 skills 模式是什么？什么时候适合用？",
+      "expected_sources": [
+        "multi-agent/skills.mdx"
+      ],
+      "retrieved_sources": [
+        "multi-agent/skills.mdx",
+        "multi-agent/skills.mdx",
+        "multi-agent/skills-sql-assistant.mdx",
+        "multi-agent/skills.mdx",
+        "multi-agent/skills-sql-assistant.mdx"
+      ],
+      "scores": [
+        0.7715,
+        0.7179,
+        0.7079,
+        0.6872,
+        0.6838
+      ],
+      "hit": true,
+      "rank": 1
+    },
+    {
+      "question": "怎么用 skills 模式构建一个 SQL 查询助手？",
+      "query_text": "怎么用 skills 模式构建一个 SQL 查询助手？",
+      "expected_sources": [
+        "multi-agent/skills-sql-assistant.mdx"
+      ],
+      "retrieved_sources": [
+        "multi-agent/skills.mdx",
+        "multi-agent/skills-sql-assistant.mdx",
+        "multi-agent/skills-sql-assistant.mdx",
+        "multi-agent/skills-sql-assistant.mdx",
+        "multi-agent/skills-sql-assistant.mdx"
+      ],
+      "scores": [
+        0.7741,
+        0.7514,
+        0.7143,
+        0.6888,
+        0.6857
+      ],
+      "hit": true,
+      "rank": 2
+    },
+    {
+      "question": "怎么搭建一个 supervisor 模式的个人助理多 agent 系统？",
+      "query_text": "怎么搭建一个 supervisor 模式的个人助理多 agent 系统？",
+      "expected_sources": [
+        "multi-agent/subagents-personal-assistant.mdx"
+      ],
+      "retrieved_sources": [
+        "multi-agent/subagents.mdx",
+        "multi-agent/subagents-personal-assistant.mdx",
+        "multi-agent/subagents-personal-assistant.mdx",
+        "multi-agent/subagents.mdx",
+        "multi-agent/subagents-personal-assistant.mdx"
+      ],
+      "scores": [
+        0.7184,
+        0.6942,
+        0.6868,
+        0.6776,
+        0.6717
+      ],
+      "hit": true,
+      "rank": 2
+    },
+    {
+      "question": "router 模式如何实现问题的自动分类和分发到不同领域的 agent？",
+      "query_text": "router 模式如何实现问题的自动分类和分发到不同领域的 agent？",
+      "expected_sources": [
+        "multi-agent/router-knowledge-base.mdx"
+      ],
+      "retrieved_sources": [
+        "multi-agent/router.mdx",
+        "multi-agent/router-knowledge-base.mdx",
+        "multi-agent/router.mdx",
+        "multi-agent/router-knowledge-base.mdx",
+        "multi-agent/router-knowledge-base.mdx"
+      ],
+      "scores": [
+        0.6505,
+        0.6469,
+        0.6461,
+        0.6372,
+        0.6118
+      ],
+      "hit": true,
+      "rank": 2
+    },
+    {
+      "question": "给 agent 接入知识库有哪些 RAG 架构，2-Step 和 Agentic RAG 有什么区别？",
+      "query_text": "给 agent 接入知识库有哪些 RAG 架构，2-Step 和 Agentic RAG 有什么区别？",
+      "expected_sources": [
+        "deepagents-retrieval.mdx"
+      ],
+      "retrieved_sources": [
+        "deepagents-retrieval.mdx",
+        "deepagents-retrieval.mdx",
+        "deepagents-retrieval.mdx",
+        "deepagents-retrieval.mdx",
+        "deepagents-retrieval.mdx"
+      ],
+      "scores": [
+        0.7898,
+        0.7675,
+        0.7277,
+        0.7032,
+        0.6596
+      ],
+      "hit": true,
+      "rank": 1
+    },
+    {
+      "question": "怎么安装 LangChain？Python 和 JS 各用什么命令？",
+      "query_text": "怎么安装 LangChain？Python 和 JS 各用什么命令？",
+      "expected_sources": [
+        "install.mdx"
+      ],
+      "retrieved_sources": [
+        "install.mdx",
+        "install.mdx",
+        "multi-agent/handoffs-customer-support.mdx",
+        "multi-agent/skills-sql-assistant.mdx",
+        "multi-agent/subagents-personal-assistant.mdx"
+      ],
+      "scores": [
+        0.809,
+        0.7934,
+        0.7809,
+        0.7765,
+        0.7707
+      ],
+      "hit": true,
+      "rank": 1
+    },
+    {
+      "question": "短期记忆和长期记忆分别用什么组件实现，适用场景有什么不同？",
+      "query_text": "短期记忆和长期记忆分别用什么组件实现，适用场景有什么不同？",
+      "expected_sources": [
+        "short-term-memory.mdx",
+        "long-term-memory.mdx"
+      ],
+      "retrieved_sources": [
+        "long-term-memory.mdx",
+        "short-term-memory.mdx",
+        "short-term-memory.mdx",
+        "tools.mdx",
+        "short-term-memory.mdx"
+      ],
+      "scores": [
+        0.6546,
+        0.5739,
+        0.5687,
+        0.5533,
+        0.5498
+      ],
+      "hit": true,
+      "rank": 1
+    },
+    {
+      "question": "middleware 和 subagents 两种模式分别适合解决什么问题？",
+      "query_text": "middleware 和 subagents 两种模式分别适合解决什么问题？",
+      "expected_sources": [
+        "middleware/overview.mdx",
+        "multi-agent/subagents.mdx"
+      ],
+      "retrieved_sources": [
+        "multi-agent/subagents.mdx",
+        "multi-agent/subagents.mdx",
+        "multi-agent/subagents.mdx",
+        "multi-agent/index.mdx",
+        "middleware/built-in.mdx"
+      ],
+      "scores": [
+        0.6906,
+        0.6792,
+        0.6762,
+        0.6756,
+        0.6741
+      ],
+      "hit": true,
+      "rank": 1
+    },
+    {
+      "question": "tool calling 和结构化输出是什么关系，怎么配合实现可靠的工具调用链？",
+      "query_text": "tool calling 和结构化输出是什么关系，怎么配合实现可靠的工具调用链？",
+      "expected_sources": [
+        "models.mdx",
+        "structured-output.mdx"
+      ],
+      "retrieved_sources": [
+        "structured-output.mdx",
+        "structured-output.mdx",
+        "structured-output.mdx",
+        "structured-output.mdx",
+        "models.mdx"
+      ],
+      "scores": [
+        0.7072,
+        0.6913,
+        0.6869,
+        0.68,
+        0.6792
       ],
       "hit": true,
       "rank": 1

@@ -49,10 +49,15 @@ def run_group(questions: list[dict], multi_agent: bool) -> dict:
         latency = time.time() - t0
 
         expected = set(q["expected_sources"])
-        hit = bool(expected & set(resp.sources))
         not_found = "未找到" in resp.answer
+        if q.get("expect_not_found"):
+            # 语料外诚实度题：正确行为是明确回答"未找到"，而非命中来源
+            hit = not_found
+            honest += hit
+        else:
+            hit = bool(expected & set(resp.sources))
+            honest += not not_found
         hits += hit
-        honest += not not_found
         total_latency += latency
         total_tokens += resp.token_usage["total_tokens"]
 
@@ -67,13 +72,15 @@ def run_group(questions: list[dict], multi_agent: bool) -> dict:
             "expected_sources": q["expected_sources"],
             "sources": resp.sources,
             "hit": hit,
+            "expect_not_found": bool(q.get("expect_not_found")),
             "not_found": not_found,
             "review": verdict,
             "latency_s": round(latency, 1),
             "tokens": resp.token_usage["total_tokens"],
             "tool_calls": [t["tool"] for t in resp.tool_calls],
         })
-        print(f"  {'✓' if hit else '✗'} {q['question'][:30]} | {latency:.0f}s | {[t['tool'] for t in resp.tool_calls]}")
+        tag = "oob" if q.get("expect_not_found") else "doc"
+        print(f"  {'✓' if hit else '✗'} [{tag}] {q['question'][:30]} | {latency:.0f}s | {[t['tool'] for t in resp.tool_calls]}")
 
     n = len(questions)
     return {

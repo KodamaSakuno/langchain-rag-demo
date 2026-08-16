@@ -90,6 +90,8 @@ def main():
     args = parser.parse_args()
 
     questions = load_questions(args.questions)
+    # expect_not_found 是语料外诚实度题，只适用于 Agent 级评测（eval_agent.py），检索层不适用
+    questions = [q for q in questions if not q.get("expect_not_found")]
     if not questions:
         raise SystemExit(f"{args.questions} 为空或不存在")
     print(f"{len(questions)} 条评测问题，加载向量库...")

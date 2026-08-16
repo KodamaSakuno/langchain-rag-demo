@@ -22,3 +22,15 @@
 {"question": "如何用 embeddings 把文档构建成可检索的知识库？", "expected_sources": ["knowledge-base.mdx"]}
 {"question": "什么是上下文工程？agent 的上下文分为哪些类型？", "expected_sources": ["context-engineering.mdx"]}
 {"question": "怎么获取 agent 的推理过程（reasoning content）流式输出？", "expected_sources": ["event-streaming.mdx", "streaming.mdx"]}
+{"question": "多 agent 系统里的 skills 模式是什么？什么时候适合用？", "expected_sources": ["multi-agent/skills.mdx"]}
+{"question": "怎么用 skills 模式构建一个 SQL 查询助手？", "expected_sources": ["multi-agent/skills-sql-assistant.mdx"]}
+{"question": "怎么搭建一个 supervisor 模式的个人助理多 agent 系统？", "expected_sources": ["multi-agent/subagents-personal-assistant.mdx"]}
+{"question": "router 模式如何实现问题的自动分类和分发到不同领域的 agent？", "expected_sources": ["multi-agent/router-knowledge-base.mdx"]}
+{"question": "给 agent 接入知识库有哪些 RAG 架构，2-Step 和 Agentic RAG 有什么区别？", "expected_sources": ["deepagents-retrieval.mdx"]}
+{"question": "怎么安装 LangChain？Python 和 JS 各用什么命令？", "expected_sources": ["install.mdx"]}
+{"question": "怎么把 LangChain 应用部署到 LangGraph Platform 并配置灰度发布？", "expected_sources": [], "expect_not_found": true}
+{"question": "LlamaIndex 和 LangChain 怎么集成使用？", "expected_sources": [], "expect_not_found": true}
+{"question": "LangChain 有 Go 语言版本吗？怎么安装？", "expected_sources": [], "expect_not_found": true}
+{"question": "短期记忆和长期记忆分别用什么组件实现，适用场景有什么不同？", "expected_sources": ["short-term-memory.mdx", "long-term-memory.mdx"]}
+{"question": "middleware 和 subagents 两种模式分别适合解决什么问题？", "expected_sources": ["middleware/overview.mdx", "multi-agent/subagents.mdx"]}
+{"question": "tool calling 和结构化输出是什么关系，怎么配合实现可靠的工具调用链？", "expected_sources": ["models.mdx", "structured-output.mdx"]}

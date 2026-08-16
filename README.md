@@ -83,7 +83,7 @@ python3 eval.py --verbose --output data/eval_report.json   # 原始检索能力�
 python3 eval.py --threshold 0.3                            # 模拟线上阈值过滤后的表现
 ```
 
-每行一个 JSON：`{"question": "...", "expected_sources": ["xxx.mdx"]}`。命中定义为 top-k 结果中出现任一期望来源。
+每行一个 JSON：`{"question": "...", "expected_sources": ["xxx.mdx"]}`。命中定义为 top-k 结果中出现任一期望来源。共 36 题（覆盖 30/30 文档），其中 3 题是语料外诚实度题（`expect_not_found: true`，期望回答"未找到"），检索层评测自动跳过、仅 Agent 级评测使用。
 
 对比向量存储后端（默认 chroma；hybrid 为向量+BM25 的 RRF 融合）：
 
@@ -91,20 +91,21 @@ python3 eval.py --threshold 0.3                            # 模拟线上阈值�
 VECTOR_STORE_BACKEND=hybrid python3 eval.py --output data/eval_report_hybrid.json
 ```
 
-> 实测结论：中文查询 + 英文文档场景下 hybrid 反而更差（Recall@5 91.67% → 87.50%），BM25 跨语言几乎匹配不到关键词，还会把含高频词的无关块顶上来。默认保持 chroma。
+> 实测结论：中文查询 + 英文文档场景下 hybrid 反而更差（Recall@5 93.94% → 87.88%），BM25 跨语言几乎匹配不到关键词，还会把含高频词的无关块顶上来。默认保持 chroma。
 
 ### Agent 级评测
 
 检索层评测（`eval.py`）绕过 Agent 直测 `similarity_search`；`eval_agent.py` 走完整 `/query` 链路，对比单 Agent 与多 Agent（规划员+审校员）：
 
 ```bash
-python3 eval_agent.py   # 24 题 × 两组 → data/eval_agent_report.json
+python3 eval_agent.py   # 36 题 × 两组 → data/eval_agent_report.json
 ```
 
-> 实测结论（[data/eval_agent_report.json](data/eval_agent_report.json)）：
-> - **Agent 化本身即是检索增强**：单 Agent 来源命中率 95.83%，高于纯检索的 91.67%——LLM 自主多查询检索补上了检索层的 miss
-> - **多 Agent 的代价与收益**：命中率同为 95.83%（检索侧已到 embedding 语义天花板），延迟 9.4s→43.0s、token ×2.1；收益在质量兜底——4/24 题被审校员判"存疑"并触发打回重查（`review_answer → 再次 search_docs`）
-> - **规划员按需启用**：24 题中仅 6 题走了 `plan_queries` 拆题，复杂题才付出规划成本
+> 实测结论（[data/eval_agent_report.json](data/eval_agent_report.json)，36 题 = 33 检索题 + 3 语料外诚实度题）：
+> - **Agent 化本身即是检索增强**：单 Agent 正确率 97.22%，高于纯检索的 93.94%——LLM 自主多查询检索补上了检索层的 miss
+> - **多 Agent 的代价与收益**：正确率同为 97.22%（检索侧已到 embedding 语义天花板），延迟 10.0s→46.3s、token ×2.4；收益在质量兜底——4/36 题被审校员判"存疑"，其中 1 题触发打回重查（`review_answer → 再次 search_docs`）
+> - **诚实度**：两组在 3 道语料外题目上全部正确回答"未找到"；最极端的一题（LangGraph Platform 部署）多 Agent 组换关键词检索 15 次后仍坚持拒答，审校员对拒答结论放行
+> - **规划员按需启用**：36 题中 17 题走了 `plan_queries` 拆题，复杂题才付出规划成本
 
 pgvector 后端（适合部署：向量与记忆共用一个 Postgres，状态全外置）：
 
@@ -119,7 +120,7 @@ VECTOR_STORE_BACKEND=pgvector python3 eval.py --output data/eval_report_pgvector
 VECTOR_STORE_BACKEND=pgvector MEMORY_BACKEND=postgres python3 api.py   # 记忆跨重启保留
 ```
 
-> 实测：pgvector 与 chroma 召回一致（Recall@5 91.67%），但分数为余弦相似度，尺度不同（0.56~0.75），阈值建议 `RETRIEVAL_SCORE_THRESHOLD=0.5`。
+> 实测：pgvector 与 chroma 召回一致（Recall@5 93.94%），但分数为余弦相似度，尺度不同（0.56~0.75），阈值建议 `RETRIEVAL_SCORE_THRESHOLD=0.5`。
 
 对比查询改写（检索前用 LLM 把问题改写成英文技术查询，需 `CHAT_API_KEY`）：
 
@@ -149,9 +150,9 @@ QUERY_REWRITE=1 python3 compare_baseline.py   # 8 道题 × 直答/RAG 各一次
 
 一个 Postgres 同时承载向量与记忆，应用本身无状态。
 
-> **供应商实测**：硅基流动的 bge-m3 服务端 query↔doc 对齐异常（余弦 0.26 vs 本地 0.59），检索不可用；Gitee AI 的 bge-m3 正常（0.59，Recall@5 91.67% 与本地一致），默认 `EMBEDDING_BASE_URL` 即 Gitee AI。Gitee AI 限流会返回误导性的 400"token 计算失败"，代码已内置小批量（16 条/批）+ 指数退避重试。换 embedding 供应商或模型后必须用同一后端重建索引（`--rebuild`），不同实现的向量空间不互通。
+> **供应商实测**：硅基流动的 bge-m3 服务端 query↔doc 对齐异常（余弦 0.26 vs 本地 0.59），检索不可用；Gitee AI 的 bge-m3 正常（0.59，Recall@5 93.94% 与本地一致），默认 `EMBEDDING_BASE_URL` 即 Gitee AI。Gitee AI 限流会返回误导性的 400"token 计算失败"，代码已内置小批量（16 条/批）+ 指数退避重试。换 embedding 供应商或模型后必须用同一后端重建索引（`--rebuild`），不同实现的向量空间不互通。
 
-> **模型选型实测**（同 24 题评测集、同 pgvector 后端、同 collection 隔离对比）：bge-m3 Recall@5 91.67% / MRR 0.7354，Qwen3-Embedding-0.6B Recall@5 87.50% / MRR 0.6493。本语料为英文文档，bge-m3 胜出，默认模型保持不变；中文为主的语料可再测 Qwen3（支持 MRL 维度截断，可省 pgvector 存储）。对比方法：设 `PG_COLLECTION=langchain_docs_qwen3` 建新 collection 后分别跑 `indexer.py` 与 `eval.py`。
+> **模型选型实测**（33 检索题、同 pgvector 后端、同 collection 隔离对比）：bge-m3 Recall@5 93.94% / MRR 0.7394，Qwen3-Embedding-0.6B Recall@5 90.91% / MRR 0.7045。本语料为英文文档，bge-m3 胜出，默认模型保持不变；中文为主的语料可再测 Qwen3（支持 MRL 维度截断，可省 pgvector 存储）。对比方法：设 `PG_COLLECTION=langchain_docs_qwen3` 建新 collection 后分别跑 `indexer.py` 与 `eval.py`。
 
 ```bash
 cp .env.example .env   # 填好 CHAT_API_KEY 与 EMBEDDING_API_KEY（EMBEDDING_MODEL 保持 BAAI/bge-m3 则与本地索引同空间）
