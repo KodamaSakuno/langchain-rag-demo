@@ -50,24 +50,29 @@ class _NormalizedEmbeddings:
         n = math.sqrt(sum(x * x for x in v))
         return [x / n for x in v] if n else v
 
-    def embed_documents(self, texts):
+    @classmethod
+    def _call_with_retry(cls, fn, *args):
         import time
 
+        for attempt in range(cls.MAX_RETRIES):
+            try:
+                return fn(*args)
+            except Exception:
+                if attempt == cls.MAX_RETRIES - 1:
+                    raise
+                time.sleep(min(2 ** attempt * 2, 30))
+
+    def embed_documents(self, texts):
         vecs = []
         for i in range(0, len(texts), self.BATCH_SIZE):
             batch = texts[i : i + self.BATCH_SIZE]
-            for attempt in range(self.MAX_RETRIES):
-                try:
-                    vecs.extend(self._inner.embed_documents(batch))
-                    break
-                except Exception:
-                    if attempt == self.MAX_RETRIES - 1:
-                        raise
-                    time.sleep(min(2 ** attempt * 2, 30))
+            vecs.extend(self._call_with_retry(self._inner.embed_documents, batch))
         return [self._norm(v) for v in vecs]
 
     def embed_query(self, text):
-        return self._norm(self._inner.embed_query(text))
+        # 查询侧同样要重试：供应商限流不分文档/查询，
+        # 且底层客户端超时必须远小于部署环境的请求时限（如 Lambda 300s），否则挂起无日志
+        return self._norm(self._call_with_retry(self._inner.embed_query, text))
 
 
 def get_embeddings():
@@ -84,6 +89,9 @@ def get_embeddings():
                     base_url=EMBEDDING_BASE_URL,
                     # 与 _NormalizedEmbeddings.BATCH_SIZE 对齐，避免内部再攒大批次
                     chunk_size=16,
+                    # 默认 600s 超时比 Lambda 的 300s 还长，挂起时无日志可排查
+                    timeout=30,
+                    max_retries=1,
                 )
             ),
             f"{EMBEDDING_MODEL} (api)",

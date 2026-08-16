@@ -7,7 +7,7 @@ from langchain_core.messages import AIMessage, ToolMessage
 from pydantic import BaseModel, Field
 
 from agent import build_agent
-from config import EMBEDDING_MODEL, RETRIEVAL_SCORE_THRESHOLD
+from config import EMBEDDING_BACKEND, EMBEDDING_BASE_URL, EMBEDDING_MODEL, RETRIEVAL_SCORE_THRESHOLD
 
 app = FastAPI(title="LangChain 文档 RAG 助手")
 
@@ -19,7 +19,7 @@ app.add_middleware(
 )
 
 agent, agent_reviewed, chat_provider, store = build_agent()
-print(f"服务启动 | Chat: {chat_provider} | Embedding: {EMBEDDING_MODEL} | 模式: Agent")
+print(f"服务启动 | Chat: {chat_provider} | Embedding: {EMBEDDING_MODEL} ({EMBEDDING_BACKEND}) | 模式: Agent")
 
 
 def _extract_token_usage(messages: list) -> dict[str, Any]:
@@ -118,8 +118,42 @@ def root():
     return {
         "message": "LangChain 文档 RAG 助手（Agent 模式）",
         "store": store.get_stats(),
-        "models": {"chat": chat_provider, "embedding": EMBEDDING_MODEL},
+        "models": {"chat": chat_provider, "embedding": f"{EMBEDDING_MODEL} ({EMBEDDING_BACKEND})"},
         "retrieval": {"score_threshold": RETRIEVAL_SCORE_THRESHOLD}
+    }
+
+
+@app.get("/debug/embedding", include_in_schema=False)
+def debug_embedding():
+    """部署自检：真实调用一次 embedding 接口，验证网络可达与配置正确。
+
+    排查部署环境问题用（如 Lambda 上怀疑连不上 embedding API 时），
+    一条 curl 即可定位，不用等业务接口报错。
+    """
+    import time
+
+    # hybrid store 包了一层，从内部的向量 store 取 embedding 函数
+    emb = getattr(store, "embedding_function", None)
+    if emb is None:
+        emb = getattr(getattr(store, "_vector", None), "embedding_function", None)
+    if emb is None:
+        raise HTTPException(status_code=500, detail="无法从向量存储获取 embedding 函数")
+
+    start = time.monotonic()
+    try:
+        vec = emb.embed_query("ping")
+    except Exception as e:
+        elapsed = round(time.monotonic() - start, 2)
+        raise HTTPException(
+            status_code=502,
+            detail=f"embedding 调用失败（{elapsed}s）：{type(e).__name__}: {e}",
+        )
+    return {
+        "backend": EMBEDDING_BACKEND,
+        "model": EMBEDDING_MODEL,
+        "base_url": EMBEDDING_BASE_URL if EMBEDDING_BACKEND == "api" else None,
+        "dim": len(vec),
+        "elapsed_s": round(time.monotonic() - start, 2),
     }
 
 
