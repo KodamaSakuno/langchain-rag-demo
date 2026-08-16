@@ -29,6 +29,13 @@ SYSTEM_PROMPT = """你是 LangChain 开发助手，回答基于 LangChain 官方
 4. 先给结论，再给依据，正文控制在 300 字以内（代码除外）。
 5. 闲聊、澄清性问题直接回答，不要调用工具。"""
 
+# 查询规划员 subagent：把复杂问题拆成多个英文子查询，扩大召回覆盖面
+PLANNER_PROMPT = """你是查询规划员，为检索 LangChain 英文技术文档设计子查询。
+1. 把用户问题分解为 2~4 个英文子查询，每个聚焦一个方面（概念、API 用法、配置、错误处理等）。
+2. 保留问题中的专有名词（如 checkpointer、middleware、create_agent），子查询用英文关键词短语，不要完整句子。
+3. 简单的单一问题不需要分解，原样输出一个英文查询即可。
+4. 只输出子查询列表，每行一个，不编号、不解释、不输出其他内容。"""
+
 # 审校员 subagent：在隔离上下文中核对主 Agent 的回答草稿，可自行再检索查证
 REVIEWER_PROMPT = """你是事实审校员，核对一份基于 LangChain 官方文档的回答草稿。
 1. 逐条检查草稿中的技术性论断（API 名称、参数、用法、行为描述）是否有文档依据。
@@ -40,8 +47,10 @@ REVIEWER_PROMPT = """你是事实审校员，核对一份基于 LangChain 官方
 
 # 主 Agent 开启多 Agent 时的附加指令
 MULTI_AGENT_SUFFIX = """
-6. 正式输出回答前，先调用 review_answer 工具，把用户问题和你的回答草稿交给审校员核对；
-   审校员指出问题时，修正后输出最终回答。闲聊类问题跳过审校。"""
+6. 复杂或涉及多个方面的问题，先调用 plan_queries 拆成英文子查询，再对每个子查询调用 search_docs 检索，
+   综合所有结果作答；简单问题直接 search_docs 即可。
+7. 正式输出回答前，先调用 review_answer 工具，把用户问题和你的回答草稿交给审校员核对；
+   审校员指出问题时，修正后输出最终回答。闲聊类问题跳过规划与审校。"""
 
 
 def build_agent():
@@ -77,9 +86,22 @@ def build_agent():
         checkpointer=checkpointer,
     )
 
-    # 多 Agent 协作（tool-per-agent 模式）：审校员是独立 Agent，
+    # 多 Agent 协作（tool-per-agent 模式）：规划员/审校员是独立 Agent，
     # 包装成工具交给主 Agent 编排；子 Agent 无 checkpointer，上下文隔离。
     # 始终构建，由请求级开关决定是否使用（构图无网络开销）
+    planner = create_agent(
+        model=llm,
+        tools=[],
+        system_prompt=PLANNER_PROMPT,
+    )
+
+    @tool("plan_queries", description="把复杂问题分解为多个英文检索子查询，每行一个。适合涉及多个方面或检索覆盖不全的问题。")
+    def plan_queries(question: str) -> str:
+        result = planner.invoke({
+            "messages": [{"role": "user", "content": question}]
+        })
+        return str(result["messages"][-1].content)
+
     reviewer = create_agent(
         model=llm,
         tools=[search_docs],
@@ -95,7 +117,7 @@ def build_agent():
 
     agent_reviewed = create_agent(
         model=llm,
-        tools=[search_docs, review_answer],
+        tools=[search_docs, plan_queries, review_answer],
         system_prompt=SYSTEM_PROMPT + MULTI_AGENT_SUFFIX,
         checkpointer=checkpointer,
     )

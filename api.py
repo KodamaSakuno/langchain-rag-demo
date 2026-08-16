@@ -47,7 +47,7 @@ def _parse_agent_result(messages: list) -> dict[str, Any]:
             if m.content:
                 answer = str(m.content)
             for tc in getattr(m, "tool_calls", None) or []:
-                tool_calls.append({"tool": tc["name"], "query": tc["args"].get("query", "")})
+                tool_calls.append({"tool": tc["name"], "query": tc["args"].get("query") or tc["args"].get("question", "")})
         elif isinstance(m, ToolMessage) and m.name == "search_docs":
             results.extend(getattr(m, "artifact", None) or [])
         elif isinstance(m, ToolMessage) and m.name == "review_answer":
