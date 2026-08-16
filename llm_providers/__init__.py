@@ -21,6 +21,10 @@ def get_chat_llm(temperature: float = 0):
             api_key=CHAT_API_KEY,
             base_url=CHAT_BASE_URL,
             temperature=temperature,
+            # 网络挂起防护：单次调用超时 120s、最多重试 2 次，
+            # 否则一个 hang 住的请求会把整条链路（或评测进程）永久卡住
+            request_timeout=120,
+            max_retries=2,
         ),
         CHAT_MODEL,
     )

@@ -93,6 +93,19 @@ VECTOR_STORE_BACKEND=hybrid python3 eval.py --output data/eval_report_hybrid.jso
 
 > 实测结论：中文查询 + 英文文档场景下 hybrid 反而更差（Recall@5 91.67% → 87.50%），BM25 跨语言几乎匹配不到关键词，还会把含高频词的无关块顶上来。默认保持 chroma。
 
+### Agent 级评测
+
+检索层评测（`eval.py`）绕过 Agent 直测 `similarity_search`；`eval_agent.py` 走完整 `/query` 链路，对比单 Agent 与多 Agent（规划员+审校员）：
+
+```bash
+python3 eval_agent.py   # 24 题 × 两组 → data/eval_agent_report.json
+```
+
+> 实测结论（[data/eval_agent_report.json](data/eval_agent_report.json)）：
+> - **Agent 化本身即是检索增强**：单 Agent 来源命中率 95.83%，高于纯检索的 91.67%——LLM 自主多查询检索补上了检索层的 miss
+> - **多 Agent 的代价与收益**：命中率同为 95.83%（检索侧已到 embedding 语义天花板），延迟 9.4s→43.0s、token ×2.1；收益在质量兜底——4/24 题被审校员判"存疑"并触发打回重查（`review_answer → 再次 search_docs`）
+> - **规划员按需启用**：24 题中仅 6 题走了 `plan_queries` 拆题，复杂题才付出规划成本
+
 pgvector 后端（适合部署：向量与记忆共用一个 Postgres，状态全外置）：
 
 ```bash
