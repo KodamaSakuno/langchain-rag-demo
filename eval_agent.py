@@ -99,6 +99,8 @@ def main():
     parser = argparse.ArgumentParser(description="Agent 级评测：单 Agent vs 多 Agent 对比")
     parser.add_argument("--questions", type=Path, default=EVAL_QUESTIONS_PATH)
     parser.add_argument("--limit", type=int, default=0, help="只跑前 N 题（调试用）")
+    parser.add_argument("--group", choices=["single", "multi", "both"], default="both",
+                        help="跑哪一组（调 prompt 后只复测受影响的一组时用）")
     parser.add_argument("--output", type=Path, default=Path("data/eval_agent_report.json"))
     args = parser.parse_args()
 
@@ -107,10 +109,12 @@ def main():
         questions = questions[: args.limit]
     if not questions:
         raise SystemExit(f"{args.questions} 为空或不存在")
-    print(f"{len(questions)} 条评测问题，Agent 已加载，开始双组评测...")
+
+    run_multi = [False, True] if args.group == "both" else [args.group == "multi"]
+    print(f"{len(questions)} 条评测问题，Agent 已加载，开始评测（{len(run_multi)} 组）...")
 
     groups = []
-    for ma in (False, True):
+    for ma in run_multi:
         print(f"\n===== {'多 Agent（规划员+审校员）' if ma else '单 Agent'} 组 =====")
         groups.append(run_group(questions, multi_agent=ma))
         g = groups[-1]

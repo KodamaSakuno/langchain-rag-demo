@@ -103,8 +103,9 @@ python3 eval_agent.py   # 36 题 × 两组 → data/eval_agent_report.json
 
 > 实测结论（[data/eval_agent_report.json](data/eval_agent_report.json)，36 题 = 33 检索题 + 3 语料外诚实度题）：
 > - **Agent 化本身即是检索增强**：单 Agent 正确率 97.22%，高于纯检索的 93.94%——LLM 自主多查询检索补上了检索层的 miss
-> - **多 Agent 的代价与收益**：正确率同为 97.22%（检索侧已到 embedding 语义天花板），延迟 10.0s→46.3s、token ×2.4；收益在质量兜底——4/36 题被审校员判"存疑"，其中 1 题触发打回重查（`review_answer → 再次 search_docs`）
-> - **诚实度**：两组在 3 道语料外题目上全部正确回答"未找到"；最极端的一题（LangGraph Platform 部署）多 Agent 组换关键词检索 15 次后仍坚持拒答，审校员对拒答结论放行
+> - **多 Agent 的代价与收益**：正确率同为 97.22%（检索侧已到 embedding 语义天花板），延迟 10.0s→47.8s、token ×3.2；收益在质量兜底——2/36 题被审校员判"存疑"，其中 1 题触发打回重查（`review_answer → 再次 search_docs → review_answer`）
+> - **审校员误报可量化调优**：初版 prompt 误把措辞不精确判为"存疑"（4/36）；在 prompt 中明确"只有实质性错误（API 错误、与文档相悖的建议、无据断言）才判存疑"后降至 2/36，且剩余 2 题复核确认文档有据——边界 case 的波动而非真错误
+> - **诚实度**：两组在 3 道语料外题目上全部正确回答"未找到"；最极端的一题（LangGraph Platform 部署）多 Agent 组换关键词检索 23 次后仍坚持拒答，审校员对拒答结论放行
 > - **规划员按需启用**：36 题中 17 题走了 `plan_queries` 拆题，复杂题才付出规划成本
 
 pgvector 后端（适合部署：向量与记忆共用一个 Postgres，状态全外置）：
