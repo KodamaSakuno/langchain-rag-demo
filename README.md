@@ -67,13 +67,15 @@ rag-demo/
 ├── agent.py             # Agent：create_agent + search_docs 工具 + checkpointer 记忆
 ├── api.py               # FastAPI 服务：/query（Agent 多轮对话）、/（状态）
 ├── eval.py              # 检索质量评测：Recall@k / MRR@k
+├── eval_agent.py        # Agent 级评测：单/多 Agent 对比（来源命中、要点召回、诚实度、审校结论）
+├── gen_questions.py     # 带溯源的评测题生成器（四题型配比 + 超纲题向量库验证）
 ├── compare_baseline.py  # 裸 LLM 直答 vs RAG 对照（产出 Markdown 报告）
 ├── config.py             # 全局配置
 ├── llm_providers/       # 聊天 LLM（ChatOpenAI）与本地 Embedding（HF）工厂
 ├── vector_stores/       # 向量存储实现
 ├── frontend/index.html  # 查询页面
 ├── data/docs/           # LangChain 文档
-├── data/eval_questions.jsonl  # 评测问题集（question + expected_sources）
+├── data/eval_questions.jsonl  # 评测问题集（question + expected_sources + expected_points + 溯源）
 ```
 
 ## 检索评测
@@ -83,7 +85,7 @@ python3 eval.py --verbose --output data/eval_report.json   # 原始检索能力�
 python3 eval.py --threshold 0.3                            # 模拟线上阈值过滤后的表现
 ```
 
-每行一个 JSON：`{"question": "...", "expected_sources": ["xxx.mdx"]}`。命中定义为 top-k 结果中出现任一期望来源。共 36 题（覆盖 30/30 文档），其中 3 题是语料外诚实度题（`expect_not_found: true`，期望回答"未找到"），检索层评测自动跳过、仅 Agent 级评测使用。
+每行一个 JSON：`{"question": "...", "expected_sources": ["xxx.mdx"], "expected_points": ["create_agent|createAgent", ...]}`。命中定义为 top-k 结果中出现任一期望来源。共 36 题，分四类：**16 直接命中 / 8 跨文档综合 / 8 API 时效陷阱（旧版 API 记忆 vs 当前文档）/ 4 超纲拒答**（`expect_not_found: true`，期望回答"未找到"，检索层评测自动跳过）。题库由 `gen_questions.py` 从语料 chunk 带溯源生成（`chunk_ids` 可审计，来源标注生成时即正确），时效陷阱与超纲题经人工核对；要点断言支持 `a|b` 双写法（语料含 Python/JS 双语文档），供 Agent 级评测做答案级校验。旧版 36 题存档为 `data/eval_questions_v1.jsonl`。
 
 对比向量存储后端（默认 chroma；hybrid 为向量+BM25 的 RRF 融合）：
 
@@ -91,7 +93,8 @@ python3 eval.py --threshold 0.3                            # 模拟线上阈值�
 VECTOR_STORE_BACKEND=hybrid python3 eval.py --output data/eval_report_hybrid.json
 ```
 
-> 实测结论：中文查询 + 英文文档场景下 hybrid 反而更差（Recall@5 93.94% → 87.88%），BM25 跨语言几乎匹配不到关键词，还会把含高频词的无关块顶上来。默认保持 chroma。
+> 实测结论：中文查询 + 英文文档场景下 hybrid 反而更差（Recall@5 96.88% → 93.75%），BM25 跨语言几乎匹配不到关键词，还会把含高频词的无关块顶上来。默认保持 chroma。
+> 注意：题库由 chunk 带溯源生成、与语料天然对齐，检索层分数比人工出题偏乐观——题库的区分度主要由时效陷阱与跨文档题型在 Agent 级评测中体现。
 
 ### Agent 级评测
 
@@ -101,12 +104,20 @@ VECTOR_STORE_BACKEND=hybrid python3 eval.py --output data/eval_report_hybrid.jso
 python3 eval_agent.py   # 36 题 × 两组 → data/eval_agent_report.json
 ```
 
-> 实测结论（[data/eval_agent_report.json](data/eval_agent_report.json)，36 题 = 33 检索题 + 3 语料外诚实度题）：
-> - **Agent 化本身即是检索增强**：单 Agent 正确率 97.22%，高于纯检索的 93.94%——LLM 自主多查询检索补上了检索层的 miss
-> - **多 Agent 的代价与收益**：正确率同为 97.22%（检索侧已到 embedding 语义天花板），延迟 10.0s→47.8s、token ×3.2；收益在质量兜底——2/36 题被审校员判"存疑"，其中 1 题触发打回重查（`review_answer → 再次 search_docs → review_answer`）
-> - **审校员误报可量化调优**：初版 prompt 误把措辞不精确判为"存疑"（4/36）；在 prompt 中明确"只有实质性错误（API 错误、与文档相悖的建议、无据断言）才判存疑"后降至 2/36，且剩余 2 题复核确认文档有据——边界 case 的波动而非真错误
-> - **诚实度**：两组在 3 道语料外题目上全部正确回答"未找到"；最极端的一题（LangGraph Platform 部署）多 Agent 组换关键词检索 23 次后仍坚持拒答，审校员对拒答结论放行
-> - **规划员按需启用**：36 题中 17 题走了 `plan_queries` 拆题，复杂题才付出规划成本
+> 实测结论（[data/eval_agent_report.json](data/eval_agent_report.json)，36 题 = 16 直接命中 + 8 跨文档综合 + 8 API 时效陷阱 + 4 超纲拒答）：
+>
+> | 题型 | 来源命中（单→多 Agent） | 要点召回（单→多） |
+> |---|---|---|
+> | 直接命中 | 13/16 → 14/16 | 66% → 78% |
+> | 跨文档综合 | 8/8 → 8/8 | 69% → 79% |
+> | API 时效陷阱 | 7/8 → 7/8 | 80% → 86% |
+> | 超纲拒答 | 4/4 → 4/4 | — |
+>
+> - **多 Agent 三项指标全面领先**：来源命中 88.89%→91.67%，答案要点召回 70.52%→80.26%（+9.7pp），诚实度 91.67%→94.44%；代价是延迟 16.1s→70.7s、token ×2.4
+> - **要点召回比来源命中更严苛**：它暴露"检索对但生成不完整"的 case——部分回答来源未命中期望文档或措辞未覆盖全部要点，内容仍基本正确。Agent 级与检索层指标不可直接比较（前者按回答实际引用、阈值 0.5 计，后者按 recall@5、无阈值计）
+> - **诚实度**：4 道超纲题两组全部明确拒答，包括两道纯域外题（Milvus 集群部署 K8s、用 LangChain 训练图像分类模型）
+> - **规划员按需启用**：多 Agent 组 23/36 题走了 `plan_queries` 拆题，复杂题才付出规划成本
+> - **审校员误报可量化调优**：题库 v1 上初版 prompt 误把措辞不精确判"存疑"（4/36），明确"只有实质性错误才判存疑"后降至 2/36 且指标无退化；本题库下 32 通过 / 4 存疑
 
 pgvector 后端（适合部署：向量与记忆共用一个 Postgres，状态全外置）：
 
@@ -121,7 +132,7 @@ VECTOR_STORE_BACKEND=pgvector python3 eval.py --output data/eval_report_pgvector
 VECTOR_STORE_BACKEND=pgvector MEMORY_BACKEND=postgres python3 api.py   # 记忆跨重启保留
 ```
 
-> 实测：pgvector 与 chroma 召回一致（Recall@5 93.94%），但分数为余弦相似度，尺度不同（0.56~0.75），阈值建议 `RETRIEVAL_SCORE_THRESHOLD=0.5`。
+> 实测：pgvector 与 chroma 召回一致（题库 v2 上 Recall@5 均为 96.88%），但分数为余弦相似度，尺度不同（0.56~0.75），阈值建议 `RETRIEVAL_SCORE_THRESHOLD=0.5`。
 
 对比查询改写（检索前用 LLM 把问题改写成英文技术查询，需 `CHAT_API_KEY`）：
 
@@ -151,9 +162,9 @@ QUERY_REWRITE=1 python3 compare_baseline.py   # 8 道题 × 直答/RAG 各一次
 
 一个 Postgres 同时承载向量与记忆，应用本身无状态。
 
-> **供应商实测**：硅基流动的 bge-m3 服务端 query↔doc 对齐异常（余弦 0.26 vs 本地 0.59），检索不可用；Gitee AI 的 bge-m3 正常（0.59，Recall@5 93.94% 与本地一致），默认 `EMBEDDING_BASE_URL` 即 Gitee AI。Gitee AI 限流会返回误导性的 400"token 计算失败"，代码已内置小批量（16 条/批）+ 指数退避重试。换 embedding 供应商或模型后必须用同一后端重建索引（`--rebuild`），不同实现的向量空间不互通。
+> **供应商实测**：硅基流动的 bge-m3 服务端 query↔doc 对齐异常（余弦 0.26 vs 本地 0.59），检索不可用；Gitee AI 的 bge-m3 正常（0.59，题库 v2 上 Recall@5 96.88% 与本地一致），默认 `EMBEDDING_BASE_URL` 即 Gitee AI。Gitee AI 限流会返回误导性的 400"token 计算失败"，代码已内置小批量（16 条/批）+ 指数退避重试。换 embedding 供应商或模型后必须用同一后端重建索引（`--rebuild`），不同实现的向量空间不互通。
 
-> **模型选型实测**（33 检索题、同 pgvector 后端、同 collection 隔离对比）：bge-m3 Recall@5 93.94% / MRR 0.7394，Qwen3-Embedding-0.6B Recall@5 90.91% / MRR 0.7045。本语料为英文文档，bge-m3 胜出，默认模型保持不变；中文为主的语料可再测 Qwen3（支持 MRL 维度截断，可省 pgvector 存储）。对比方法：设 `PG_COLLECTION=langchain_docs_qwen3` 建新 collection 后分别跑 `indexer.py` 与 `eval.py`。
+> **模型选型实测**（题库 v1，33 检索题、同 pgvector 后端、同 collection 隔离对比）：bge-m3 Recall@5 93.94% / MRR 0.7394，Qwen3-Embedding-0.6B Recall@5 90.91% / MRR 0.7045。本语料为英文文档，bge-m3 胜出，默认模型保持不变；中文为主的语料可再测 Qwen3（支持 MRL 维度截断，可省 pgvector 存储）。对比方法：设 `PG_COLLECTION=langchain_docs_qwen3` 建新 collection 后分别跑 `indexer.py` 与 `eval.py`。
 
 ```bash
 cp .env.example .env   # 填好 CHAT_API_KEY 与 EMBEDDING_API_KEY（EMBEDDING_MODEL 保持 BAAI/bge-m3 则与本地索引同空间）

@@ -3,465 +3,118 @@
     {
       "multi_agent": false,
       "num_questions": 36,
-      "source_hit_rate": 0.9722222222222222,
-      "hallucination_free_rate": 0.9722222222222222,
-      "avg_latency_s": 10.0,
-      "avg_tokens": 8455,
+      "source_hit_rate": 0.8888888888888888,
+      "hallucination_free_rate": 0.9166666666666666,
+      "point_recall": 0.7052,
+      "avg_latency_s": 16.1,
+      "avg_tokens": 12370,
       "review_verdicts": null,
       "details": [
         {
-          "question": "如何给 agent 添加短期记忆，让它记住当前对话的历史？",
+          "question": "在构建技能助手时，有哪些渐进式披露策略可以用来加载技能内容？",
           "expected_sources": [
-            "short-term-memory.mdx"
+            "multi-agent/skills-sql-assistant.mdx"
           ],
           "sources": [
-            "short-term-memory.mdx",
-            "multi-agent/router-knowledge-base.mdx",
-            "quickstart.mdx",
-            "long-term-memory.mdx",
-            "agents.mdx"
+            "multi-agent/skills-sql-assistant.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
           "not_found": false,
           "review": "",
-          "latency_s": 12.2,
-          "tokens": 3865,
+          "point_hit": {
+            "Progressive disclosure strategies": false,
+            "Single load": true,
+            "Paginated": true,
+            "Search-based": true,
+            "Hierarchical": true
+          },
+          "latency_s": 6.5,
+          "tokens": 2594,
           "tool_calls": [
             "search_docs",
             "search_docs"
           ]
         },
         {
-          "question": "怎样跨会话记住用户的偏好信息？",
+          "question": "在 LangGraph 里，我想让工具执行后直接更新状态并触发下一步流转，应该怎么写工具返回值？",
           "expected_sources": [
-            "long-term-memory.mdx",
-            "short-term-memory.mdx"
-          ],
-          "sources": [
-            "context-engineering.mdx",
-            "short-term-memory.mdx",
-            "long-term-memory.mdx",
-            "tools.mdx",
-            "human-in-the-loop.mdx",
-            "sql-agent.mdx",
-            "quickstart.mdx",
-            "middleware/built-in.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": false,
-          "not_found": false,
-          "review": "",
-          "latency_s": 21.2,
-          "tokens": 8782,
-          "tool_calls": [
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs"
-          ]
-        },
-        {
-          "question": "如何定义一个自定义工具交给 agent 调用？",
-          "expected_sources": [
-            "tools.mdx"
+            "multi-agent/handoffs.mdx"
           ],
           "sources": [
             "tools.mdx",
-            "middleware/built-in.mdx",
-            "multi-agent/subagents-personal-assistant.mdx",
-            "multi-agent/subagents.mdx",
-            "middleware/custom.mdx",
-            "quickstart.mdx",
-            "multi-agent/skills-sql-assistant.mdx",
-            "models.mdx",
-            "event-streaming.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": false,
-          "not_found": false,
-          "review": "",
-          "latency_s": 6.7,
-          "tokens": 9798,
-          "tool_calls": [
-            "search_docs",
-            "search_docs",
-            "search_docs"
-          ]
-        },
-        {
-          "question": "工具执行报错时怎么处理错误？",
-          "expected_sources": [
-            "tools.mdx"
-          ],
-          "sources": [
-            "middleware/built-in.mdx",
-            "structured-output.mdx"
-          ],
-          "hit": false,
-          "expect_not_found": false,
-          "not_found": false,
-          "review": "",
-          "latency_s": 6.2,
-          "tokens": 3381,
-          "tool_calls": [
-            "search_docs",
-            "search_docs"
-          ]
-        },
-        {
-          "question": "如何让模型输出符合指定 schema 的结构化结果？",
-          "expected_sources": [
-            "structured-output.mdx"
-          ],
-          "sources": [
-            "structured-output.mdx",
-            "models.mdx",
-            "context-engineering.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": false,
-          "not_found": false,
-          "review": "",
-          "latency_s": 10.3,
-          "tokens": 11634,
-          "tool_calls": [
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs"
-          ]
-        },
-        {
-          "question": "ProviderStrategy 和 ToolStrategy 有什么区别？",
-          "expected_sources": [
-            "structured-output.mdx"
-          ],
-          "sources": [
-            "middleware/built-in.mdx",
-            "structured-output.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": false,
-          "not_found": false,
-          "review": "",
-          "latency_s": 4.8,
-          "tokens": 3138,
-          "tool_calls": [
-            "search_docs",
-            "search_docs"
-          ]
-        },
-        {
-          "question": "创建 agent 时需要指定 checkpointer 是为什么？",
-          "expected_sources": [
-            "short-term-memory.mdx",
-            "agents.mdx"
-          ],
-          "sources": [
-            "multi-agent/handoffs-customer-support.mdx",
-            "multi-agent/skills-sql-assistant.mdx",
-            "quickstart.mdx",
-            "short-term-memory.mdx",
-            "long-term-memory.mdx",
-            "human-in-the-loop.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": false,
-          "not_found": false,
-          "review": "",
-          "latency_s": 4.9,
-          "tokens": 3571,
-          "tool_calls": [
-            "search_docs",
-            "search_docs"
-          ]
-        },
-        {
-          "question": "如何中断 agent 的执行，等待人工审批后再继续？",
-          "expected_sources": [
-            "human-in-the-loop.mdx"
-          ],
-          "sources": [
-            "middleware/built-in.mdx",
-            "human-in-the-loop.mdx",
-            "sql-agent.mdx",
-            "multi-agent/subagents-personal-assistant.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": false,
-          "not_found": false,
-          "review": "",
-          "latency_s": 5.8,
-          "tokens": 4032,
-          "tool_calls": [
-            "search_docs",
-            "search_docs"
-          ]
-        },
-        {
-          "question": "stream 有哪些模式？怎么流式输出 LLM 的 token？",
-          "expected_sources": [
-            "streaming.mdx"
-          ],
-          "sources": [
-            "streaming.mdx",
-            "models.mdx",
-            "human-in-the-loop.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": false,
-          "not_found": false,
-          "review": "",
-          "latency_s": 7.5,
-          "tokens": 7289,
-          "tool_calls": [
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs"
-          ]
-        },
-        {
-          "question": "如何构建一个能查询 SQL 数据库的 agent？",
-          "expected_sources": [
-            "sql-agent.mdx"
-          ],
-          "sources": [
-            "multi-agent/skills-sql-assistant.mdx",
-            "sql-agent.mdx",
-            "middleware/custom.mdx",
-            "short-term-memory.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": false,
-          "not_found": false,
-          "review": "",
-          "latency_s": 11.9,
-          "tokens": 12911,
-          "tool_calls": [
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs"
-          ]
-        },
-        {
-          "question": "多 agent 系统有哪些常见的协作模式？",
-          "expected_sources": [
-            "multi-agent/index.mdx"
-          ],
-          "sources": [
-            "multi-agent/index.mdx",
-            "multi-agent/subagents-personal-assistant.mdx",
-            "multi-agent/handoffs-customer-support.mdx",
-            "multi-agent/subagents.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": false,
-          "not_found": false,
-          "review": "",
-          "latency_s": 5.1,
-          "tokens": 3267,
-          "tool_calls": [
-            "search_docs",
-            "search_docs"
-          ]
-        },
-        {
-          "question": "subagents 模式适合什么场景，怎么实现？",
-          "expected_sources": [
-            "multi-agent/subagents.mdx"
-          ],
-          "sources": [
-            "multi-agent/subagents.mdx",
-            "middleware/built-in.mdx",
-            "multi-agent/router.mdx",
-            "multi-agent/index.mdx",
-            "multi-agent/handoffs-customer-support.mdx",
-            "agents.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": false,
-          "not_found": false,
-          "review": "",
-          "latency_s": 8.3,
-          "tokens": 7553,
-          "tool_calls": [
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs"
-          ]
-        },
-        {
-          "question": "router 模式下有状态和无状态有什么区别？",
-          "expected_sources": [
-            "multi-agent/router.mdx"
-          ],
-          "sources": [
-            "multi-agent/router-knowledge-base.mdx",
-            "multi-agent/router.mdx",
-            "streaming.mdx",
-            "multi-agent/handoffs.mdx",
-            "tools.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": false,
-          "not_found": false,
-          "review": "",
-          "latency_s": 7.7,
-          "tokens": 9702,
-          "tool_calls": [
-            "search_docs",
-            "search_docs",
-            "search_docs"
-          ]
-        },
-        {
-          "question": "handoffs 模式怎么实现客服工单在机器人之间的流转？",
-          "expected_sources": [
-            "multi-agent/handoffs.mdx",
-            "multi-agent/handoffs-customer-support.mdx"
-          ],
-          "sources": [
-            "multi-agent/handoffs.mdx",
-            "multi-agent/handoffs-customer-support.mdx",
-            "multi-agent/index.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": false,
-          "not_found": false,
-          "review": "",
-          "latency_s": 15.8,
-          "tokens": 9139,
-          "tool_calls": [
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs"
-          ]
-        },
-        {
-          "question": "如何用自定义 workflow 编排多个 agent 组成 RAG 流水线？",
-          "expected_sources": [
-            "multi-agent/custom-workflow.mdx"
-          ],
-          "sources": [
-            "deepagents-retrieval.mdx",
-            "multi-agent/custom-workflow.mdx",
-            "multi-agent/router-knowledge-base.mdx",
-            "multi-agent/subagents-personal-assistant.mdx",
-            "multi-agent/router.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": false,
-          "not_found": false,
-          "review": "",
-          "latency_s": 28.2,
-          "tokens": 10078,
-          "tool_calls": [
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs"
-          ]
-        },
-        {
-          "question": "如何编写自定义 middleware，有哪些钩子可以用？",
-          "expected_sources": [
-            "middleware/custom.mdx"
-          ],
-          "sources": [
-            "middleware/custom.mdx",
-            "agents.mdx",
-            "middleware/overview.mdx",
-            "human-in-the-loop.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": false,
-          "not_found": false,
-          "review": "",
-          "latency_s": 7.6,
-          "tokens": 7330,
-          "tool_calls": [
-            "search_docs",
-            "search_docs",
-            "search_docs"
-          ]
-        },
-        {
-          "question": "LangChain 提供了哪些内置 middleware？",
-          "expected_sources": [
-            "middleware/built-in.mdx"
-          ],
-          "sources": [
-            "middleware/overview.mdx",
-            "middleware/custom.mdx",
-            "middleware/built-in.mdx",
-            "multi-agent/handoffs.mdx",
-            "overview.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": false,
-          "not_found": false,
-          "review": "",
-          "latency_s": 6.9,
-          "tokens": 7243,
-          "tool_calls": [
-            "search_docs",
-            "search_docs",
-            "search_docs"
-          ]
-        },
-        {
-          "question": "middleware 在 agent loop 中处于什么位置、起什么作用？",
-          "expected_sources": [
-            "middleware/overview.mdx"
-          ],
-          "sources": [
-            "middleware/overview.mdx",
-            "middleware/custom.mdx",
-            "middleware/built-in.mdx",
-            "sql-agent.mdx",
-            "multi-agent/handoffs.mdx",
-            "short-term-memory.mdx",
-            "context-engineering.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": false,
-          "not_found": false,
-          "review": "",
-          "latency_s": 9.5,
-          "tokens": 8643,
-          "tool_calls": [
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs"
-          ]
-        },
-        {
-          "question": "LangChain 的聊天消息有哪些类型？",
-          "expected_sources": [
-            "messages.mdx"
-          ],
-          "sources": [
-            "models.mdx",
-            "messages.mdx",
-            "structured-output.mdx",
             "multi-agent/handoffs.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
           "not_found": false,
           "review": "",
-          "latency_s": 8.4,
-          "tokens": 11994,
+          "point_hit": {
+            "Command": true,
+            "ToolMessage": true,
+            "ToolRuntime": true,
+            "tool_call_id|toolCallId": true
+          },
+          "latency_s": 13.3,
+          "tokens": 9300,
+          "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs"
+          ]
+        },
+        {
+          "question": "我想让同一个链里的多个模型各自可配置不同参数，用 init_chat_model 创建模型时怎么设置默认值和可配置项？调用时又怎么覆盖这些配置？",
+          "expected_sources": [
+            "models.mdx"
+          ],
+          "sources": [
+            "models.mdx"
+          ],
+          "hit": true,
+          "expect_not_found": false,
+          "not_found": false,
+          "review": "",
+          "point_hit": {
+            "init_chat_model": true,
+            "configurable_fields": true,
+            "config_prefix": true,
+            "configurable": true
+          },
+          "latency_s": 5.3,
+          "tokens": 2896,
+          "tool_calls": [
+            "search_docs",
+            "search_docs"
+          ]
+        },
+        {
+          "question": "在 LangChain 中，工具（tools）在底层是什么？模型是如何决定调用工具及传入参数的？",
+          "expected_sources": [
+            "tools.mdx"
+          ],
+          "sources": [
+            "models.mdx",
+            "tools.mdx",
+            "middleware/built-in.mdx",
+            "multi-agent/handoffs.mdx",
+            "structured-output.mdx"
+          ],
+          "hit": true,
+          "expect_not_found": false,
+          "not_found": false,
+          "review": "",
+          "point_hit": {
+            "Tools": true,
+            "chat model": true,
+            "Tool calling": false
+          },
+          "latency_s": 11.7,
+          "tokens": 7846,
           "tool_calls": [
             "search_docs",
             "search_docs",
@@ -471,53 +124,65 @@
           ]
         },
         {
-          "question": "模型的 tool calling 是如何工作的？",
+          "question": "多个子代理并行返回结果前，主代理需要等待所有结果才能回复用户。这种同步等待方式适合哪些任务场景？有什么明显的取舍？",
           "expected_sources": [
-            "models.mdx",
-            "tools.mdx"
+            "multi-agent/subagents.mdx"
           ],
           "sources": [
-            "tools.mdx",
-            "models.mdx",
+            "multi-agent/router-knowledge-base.mdx"
+          ],
+          "hit": false,
+          "expect_not_found": false,
+          "not_found": true,
+          "review": "",
+          "point_hit": {
+            "sync": false,
+            "subagent": false,
+            "order dependencies": false
+          },
+          "latency_s": 17.4,
+          "tokens": 7106,
+          "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs"
+          ]
+        },
+        {
+          "question": "我想遍历一条消息里的内容块，访问 content_blocks 属性得到的是什么形式的数据？每个块长什么样？",
+          "expected_sources": [
+            "messages.mdx"
+          ],
+          "sources": [
             "messages.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
           "not_found": false,
           "review": "",
-          "latency_s": 5.6,
-          "tokens": 3241,
+          "point_hit": {
+            "content_blocks": true,
+            "typed dictionaries": false,
+            "type": true,
+            "text": true,
+            "reasoning": true
+          },
+          "latency_s": 18.4,
+          "tokens": 11630,
           "tool_calls": [
             "search_docs",
-            "search_docs"
-          ]
-        },
-        {
-          "question": "如何快速搭建并运行第一个 agent？",
-          "expected_sources": [
-            "quickstart.mdx",
-            "agents.mdx",
-            "overview.mdx"
-          ],
-          "sources": [
-            "quickstart.mdx",
-            "agents.mdx",
-            "multi-agent/handoffs-customer-support.mdx",
-            "overview.mdx",
-            "multi-agent/custom-workflow.mdx",
-            "sql-agent.mdx",
-            "middleware/built-in.mdx",
-            "middleware/custom.mdx",
-            "multi-agent/skills-sql-assistant.mdx",
-            "tools.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": false,
-          "not_found": false,
-          "review": "",
-          "latency_s": 9.7,
-          "tokens": 14543,
-          "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -526,70 +191,190 @@
           ]
         },
         {
-          "question": "如何用 embeddings 把文档构建成可检索的知识库？",
+          "question": "向 VectorStore 添加文档后，如何进行查询？查询方式有哪些？这些查询方法返回什么？",
           "expected_sources": [
             "knowledge-base.mdx"
           ],
           "sources": [
-            "knowledge-base.mdx",
-            "deepagents-retrieval.mdx"
+            "knowledge-base.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
           "not_found": false,
           "review": "",
-          "latency_s": 7.0,
-          "tokens": 4659,
+          "point_hit": {
+            "VectorStore": true,
+            "Document": true,
+            "max_marginal_relevance_search": true,
+            "max_marginal_relevance_search|maxMarginalRelevanceSearch": true
+          },
+          "latency_s": 9.5,
+          "tokens": 7024,
           "tool_calls": [
+            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs"
           ]
         },
         {
-          "question": "什么是上下文工程？agent 的上下文分为哪些类型？",
+          "question": "在构建一个结合检索的 RAG 流程时，WNBA stats assistant 的工作流里定义了哪三类节点？各自有什么特点？",
           "expected_sources": [
-            "context-engineering.mdx"
+            "multi-agent/custom-workflow.mdx"
           ],
           "sources": [
-            "context-engineering.mdx",
-            "multi-agent/skills-sql-assistant.mdx",
-            "agents.mdx",
-            "middleware/custom.mdx",
+            "deepagents-retrieval.mdx"
+          ],
+          "hit": false,
+          "expect_not_found": false,
+          "not_found": true,
+          "review": "",
+          "point_hit": {
+            "Rewrite": false,
+            "Retrieve": true,
+            "Agent": false,
+            "vector similarity search": false
+          },
+          "latency_s": 8.5,
+          "tokens": 5277,
+          "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs"
+          ]
+        },
+        {
+          "question": "在 LangGraph 里我想把同一个 query 按分类结果同时发给多个专用 agent 处理，代码上该怎么写？",
+          "expected_sources": [
+            "multi-agent/router.mdx"
+          ],
+          "sources": [
+            "multi-agent/router-knowledge-base.mdx",
+            "multi-agent/router.mdx"
+          ],
+          "hit": true,
+          "expect_not_found": false,
+          "not_found": false,
+          "review": "",
+          "point_hit": {
+            "Send": true,
+            "route_query": true,
+            "classify_query": false
+          },
+          "latency_s": 15.0,
+          "tokens": 8251,
+          "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs"
+          ]
+        },
+        {
+          "question": "LLM 上下文窗口有 token 限制，消息历史快接近上限时怎么截断？用 LangChain 的话具体怎么做？",
+          "expected_sources": [
+            "short-term-memory.mdx"
+          ],
+          "sources": [
+            "short-term-memory.mdx"
+          ],
+          "hit": true,
+          "expect_not_found": false,
+          "not_found": false,
+          "review": "",
+          "point_hit": {
+            "trim messages": true,
+            "strategy": true,
+            "max_tokens": false
+          },
+          "latency_s": 13.8,
+          "tokens": 15327,
+          "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs"
+          ]
+        },
+        {
+          "question": "我想在客服Agent的每个step里动态切换system prompt和工具，比如根据current_step配置不同行为，LangChain里怎么实现？",
+          "expected_sources": [
+            "multi-agent/handoffs-customer-support.mdx"
+          ],
+          "sources": [
+            "tools.mdx",
+            "multi-agent/handoffs-customer-support.mdx",
+            "multi-agent/handoffs.mdx",
+            "sql-agent.mdx",
+            "middleware/custom.mdx"
+          ],
+          "hit": true,
+          "expect_not_found": false,
+          "not_found": false,
+          "review": "",
+          "point_hit": {
+            "wrap_model_call": true,
+            "ModelRequest": true,
+            "request.state": true,
+            "request.override": true
+          },
+          "latency_s": 16.9,
+          "tokens": 13701,
+          "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs"
+          ]
+        },
+        {
+          "question": "在 supervisor 模式里，sub-agent 明明调用了工具，但最终返回给 supervisor 的消息里却老是缺这些结果，该怎么修？",
+          "expected_sources": [
+            "multi-agent/subagents-personal-assistant.mdx"
+          ],
+          "sources": [
+            "multi-agent/subagents-personal-assistant.mdx",
+            "multi-agent/subagents.mdx",
+            "structured-output.mdx",
+            "messages.mdx",
             "event-streaming.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
           "not_found": false,
           "review": "",
-          "latency_s": 8.9,
-          "tokens": 7751,
+          "point_hit": {
+            "sub-agent": false,
+            "final message": false,
+            "supervisor_complete.ts": false
+          },
+          "latency_s": 30.6,
+          "tokens": 36926,
           "tool_calls": [
             "search_docs",
             "search_docs",
             "search_docs",
-            "search_docs"
-          ]
-        },
-        {
-          "question": "怎么获取 agent 的推理过程（reasoning content）流式输出？",
-          "expected_sources": [
-            "event-streaming.mdx",
-            "streaming.mdx"
-          ],
-          "sources": [
-            "streaming.mdx",
-            "event-streaming.mdx",
-            "messages.mdx",
-            "models.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": false,
-          "not_found": true,
-          "review": "",
-          "latency_s": 25.5,
-          "tokens": 21753,
-          "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -599,24 +384,29 @@
           ]
         },
         {
-          "question": "多 agent 系统里的 skills 模式是什么？什么时候适合用？",
+          "question": "如何在模型调用层注入状态更新，并在工具返回时更新对话历史？",
           "expected_sources": [
-            "multi-agent/skills.mdx"
+            "context-engineering.mdx"
           ],
           "sources": [
-            "multi-agent/index.mdx",
-            "multi-agent/subagents-personal-assistant.mdx",
-            "multi-agent/skills.mdx",
-            "multi-agent/subagents.mdx",
-            "multi-agent/skills-sql-assistant.mdx"
+            "context-engineering.mdx",
+            "models.mdx",
+            "middleware/custom.mdx",
+            "multi-agent/handoffs-customer-support.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
           "not_found": false,
           "review": "",
-          "latency_s": 13.0,
-          "tokens": 7038,
+          "point_hit": {
+            "Command": true,
+            "wrap_model_call|wrapModelCall": true,
+            "wrap_tool_call|wrapToolCall": true
+          },
+          "latency_s": 12.9,
+          "tokens": 7455,
           "tool_calls": [
+            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -624,147 +414,187 @@
           ]
         },
         {
-          "question": "怎么用 skills 模式构建一个 SQL 查询助手？",
-          "expected_sources": [
-            "multi-agent/skills-sql-assistant.mdx"
-          ],
-          "sources": [
-            "multi-agent/skills.mdx",
-            "multi-agent/skills-sql-assistant.mdx",
-            "quickstart.mdx",
-            "event-streaming.mdx",
-            "sql-agent.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": false,
-          "not_found": false,
-          "review": "",
-          "latency_s": 10.0,
-          "tokens": 10953,
-          "tool_calls": [
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs"
-          ]
-        },
-        {
-          "question": "怎么搭建一个 supervisor 模式的个人助理多 agent 系统？",
-          "expected_sources": [
-            "multi-agent/subagents-personal-assistant.mdx"
-          ],
-          "sources": [
-            "multi-agent/subagents-personal-assistant.mdx",
-            "multi-agent/index.mdx",
-            "multi-agent/subagents.mdx",
-            "middleware/built-in.mdx",
-            "sql-agent.mdx",
-            "overview.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": false,
-          "not_found": false,
-          "review": "",
-          "latency_s": 9.8,
-          "tokens": 11101,
-          "tool_calls": [
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs"
-          ]
-        },
-        {
-          "question": "router 模式如何实现问题的自动分类和分发到不同领域的 agent？",
+          "question": "用 TypedDict 定义多智能体路由状态时，怎样把每个子智能体返回的结果收集合并起来？",
           "expected_sources": [
             "multi-agent/router-knowledge-base.mdx"
           ],
           "sources": [
-            "multi-agent/router.mdx",
-            "multi-agent/router-knowledge-base.mdx",
-            "multi-agent/index.mdx",
-            "multi-agent/custom-workflow.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": false,
-          "not_found": false,
-          "review": "",
-          "latency_s": 8.5,
-          "tokens": 8156,
-          "tool_calls": [
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs"
-          ]
-        },
-        {
-          "question": "给 agent 接入知识库有哪些 RAG 架构，2-Step 和 Agentic RAG 有什么区别？",
-          "expected_sources": [
-            "deepagents-retrieval.mdx"
-          ],
-          "sources": [
-            "deepagents-retrieval.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": false,
-          "not_found": false,
-          "review": "",
-          "latency_s": 8.3,
-          "tokens": 3421,
-          "tool_calls": [
-            "search_docs",
-            "search_docs"
-          ]
-        },
-        {
-          "question": "怎么安装 LangChain？Python 和 JS 各用什么命令？",
-          "expected_sources": [
-            "install.mdx"
-          ],
-          "sources": [
-            "install.mdx",
-            "multi-agent/handoffs-customer-support.mdx",
-            "multi-agent/skills-sql-assistant.mdx",
             "multi-agent/subagents-personal-assistant.mdx",
+            "multi-agent/subagents.mdx",
+            "models.mdx",
+            "structured-output.mdx"
+          ],
+          "hit": false,
+          "expect_not_found": false,
+          "not_found": true,
+          "review": "",
+          "point_hit": {
+            "RouterState": false,
+            "Annotated": true,
+            "operator.add": false,
+            "AgentOutput": false
+          },
+          "latency_s": 39.1,
+          "tokens": 33719,
+          "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs"
+          ]
+        },
+        {
+          "question": "在 LangChain 中如何实现多轮对话的持久化，让后续轮次能恢复同一段历史？本地和部署环境有何区别？thread_id 和 streamMode、context 的传参关系是怎样的？",
+          "expected_sources": [
+            "streaming.mdx"
+          ],
+          "sources": [
+            "streaming.mdx",
+            "quickstart.mdx",
+            "middleware/built-in.mdx",
+            "short-term-memory.mdx"
+          ],
+          "hit": true,
+          "expect_not_found": false,
+          "not_found": false,
+          "review": "",
+          "point_hit": {
+            "thread_id": true,
+            "checkpointer": true,
+            "InMemorySaver": true,
+            "configurable": true
+          },
+          "latency_s": 16.2,
+          "tokens": 4995,
+          "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs"
+          ]
+        },
+        {
+          "question": "同一个用户重复请求时，coffee agent 和基于 router 的方案在调用次数上有什么区别？分别说明原因。",
+          "expected_sources": [
+            "multi-agent/index.mdx"
+          ],
+          "sources": [
+            "multi-agent/index.mdx",
+            "multi-agent/subagents.mdx",
             "multi-agent/router-knowledge-base.mdx",
+            "multi-agent/router.mdx"
+          ],
+          "hit": true,
+          "expect_not_found": false,
+          "not_found": false,
+          "review": "",
+          "point_hit": {
+            "buy_coffee": true,
+            "LLM routing call": false,
+            "stateful agent": false,
+            "handoff": true
+          },
+          "latency_s": 5.8,
+          "tokens": 2841,
+          "tool_calls": [
+            "search_docs",
+            "search_docs"
+          ]
+        },
+        {
+          "question": "我想在本地开发一个 LangGraph agent，既要通过自定义流转换器输出工具活动事件，又要让多轮对话能通过 thread_id 恢复历史。代码里该怎么配置？",
+          "expected_sources": [
+            "streaming.mdx",
+            "event-streaming.mdx"
+          ],
+          "sources": [
+            "streaming.mdx",
+            "human-in-the-loop.mdx",
+            "event-streaming.mdx",
+            "models.mdx",
+            "tools.mdx",
+            "multi-agent/skills-sql-assistant.mdx",
+            "multi-agent/handoffs-customer-support.mdx",
+            "multi-agent/subagents-personal-assistant.mdx",
             "quickstart.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
           "not_found": false,
           "review": "",
-          "latency_s": 4.3,
-          "tokens": 3757,
+          "point_hit": {
+            "InMemorySaver": true,
+            "thread_id": true,
+            "stream_events": false,
+            "transformers": false
+          },
+          "latency_s": 12.8,
+          "tokens": 12250,
           "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
             "search_docs",
             "search_docs"
           ]
         },
         {
-          "question": "怎么把 LangChain 应用部署到 LangGraph Platform 并配置灰度发布？",
-          "expected_sources": [],
+          "question": "我需要Agent在最终回复中输出特定结构的数据，同时要在多轮对话中保持上下文。LangChain里该怎么做？",
+          "expected_sources": [
+            "context-engineering.mdx",
+            "agents.mdx"
+          ],
           "sources": [
-            "sql-agent.mdx",
-            "tools.mdx",
-            "event-streaming.mdx",
-            "multi-agent/custom-workflow.mdx",
-            "multi-agent/skills.mdx",
-            "overview.mdx",
-            "multi-agent/handoffs.mdx",
+            "multi-agent/index.mdx",
+            "structured-output.mdx",
             "short-term-memory.mdx",
-            "deepagents-retrieval.mdx",
-            "multi-agent/router-knowledge-base.mdx",
-            "knowledge-base.mdx"
+            "agents.mdx",
+            "multi-agent/skills-sql-assistant.mdx",
+            "multi-agent/handoffs-customer-support.mdx"
           ],
           "hit": true,
-          "expect_not_found": true,
-          "not_found": true,
+          "expect_not_found": false,
+          "not_found": false,
           "review": "",
-          "latency_s": 13.7,
-          "tokens": 18057,
+          "point_hit": {
+            "Structured output": false,
+            "schema": true,
+            "invoke": true,
+            "thread_id": true
+          },
+          "latency_s": 11.8,
+          "tokens": 8638,
           "tool_calls": [
-            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -776,108 +606,34 @@
           ]
         },
         {
-          "question": "LlamaIndex 和 LangChain 怎么集成使用？",
-          "expected_sources": [],
-          "sources": [
-            "install.mdx",
-            "messages.mdx",
-            "models.mdx",
-            "agents.mdx",
-            "middleware/custom.mdx",
-            "deepagents-retrieval.mdx",
-            "middleware/built-in.mdx",
-            "multi-agent/router-knowledge-base.mdx",
+          "question": "在 LangChain 里，我想让主代理既能调用多个专家子代理，又能按需加载不同专业技能（比如 write_sql），这两种能力扩展方式分别怎么实现？它们的共同思路是什么？",
+          "expected_sources": [
+            "multi-agent/subagents.mdx",
             "multi-agent/skills.mdx"
           ],
-          "hit": true,
-          "expect_not_found": true,
-          "not_found": true,
-          "review": "",
-          "latency_s": 14.8,
-          "tokens": 12113,
-          "tool_calls": [
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs"
-          ]
-        },
-        {
-          "question": "LangChain 有 Go 语言版本吗？怎么安装？",
-          "expected_sources": [],
           "sources": [
-            "install.mdx",
-            "multi-agent/skills-sql-assistant.mdx",
-            "knowledge-base.mdx",
-            "messages.mdx",
-            "multi-agent/subagents-personal-assistant.mdx",
-            "multi-agent/router-knowledge-base.mdx",
-            "multi-agent/handoffs-customer-support.mdx",
-            "quickstart.mdx",
-            "models.mdx",
-            "multi-agent/router.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": true,
-          "not_found": true,
-          "review": "",
-          "latency_s": 5.5,
-          "tokens": 7668,
-          "tool_calls": [
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs"
-          ]
-        },
-        {
-          "question": "短期记忆和长期记忆分别用什么组件实现，适用场景有什么不同？",
-          "expected_sources": [
-            "short-term-memory.mdx",
-            "long-term-memory.mdx"
-          ],
-          "sources": [
-            "long-term-memory.mdx",
-            "short-term-memory.mdx",
-            "messages.mdx",
-            "multi-agent/router-knowledge-base.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": false,
-          "not_found": false,
-          "review": "",
-          "latency_s": 5.6,
-          "tokens": 3144,
-          "tool_calls": [
-            "search_docs",
-            "search_docs"
-          ]
-        },
-        {
-          "question": "middleware 和 subagents 两种模式分别适合解决什么问题？",
-          "expected_sources": [
-            "middleware/overview.mdx",
-            "multi-agent/subagents.mdx"
-          ],
-          "sources": [
-            "middleware/overview.mdx",
-            "middleware/custom.mdx",
-            "middleware/built-in.mdx",
-            "multi-agent/handoffs.mdx",
             "multi-agent/subagents.mdx",
-            "multi-agent/router.mdx",
-            "multi-agent/index.mdx"
+            "middleware/custom.mdx",
+            "multi-agent/subagents-personal-assistant.mdx",
+            "multi-agent/handoffs.mdx",
+            "multi-agent/skills.mdx",
+            "multi-agent/skills-sql-assistant.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
           "not_found": false,
           "review": "",
-          "latency_s": 7.8,
-          "tokens": 8490,
+          "point_hit": {
+            "Main Agent": false,
+            "Subagent": true,
+            "tool": true,
+            "load_skill": true,
+            "create_agent|createAgent": true
+          },
+          "latency_s": 15.8,
+          "tokens": 11012,
           "tool_calls": [
+            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -885,31 +641,590 @@
           ]
         },
         {
-          "question": "tool calling 和结构化输出是什么关系，怎么配合实现可靠的工具调用链？",
+          "question": "我想让SQL agent用sqlite3连接Chinook库，同时按需通过load_skill加载销售分析用的schema。这个agent的模型需要什么能力？如何利用custom agent state来约束工具的使用？",
           "expected_sources": [
-            "models.mdx",
-            "structured-output.mdx"
+            "sql-agent.mdx",
+            "multi-agent/skills-sql-assistant.mdx"
           ],
           "sources": [
+            "multi-agent/skills-sql-assistant.mdx",
+            "short-term-memory.mdx",
+            "multi-agent/custom-workflow.mdx",
+            "middleware/custom.mdx",
+            "agents.mdx",
             "structured-output.mdx",
-            "models.mdx",
-            "context-engineering.mdx",
-            "tools.mdx",
-            "multi-agent/index.mdx",
+            "multi-agent/subagents.mdx",
             "event-streaming.mdx",
-            "middleware/overview.mdx",
             "middleware/built-in.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
           "not_found": false,
           "review": "",
-          "latency_s": 12.0,
-          "tokens": 15186,
+          "point_hit": {
+            "tool-calling": false,
+            "sqlite3": true,
+            "load_skill": true,
+            "custom agent state": true
+          },
+          "latency_s": 18.4,
+          "tokens": 13121,
           "tool_calls": [
             "search_docs",
             "search_docs",
             "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs"
+          ]
+        },
+        {
+          "question": "我用可配置模型做工具调用，现在需要在同一个流程里支持用户上传图片（拿到的是 provider-managed File ID）。我该怎么构造消息并调用？还能继续拿到 .tool_calls 吗？",
+          "expected_sources": [
+            "messages.mdx",
+            "models.mdx"
+          ],
+          "sources": [
+            "models.mdx",
+            "messages.mdx",
+            "structured-output.mdx",
+            "multi-agent/subagents-personal-assistant.mdx"
+          ],
+          "hit": true,
+          "expect_not_found": false,
+          "not_found": false,
+          "review": "",
+          "point_hit": {
+            "HumanMessage": true,
+            "source_type: \"id\"": false,
+            "model_with_tools.invoke": false,
+            "configurable": false
+          },
+          "latency_s": 19.3,
+          "tokens": 10846,
+          "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs"
+          ]
+        },
+        {
+          "question": "我想在同一个LangGraph工具里既读取当前short-term memory（agent state），又把一些信息写入long-term memory。工具函数应该怎么写？运行时通过什么区分这两类记忆？",
+          "expected_sources": [
+            "long-term-memory.mdx",
+            "short-term-memory.mdx"
+          ],
+          "sources": [
+            "long-term-memory.mdx",
+            "multi-agent/handoffs-customer-support.mdx",
+            "tools.mdx",
+            "short-term-memory.mdx"
+          ],
+          "hit": true,
+          "expect_not_found": false,
+          "not_found": false,
+          "review": "",
+          "point_hit": {
+            "runtime": true,
+            "ToolRuntime": true,
+            "runtime.store": true
+          },
+          "latency_s": 18.3,
+          "tokens": 16435,
+          "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs"
+          ]
+        },
+        {
+          "question": "在基于Nike 10-K的RAG系统中，用户问“Nike的直营业务是怎么运作的？” 检索器返回两个Document块：一块包含美国零售门店数量，另一块介绍NIKE Direct operations包含零售店和数字平台。仅靠单块回答不完整。面对这种需要多源整合且语义宽泛的查询，应该采用哪种RAG架构？它为什么适合？",
+          "expected_sources": [
+            "knowledge-base.mdx",
+            "deepagents-retrieval.mdx"
+          ],
+          "sources": [
+            "deepagents-retrieval.mdx"
+          ],
+          "hit": true,
+          "expect_not_found": false,
+          "not_found": false,
+          "review": "",
+          "point_hit": {
+            "Hybrid RAG": true,
+            "Agentic RAG": true,
+            "Self-Correction": false,
+            "Document": true
+          },
+          "latency_s": 19.2,
+          "tokens": 9854,
+          "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs"
+          ]
+        },
+        {
+          "question": "我想根据用户登录状态动态调整 agent 可用的工具，并且这些工具的输出必须是受约束的结构化数据（例如评分不能超过5）。LangChain 这边怎么支持？如果模型返回了不合法输出，agent 会如何处理？",
+          "expected_sources": [
+            "tools.mdx",
+            "structured-output.mdx"
+          ],
+          "sources": [
+            "structured-output.mdx",
+            "middleware/built-in.mdx",
+            "event-streaming.mdx",
+            "middleware/custom.mdx",
+            "multi-agent/skills-sql-assistant.mdx",
+            "quickstart.mdx"
+          ],
+          "hit": true,
+          "expect_not_found": false,
+          "not_found": false,
+          "review": "",
+          "point_hit": {
+            "dynamic tool selection": false,
+            "create_agent|createAgent": true,
+            "toolStrategy": true,
+            "zod": true
+          },
+          "latency_s": 27.9,
+          "tokens": 21887,
+          "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs"
+          ]
+        },
+        {
+          "question": "我想在 LangChain 里初始化 Claude 模型，并且要设置 temperature、timeout、max_tokens、max_retries 这些参数，应该怎么写？",
+          "expected_sources": [
+            "models.mdx"
+          ],
+          "sources": [
+            "quickstart.mdx",
+            "models.mdx"
+          ],
+          "hit": true,
+          "expect_not_found": false,
+          "not_found": false,
+          "review": "",
+          "point_hit": {
+            "init_chat_model|initChatModel": true
+          },
+          "latency_s": 5.7,
+          "tokens": 2880,
+          "tool_calls": [
+            "search_docs",
+            "search_docs"
+          ]
+        },
+        {
+          "question": "我想给 Agent 加个对话摘要功能：当 token 数超过 4000 时，自动把早期消息摘要成短内容，只保留最近 20 条消息。用 LangChain 应该怎么写？",
+          "expected_sources": [
+            "middleware/built-in.mdx"
+          ],
+          "sources": [
+            "middleware/built-in.mdx",
+            "context-engineering.mdx",
+            "multi-agent/handoffs-customer-support.mdx"
+          ],
+          "hit": true,
+          "expect_not_found": false,
+          "not_found": false,
+          "review": "",
+          "point_hit": {
+            "create_agent": true,
+            "SummarizationMiddleware": true,
+            "middleware": true,
+            "trigger": true
+          },
+          "latency_s": 7.9,
+          "tokens": 4833,
+          "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs"
+          ]
+        },
+        {
+          "question": "在 LangChain 1.x 中，我想创建一个带天气查询工具和自定义系统提示词的 agent，然后接收用户消息并获取结果，正确的写法是什么？",
+          "expected_sources": [
+            "overview.mdx"
+          ],
+          "sources": [
+            "middleware/custom.mdx",
+            "quickstart.mdx",
+            "sql-agent.mdx",
+            "overview.mdx",
+            "multi-agent/handoffs-customer-support.mdx",
+            "structured-output.mdx",
+            "event-streaming.mdx",
+            "middleware/built-in.mdx"
+          ],
+          "hit": true,
+          "expect_not_found": false,
+          "not_found": false,
+          "review": "",
+          "point_hit": {
+            "create_agent": true,
+            "init_chat_model": true,
+            "content_blocks": true
+          },
+          "latency_s": 18.9,
+          "tokens": 18058,
+          "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs"
+          ]
+        },
+        {
+          "question": "在LangChain中，我想让工具在每次调用时都能获取当前用户ID和请求ID，同时又想区分不同会话的历史消息。目前我把这些数据都放在memory里，感觉很混乱。正确的做法应该是什么？",
+          "expected_sources": [
+            "agents.mdx"
+          ],
+          "sources": [
+            "agents.mdx",
+            "context-engineering.mdx",
+            "short-term-memory.mdx",
+            "streaming.mdx",
+            "tools.mdx"
+          ],
+          "hit": true,
+          "expect_not_found": false,
+          "not_found": false,
+          "review": "",
+          "point_hit": {
+            "thread_id": true,
+            "context": true,
+            "context_schema|contextSchema": true,
+            "runtime.context": true
+          },
+          "latency_s": 18.2,
+          "tokens": 12300,
+          "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs"
+          ]
+        },
+        {
+          "question": "我想做一个多知识库路由：先判断用户问题该查 GitHub/Notion/Slack，把拆出的子问题并行发给三个带各自工具的 agent，最后汇总结果。具体在 LangChain 里怎么实现？",
+          "expected_sources": [
+            "multi-agent/router-knowledge-base.mdx"
+          ],
+          "sources": [
+            "multi-agent/router-knowledge-base.mdx",
+            "overview.mdx",
+            "multi-agent/custom-workflow.mdx",
+            "deepagents-retrieval.mdx",
+            "multi-agent/router.mdx"
+          ],
+          "hit": true,
+          "expect_not_found": false,
+          "not_found": false,
+          "review": "",
+          "point_hit": {
+            "create_agent|createAgent": true,
+            "StateGraph": true,
+            "StateSchema": false,
+            "Send": true
+          },
+          "latency_s": 27.3,
+          "tokens": 28219,
+          "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs"
+          ]
+        },
+        {
+          "question": "我需要让一个工具在浏览器前端执行实际逻辑，但模型在服务端也能看到并调用它。我不想在Python进程里实现这个工具，LangChain里怎么定义和接入这种无后端实现的工具？",
+          "expected_sources": [
+            "tools.mdx"
+          ],
+          "sources": [
+            "tools.mdx",
+            "overview.mdx",
+            "models.mdx"
+          ],
+          "hit": true,
+          "expect_not_found": false,
+          "not_found": false,
+          "review": "",
+          "point_hit": {
+            "create_agent": false,
+            ".implement(...)": false
+          },
+          "latency_s": 28.8,
+          "tokens": 27321,
+          "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs"
+          ]
+        },
+        {
+          "question": "我想在 LangChain 里把 `get_weather` 这种函数作为工具，自动根据用户消息决定是否调用，并拿到最终回复。请给我一个最小可运行示例。",
+          "expected_sources": [
+            "quickstart.mdx"
+          ],
+          "sources": [
+            "models.mdx",
+            "multi-agent/subagents.mdx",
+            "multi-agent/subagents-personal-assistant.mdx",
+            "middleware/built-in.mdx",
+            "structured-output.mdx",
+            "deepagents-retrieval.mdx",
+            "middleware/custom.mdx",
+            "event-streaming.mdx"
+          ],
+          "hit": false,
+          "expect_not_found": false,
+          "not_found": false,
+          "review": "",
+          "point_hit": {
+            "create_agent": true,
+            "agent.invoke": true,
+            "content_blocks": false
+          },
+          "latency_s": 12.5,
+          "tokens": 11433,
+          "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs"
+          ]
+        },
+        {
+          "question": "LangChain 如何部署到阿里云函数计算并配置触发器？",
+          "expected_sources": [],
+          "sources": [
+            "install.mdx",
+            "overview.mdx",
+            "multi-agent/skills-sql-assistant.mdx",
+            "knowledge-base.mdx",
+            "multi-agent/router-knowledge-base.mdx"
+          ],
+          "hit": true,
+          "expect_not_found": true,
+          "not_found": true,
+          "review": "",
+          "point_hit": {},
+          "latency_s": 13.8,
+          "tokens": 6948,
+          "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs"
+          ]
+        },
+        {
+          "question": "LangChain 与 AutoGen 在多智能体编排上的核心差异是什么？",
+          "expected_sources": [],
+          "sources": [
+            "multi-agent/handoffs-customer-support.mdx",
+            "multi-agent/index.mdx",
+            "multi-agent/subagents-personal-assistant.mdx"
+          ],
+          "hit": true,
+          "expect_not_found": true,
+          "not_found": true,
+          "review": "",
+          "point_hit": {},
+          "latency_s": 10.2,
+          "tokens": 4296,
+          "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs"
+          ]
+        },
+        {
+          "question": "我想在 agent 每次调用模型前检查历史消息数量，超过 50 条就返回一句固定话术并终止本次运行，不要走后续工具调用。用 LangChain 怎么做？",
+          "expected_sources": [
+            "middleware/custom.mdx"
+          ],
+          "sources": [
+            "middleware/custom.mdx",
+            "short-term-memory.mdx",
+            "human-in-the-loop.mdx",
+            "multi-agent/custom-workflow.mdx",
+            "agents.mdx"
+          ],
+          "hit": true,
+          "expect_not_found": false,
+          "not_found": false,
+          "review": "",
+          "point_hit": {
+            "AgentMiddleware": true,
+            "hook_config": true,
+            "before_model": true,
+            "jump_to": true
+          },
+          "latency_s": 37.5,
+          "tokens": 42840,
+          "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs"
+          ]
+        },
+        {
+          "question": "Milvus 集群如何部署到 Kubernetes 上？",
+          "expected_sources": [],
+          "sources": [],
+          "hit": true,
+          "expect_not_found": true,
+          "not_found": true,
+          "review": "",
+          "point_hit": {},
+          "latency_s": 7.3,
+          "tokens": 2774,
+          "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs"
+          ]
+        },
+        {
+          "question": "LangChain 如何训练图像分类模型？",
+          "expected_sources": [],
+          "sources": [],
+          "hit": true,
+          "expect_not_found": true,
+          "not_found": true,
+          "review": "",
+          "point_hit": {},
+          "latency_s": 6.6,
+          "tokens": 2473,
+          "tool_calls": [
             "search_docs",
             "search_docs",
             "search_docs",
@@ -921,35 +1236,222 @@
     {
       "multi_agent": true,
       "num_questions": 36,
-      "source_hit_rate": 0.9722222222222222,
-      "hallucination_free_rate": 0.9722222222222222,
-      "avg_latency_s": 47.8,
-      "avg_tokens": 26792,
+      "source_hit_rate": 0.9166666666666666,
+      "hallucination_free_rate": 0.9444444444444444,
+      "point_recall": 0.8026,
+      "avg_latency_s": 70.7,
+      "avg_tokens": 29927,
       "review_verdicts": {
-        "通过": 34,
-        "存疑": 2
+        "通过": 32,
+        "存疑": 4
       },
       "details": [
         {
-          "question": "如何给 agent 添加短期记忆，让它记住当前对话的历史？",
+          "question": "在构建技能助手时，有哪些渐进式披露策略可以用来加载技能内容？",
           "expected_sources": [
-            "short-term-memory.mdx"
+            "multi-agent/skills-sql-assistant.mdx"
           ],
           "sources": [
-            "quickstart.mdx",
-            "short-term-memory.mdx",
-            "long-term-memory.mdx",
-            "multi-agent/handoffs-customer-support.mdx",
             "multi-agent/skills-sql-assistant.mdx",
+            "multi-agent/skills.mdx"
+          ],
+          "hit": true,
+          "expect_not_found": false,
+          "not_found": false,
+          "review": "通过",
+          "point_hit": {
+            "Progressive disclosure strategies": true,
+            "Single load": true,
+            "Paginated": true,
+            "Search-based": true,
+            "Hierarchical": true
+          },
+          "latency_s": 18.2,
+          "tokens": 6247,
+          "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "review_answer"
+          ]
+        },
+        {
+          "question": "在 LangGraph 里，我想让工具执行后直接更新状态并触发下一步流转，应该怎么写工具返回值？",
+          "expected_sources": [
+            "multi-agent/handoffs.mdx"
+          ],
+          "sources": [
+            "tools.mdx",
+            "multi-agent/handoffs.mdx"
+          ],
+          "hit": true,
+          "expect_not_found": false,
+          "not_found": false,
+          "review": "通过",
+          "point_hit": {
+            "Command": true,
+            "ToolMessage": true,
+            "ToolRuntime": true,
+            "tool_call_id|toolCallId": true
+          },
+          "latency_s": 47.7,
+          "tokens": 18736,
+          "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "review_answer"
+          ]
+        },
+        {
+          "question": "我想让同一个链里的多个模型各自可配置不同参数，用 init_chat_model 创建模型时怎么设置默认值和可配置项？调用时又怎么覆盖这些配置？",
+          "expected_sources": [
+            "models.mdx"
+          ],
+          "sources": [
+            "models.mdx"
+          ],
+          "hit": true,
+          "expect_not_found": false,
+          "not_found": false,
+          "review": "通过",
+          "point_hit": {
+            "init_chat_model": true,
+            "configurable_fields": true,
+            "config_prefix": true,
+            "configurable": true
+          },
+          "latency_s": 30.3,
+          "tokens": 13283,
+          "tool_calls": [
+            "plan_queries",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "review_answer"
+          ]
+        },
+        {
+          "question": "在 LangChain 中，工具（tools）在底层是什么？模型是如何决定调用工具及传入参数的？",
+          "expected_sources": [
+            "tools.mdx"
+          ],
+          "sources": [
+            "models.mdx",
+            "quickstart.mdx",
+            "structured-output.mdx"
+          ],
+          "hit": false,
+          "expect_not_found": false,
+          "not_found": false,
+          "review": "通过",
+          "point_hit": {
+            "Tools": true,
+            "chat model": false,
+            "Tool calling": true
+          },
+          "latency_s": 50.2,
+          "tokens": 22716,
+          "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "review_answer"
+          ]
+        },
+        {
+          "question": "多个子代理并行返回结果前，主代理需要等待所有结果才能回复用户。这种同步等待方式适合哪些任务场景？有什么明显的取舍？",
+          "expected_sources": [
+            "multi-agent/subagents.mdx"
+          ],
+          "sources": [
+            "multi-agent/subagents-personal-assistant.mdx",
+            "multi-agent/index.mdx",
+            "multi-agent/router.mdx",
+            "multi-agent/subagents.mdx"
+          ],
+          "hit": true,
+          "expect_not_found": false,
+          "not_found": true,
+          "review": "通过",
+          "point_hit": {
+            "sync": false,
+            "subagent": false,
+            "order dependencies": false
+          },
+          "latency_s": 54.9,
+          "tokens": 23115,
+          "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "review_answer"
+          ]
+        },
+        {
+          "question": "我想遍历一条消息里的内容块，访问 content_blocks 属性得到的是什么形式的数据？每个块长什么样？",
+          "expected_sources": [
+            "messages.mdx"
+          ],
+          "sources": [
             "messages.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
           "not_found": false,
           "review": "存疑",
-          "latency_s": 50.0,
-          "tokens": 11811,
+          "point_hit": {
+            "content_blocks": true,
+            "typed dictionaries": false,
+            "type": true,
+            "text": true,
+            "reasoning": true
+          },
+          "latency_s": 72.3,
+          "tokens": 25912,
           "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -958,23 +1460,27 @@
           ]
         },
         {
-          "question": "怎样跨会话记住用户的偏好信息？",
+          "question": "向 VectorStore 添加文档后，如何进行查询？查询方式有哪些？这些查询方法返回什么？",
           "expected_sources": [
-            "long-term-memory.mdx",
-            "short-term-memory.mdx"
+            "knowledge-base.mdx"
           ],
           "sources": [
-            "context-engineering.mdx",
-            "long-term-memory.mdx"
+            "knowledge-base.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
           "not_found": false,
           "review": "通过",
-          "latency_s": 43.8,
-          "tokens": 13756,
+          "point_hit": {
+            "VectorStore": true,
+            "Document": true,
+            "max_marginal_relevance_search": true,
+            "max_marginal_relevance_search|maxMarginalRelevanceSearch": true
+          },
+          "latency_s": 51.6,
+          "tokens": 13153,
           "tool_calls": [
-            "search_docs",
+            "plan_queries",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -984,54 +1490,26 @@
           ]
         },
         {
-          "question": "如何定义一个自定义工具交给 agent 调用？",
+          "question": "在构建一个结合检索的 RAG 流程时，WNBA stats assistant 的工作流里定义了哪三类节点？各自有什么特点？",
           "expected_sources": [
-            "tools.mdx"
+            "multi-agent/custom-workflow.mdx"
           ],
           "sources": [
-            "multi-agent/handoffs.mdx",
-            "tools.mdx",
-            "streaming.mdx",
-            "multi-agent/skills-sql-assistant.mdx",
-            "multi-agent/subagents.mdx",
-            "short-term-memory.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": false,
-          "not_found": false,
-          "review": "通过",
-          "latency_s": 37.4,
-          "tokens": 14120,
-          "tool_calls": [
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "review_answer"
-          ]
-        },
-        {
-          "question": "工具执行报错时怎么处理错误？",
-          "expected_sources": [
-            "tools.mdx"
-          ],
-          "sources": [
-            "structured-output.mdx",
-            "middleware/built-in.mdx",
-            "event-streaming.mdx"
+            "deepagents-retrieval.mdx",
+            "knowledge-base.mdx"
           ],
           "hit": false,
           "expect_not_found": false,
           "not_found": true,
           "review": "通过",
-          "latency_s": 30.5,
-          "tokens": 24717,
+          "point_hit": {
+            "Rewrite": false,
+            "Retrieve": true,
+            "Agent": true,
+            "vector similarity search": false
+          },
+          "latency_s": 58.4,
+          "tokens": 26553,
           "tool_calls": [
             "search_docs",
             "search_docs",
@@ -1040,158 +1518,6 @@
             "search_docs",
             "search_docs",
             "search_docs",
-            "review_answer"
-          ]
-        },
-        {
-          "question": "如何让模型输出符合指定 schema 的结构化结果？",
-          "expected_sources": [
-            "structured-output.mdx"
-          ],
-          "sources": [
-            "structured-output.mdx",
-            "context-engineering.mdx",
-            "models.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": false,
-          "not_found": false,
-          "review": "通过",
-          "latency_s": 33.1,
-          "tokens": 14750,
-          "tool_calls": [
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "review_answer"
-          ]
-        },
-        {
-          "question": "ProviderStrategy 和 ToolStrategy 有什么区别？",
-          "expected_sources": [
-            "structured-output.mdx"
-          ],
-          "sources": [
-            "structured-output.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": false,
-          "not_found": false,
-          "review": "通过",
-          "latency_s": 23.1,
-          "tokens": 11103,
-          "tool_calls": [
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "review_answer"
-          ]
-        },
-        {
-          "question": "创建 agent 时需要指定 checkpointer 是为什么？",
-          "expected_sources": [
-            "short-term-memory.mdx",
-            "agents.mdx"
-          ],
-          "sources": [
-            "short-term-memory.mdx",
-            "quickstart.mdx",
-            "streaming.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": false,
-          "not_found": false,
-          "review": "通过",
-          "latency_s": 21.6,
-          "tokens": 7263,
-          "tool_calls": [
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "review_answer"
-          ]
-        },
-        {
-          "question": "如何中断 agent 的执行，等待人工审批后再继续？",
-          "expected_sources": [
-            "human-in-the-loop.mdx"
-          ],
-          "sources": [
-            "middleware/built-in.mdx",
-            "human-in-the-loop.mdx",
-            "streaming.mdx",
-            "multi-agent/subagents-personal-assistant.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": false,
-          "not_found": false,
-          "review": "通过",
-          "latency_s": 41.9,
-          "tokens": 17552,
-          "tool_calls": [
-            "plan_queries",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "review_answer"
-          ]
-        },
-        {
-          "question": "stream 有哪些模式？怎么流式输出 LLM 的 token？",
-          "expected_sources": [
-            "streaming.mdx"
-          ],
-          "sources": [
-            "streaming.mdx",
-            "models.mdx",
-            "event-streaming.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": false,
-          "not_found": false,
-          "review": "通过",
-          "latency_s": 42.7,
-          "tokens": 16295,
-          "tool_calls": [
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "review_answer"
-          ]
-        },
-        {
-          "question": "如何构建一个能查询 SQL 数据库的 agent？",
-          "expected_sources": [
-            "sql-agent.mdx"
-          ],
-          "sources": [
-            "sql-agent.mdx",
-            "multi-agent/skills-sql-assistant.mdx",
-            "structured-output.mdx",
-            "multi-agent/router-knowledge-base.mdx",
-            "multi-agent/handoffs-customer-support.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": false,
-          "not_found": false,
-          "review": "通过",
-          "latency_s": 74.1,
-          "tokens": 42770,
-          "tool_calls": [
-            "plan_queries",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -1207,77 +1533,147 @@
           ]
         },
         {
-          "question": "多 agent 系统有哪些常见的协作模式？",
-          "expected_sources": [
-            "multi-agent/index.mdx"
-          ],
-          "sources": [
-            "multi-agent/handoffs-customer-support.mdx",
-            "multi-agent/index.mdx",
-            "multi-agent/router-knowledge-base.mdx",
-            "multi-agent/subagents-personal-assistant.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": false,
-          "not_found": false,
-          "review": "通过",
-          "latency_s": 17.7,
-          "tokens": 8454,
-          "tool_calls": [
-            "plan_queries",
-            "search_docs",
-            "search_docs",
-            "review_answer"
-          ]
-        },
-        {
-          "question": "subagents 模式适合什么场景，怎么实现？",
-          "expected_sources": [
-            "multi-agent/subagents.mdx"
-          ],
-          "sources": [
-            "multi-agent/subagents.mdx",
-            "multi-agent/handoffs.mdx",
-            "agents.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": false,
-          "not_found": false,
-          "review": "通过",
-          "latency_s": 61.1,
-          "tokens": 20768,
-          "tool_calls": [
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "review_answer"
-          ]
-        },
-        {
-          "question": "router 模式下有状态和无状态有什么区别？",
+          "question": "在 LangGraph 里我想把同一个 query 按分类结果同时发给多个专用 agent 处理，代码上该怎么写？",
           "expected_sources": [
             "multi-agent/router.mdx"
           ],
           "sources": [
-            "context-engineering.mdx",
-            "short-term-memory.mdx",
-            "streaming.mdx",
-            "multi-agent/custom-workflow.mdx",
-            "long-term-memory.mdx",
-            "human-in-the-loop.mdx",
-            "multi-agent/router.mdx",
-            "multi-agent/router-knowledge-base.mdx"
+            "multi-agent/router.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
           "not_found": false,
           "review": "通过",
-          "latency_s": 111.9,
-          "tokens": 198915,
+          "point_hit": {
+            "Send": true,
+            "route_query": true,
+            "classify_query": false
+          },
+          "latency_s": 165.4,
+          "tokens": 17159,
+          "tool_calls": [
+            "plan_queries",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "review_answer"
+          ]
+        },
+        {
+          "question": "LLM 上下文窗口有 token 限制，消息历史快接近上限时怎么截断？用 LangChain 的话具体怎么做？",
+          "expected_sources": [
+            "short-term-memory.mdx"
+          ],
+          "sources": [
+            "short-term-memory.mdx",
+            "middleware/built-in.mdx"
+          ],
+          "hit": true,
+          "expect_not_found": false,
+          "not_found": false,
+          "review": "通过",
+          "point_hit": {
+            "trim messages": true,
+            "strategy": true,
+            "max_tokens": true
+          },
+          "latency_s": 47.8,
+          "tokens": 30289,
+          "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "review_answer"
+          ]
+        },
+        {
+          "question": "我想在客服Agent的每个step里动态切换system prompt和工具，比如根据current_step配置不同行为，LangChain里怎么实现？",
+          "expected_sources": [
+            "multi-agent/handoffs-customer-support.mdx"
+          ],
+          "sources": [
+            "multi-agent/custom-workflow.mdx",
+            "short-term-memory.mdx",
+            "middleware/custom.mdx",
+            "multi-agent/handoffs-customer-support.mdx",
+            "context-engineering.mdx",
+            "agents.mdx",
+            "sql-agent.mdx",
+            "multi-agent/skills-sql-assistant.mdx",
+            "multi-agent/subagents-personal-assistant.mdx",
+            "tools.mdx",
+            "multi-agent/handoffs.mdx",
+            "middleware/built-in.mdx"
+          ],
+          "hit": true,
+          "expect_not_found": false,
+          "not_found": false,
+          "review": "通过",
+          "point_hit": {
+            "wrap_model_call": true,
+            "ModelRequest": true,
+            "request.state": true,
+            "request.override": true
+          },
+          "latency_s": 72.8,
+          "tokens": 54552,
+          "tool_calls": [
+            "plan_queries",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "review_answer"
+          ]
+        },
+        {
+          "question": "在 supervisor 模式里，sub-agent 明明调用了工具，但最终返回给 supervisor 的消息里却老是缺这些结果，该怎么修？",
+          "expected_sources": [
+            "multi-agent/subagents-personal-assistant.mdx"
+          ],
+          "sources": [
+            "multi-agent/router-knowledge-base.mdx",
+            "multi-agent/subagents-personal-assistant.mdx",
+            "multi-agent/subagents.mdx",
+            "event-streaming.mdx",
+            "multi-agent/handoffs.mdx",
+            "structured-output.mdx"
+          ],
+          "hit": true,
+          "expect_not_found": false,
+          "not_found": false,
+          "review": "通过",
+          "point_hit": {
+            "sub-agent": true,
+            "final message": false,
+            "supervisor_complete.ts": false
+          },
+          "latency_s": 126.2,
+          "tokens": 69759,
           "tool_calls": [
             "search_docs",
             "search_docs",
@@ -1307,18 +1703,41 @@
             "search_docs",
             "search_docs",
             "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
+            "review_answer"
+          ]
+        },
+        {
+          "question": "如何在模型调用层注入状态更新，并在工具返回时更新对话历史？",
+          "expected_sources": [
+            "context-engineering.mdx"
+          ],
+          "sources": [
+            "sql-agent.mdx",
+            "multi-agent/router-knowledge-base.mdx",
+            "multi-agent/handoffs-customer-support.mdx",
+            "deepagents-retrieval.mdx",
+            "multi-agent/custom-workflow.mdx",
+            "short-term-memory.mdx",
+            "middleware/custom.mdx",
+            "multi-agent/skills-sql-assistant.mdx",
+            "models.mdx",
+            "structured-output.mdx",
+            "context-engineering.mdx",
+            "middleware/built-in.mdx"
+          ],
+          "hit": true,
+          "expect_not_found": false,
+          "not_found": false,
+          "review": "通过",
+          "point_hit": {
+            "Command": true,
+            "wrap_model_call|wrapModelCall": true,
+            "wrap_tool_call|wrapToolCall": true
+          },
+          "latency_s": 126.9,
+          "tokens": 91840,
+          "tool_calls": [
+            "plan_queries",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -1354,13 +1773,87 @@
           ]
         },
         {
-          "question": "handoffs 模式怎么实现客服工单在机器人之间的流转？",
+          "question": "用 TypedDict 定义多智能体路由状态时，怎样把每个子智能体返回的结果收集合并起来？",
           "expected_sources": [
-            "multi-agent/handoffs.mdx",
-            "multi-agent/handoffs-customer-support.mdx"
+            "multi-agent/router-knowledge-base.mdx"
           ],
           "sources": [
-            "multi-agent/handoffs.mdx",
+            "deepagents-retrieval.mdx",
+            "sql-agent.mdx",
+            "multi-agent/custom-workflow.mdx",
+            "multi-agent/router-knowledge-base.mdx"
+          ],
+          "hit": true,
+          "expect_not_found": false,
+          "not_found": false,
+          "review": "通过",
+          "point_hit": {
+            "RouterState": true,
+            "Annotated": true,
+            "operator.add": true,
+            "AgentOutput": true
+          },
+          "latency_s": 51.8,
+          "tokens": 19083,
+          "tool_calls": [
+            "plan_queries",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "review_answer"
+          ]
+        },
+        {
+          "question": "在 LangChain 中如何实现多轮对话的持久化，让后续轮次能恢复同一段历史？本地和部署环境有何区别？thread_id 和 streamMode、context 的传参关系是怎样的？",
+          "expected_sources": [
+            "streaming.mdx"
+          ],
+          "sources": [
+            "streaming.mdx",
+            "agents.mdx",
+            "context-engineering.mdx"
+          ],
+          "hit": true,
+          "expect_not_found": false,
+          "not_found": false,
+          "review": "通过",
+          "point_hit": {
+            "thread_id": true,
+            "checkpointer": true,
+            "InMemorySaver": true,
+            "configurable": true
+          },
+          "latency_s": 135.5,
+          "tokens": 28225,
+          "tool_calls": [
+            "plan_queries",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "review_answer",
+            "review_answer"
+          ]
+        },
+        {
+          "question": "同一个用户重复请求时，coffee agent 和基于 router 的方案在调用次数上有什么区别？分别说明原因。",
+          "expected_sources": [
+            "multi-agent/index.mdx"
+          ],
+          "sources": [
             "multi-agent/index.mdx",
             "multi-agent/router-knowledge-base.mdx"
           ],
@@ -1368,38 +1861,14 @@
           "expect_not_found": false,
           "not_found": false,
           "review": "通过",
-          "latency_s": 39.0,
-          "tokens": 17858,
-          "tool_calls": [
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "review_answer"
-          ]
-        },
-        {
-          "question": "如何用自定义 workflow 编排多个 agent 组成 RAG 流水线？",
-          "expected_sources": [
-            "multi-agent/custom-workflow.mdx"
-          ],
-          "sources": [
-            "multi-agent/router-knowledge-base.mdx",
-            "multi-agent/custom-workflow.mdx",
-            "overview.mdx",
-            "middleware/built-in.mdx",
-            "multi-agent/router.mdx",
-            "multi-agent/index.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": false,
-          "not_found": false,
-          "review": "通过",
-          "latency_s": 54.8,
-          "tokens": 24501,
+          "point_hit": {
+            "buy_coffee": true,
+            "LLM routing call": false,
+            "stateful agent": false,
+            "handoff": true
+          },
+          "latency_s": 38.8,
+          "tokens": 20121,
           "tool_calls": [
             "plan_queries",
             "search_docs",
@@ -1407,32 +1876,165 @@
             "search_docs",
             "search_docs",
             "search_docs",
+            "search_docs",
+            "search_docs",
             "review_answer"
           ]
         },
         {
-          "question": "如何编写自定义 middleware，有哪些钩子可以用？",
+          "question": "我想在本地开发一个 LangGraph agent，既要通过自定义流转换器输出工具活动事件，又要让多轮对话能通过 thread_id 恢复历史。代码里该怎么配置？",
           "expected_sources": [
-            "middleware/custom.mdx"
-          ],
-          "sources": [
-            "middleware/overview.mdx",
-            "middleware/custom.mdx",
-            "middleware/built-in.mdx",
-            "multi-agent/handoffs.mdx",
-            "multi-agent/skills-sql-assistant.mdx",
-            "human-in-the-loop.mdx",
-            "short-term-memory.mdx",
+            "streaming.mdx",
             "event-streaming.mdx"
           ],
+          "sources": [
+            "event-streaming.mdx",
+            "streaming.mdx",
+            "human-in-the-loop.mdx",
+            "short-term-memory.mdx",
+            "agents.mdx",
+            "tools.mdx"
+          ],
+          "hit": true,
+          "expect_not_found": false,
+          "not_found": false,
+          "review": "存疑",
+          "point_hit": {
+            "InMemorySaver": true,
+            "thread_id": true,
+            "stream_events": false,
+            "transformers": false
+          },
+          "latency_s": 105.9,
+          "tokens": 24915,
+          "tool_calls": [
+            "plan_queries",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "review_answer"
+          ]
+        },
+        {
+          "question": "我需要Agent在最终回复中输出特定结构的数据，同时要在多轮对话中保持上下文。LangChain里该怎么做？",
+          "expected_sources": [
+            "context-engineering.mdx",
+            "agents.mdx"
+          ],
+          "sources": [
+            "structured-output.mdx",
+            "multi-agent/index.mdx",
+            "multi-agent/router-knowledge-base.mdx",
+            "short-term-memory.mdx",
+            "context-engineering.mdx",
+            "multi-agent/router.mdx",
+            "streaming.mdx"
+          ],
+          "hit": true,
+          "expect_not_found": false,
+          "not_found": false,
+          "review": "存疑",
+          "point_hit": {
+            "Structured output": false,
+            "schema": true,
+            "invoke": true,
+            "thread_id": true
+          },
+          "latency_s": 70.4,
+          "tokens": 13799,
+          "tool_calls": [
+            "plan_queries",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "review_answer"
+          ]
+        },
+        {
+          "question": "在 LangChain 里，我想让主代理既能调用多个专家子代理，又能按需加载不同专业技能（比如 write_sql），这两种能力扩展方式分别怎么实现？它们的共同思路是什么？",
+          "expected_sources": [
+            "multi-agent/subagents.mdx",
+            "multi-agent/skills.mdx"
+          ],
+          "sources": [
+            "multi-agent/subagents-personal-assistant.mdx",
+            "multi-agent/subagents.mdx",
+            "multi-agent/index.mdx",
+            "multi-agent/skills-sql-assistant.mdx",
+            "multi-agent/skills.mdx",
+            "multi-agent/handoffs-customer-support.mdx",
+            "multi-agent/router-knowledge-base.mdx"
+          ],
           "hit": true,
           "expect_not_found": false,
           "not_found": false,
           "review": "通过",
-          "latency_s": 53.5,
-          "tokens": 38006,
+          "point_hit": {
+            "Main Agent": false,
+            "Subagent": true,
+            "tool": true,
+            "load_skill": true,
+            "create_agent|createAgent": true
+          },
+          "latency_s": 69.8,
+          "tokens": 28371,
           "tool_calls": [
             "plan_queries",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "review_answer"
+          ]
+        },
+        {
+          "question": "我想让SQL agent用sqlite3连接Chinook库，同时按需通过load_skill加载销售分析用的schema。这个agent的模型需要什么能力？如何利用custom agent state来约束工具的使用？",
+          "expected_sources": [
+            "sql-agent.mdx",
+            "multi-agent/skills-sql-assistant.mdx"
+          ],
+          "sources": [
+            "multi-agent/skills-sql-assistant.mdx",
+            "multi-agent/skills.mdx",
+            "sql-agent.mdx",
+            "short-term-memory.mdx",
+            "models.mdx",
+            "middleware/custom.mdx"
+          ],
+          "hit": true,
+          "expect_not_found": false,
+          "not_found": false,
+          "review": "通过",
+          "point_hit": {
+            "tool-calling": false,
+            "sqlite3": true,
+            "load_skill": true,
+            "custom agent state": true
+          },
+          "latency_s": 88.6,
+          "tokens": 75316,
+          "tool_calls": [
+            "plan_queries",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -1449,22 +2051,146 @@
           ]
         },
         {
-          "question": "LangChain 提供了哪些内置 middleware？",
+          "question": "我用可配置模型做工具调用，现在需要在同一个流程里支持用户上传图片（拿到的是 provider-managed File ID）。我该怎么构造消息并调用？还能继续拿到 .tool_calls 吗？",
           "expected_sources": [
-            "middleware/built-in.mdx"
+            "messages.mdx",
+            "models.mdx"
           ],
           "sources": [
-            "middleware/built-in.mdx",
-            "middleware/overview.mdx",
-            "models.mdx"
+            "models.mdx",
+            "messages.mdx",
+            "structured-output.mdx"
+          ],
+          "hit": true,
+          "expect_not_found": false,
+          "not_found": false,
+          "review": "存疑",
+          "point_hit": {
+            "HumanMessage": true,
+            "source_type: \"id\"": true,
+            "model_with_tools.invoke": true,
+            "configurable": true
+          },
+          "latency_s": 81.2,
+          "tokens": 53108,
+          "tool_calls": [
+            "plan_queries",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "review_answer",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs"
+          ]
+        },
+        {
+          "question": "我想在同一个LangGraph工具里既读取当前short-term memory（agent state），又把一些信息写入long-term memory。工具函数应该怎么写？运行时通过什么区分这两类记忆？",
+          "expected_sources": [
+            "long-term-memory.mdx",
+            "short-term-memory.mdx"
+          ],
+          "sources": [
+            "short-term-memory.mdx",
+            "long-term-memory.mdx",
+            "tools.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
           "not_found": false,
           "review": "通过",
-          "latency_s": 93.9,
-          "tokens": 43129,
+          "point_hit": {
+            "runtime": true,
+            "ToolRuntime": true,
+            "runtime.store": true
+          },
+          "latency_s": 63.8,
+          "tokens": 32088,
           "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "review_answer"
+          ]
+        },
+        {
+          "question": "在基于Nike 10-K的RAG系统中，用户问“Nike的直营业务是怎么运作的？” 检索器返回两个Document块：一块包含美国零售门店数量，另一块介绍NIKE Direct operations包含零售店和数字平台。仅靠单块回答不完整。面对这种需要多源整合且语义宽泛的查询，应该采用哪种RAG架构？它为什么适合？",
+          "expected_sources": [
+            "knowledge-base.mdx",
+            "deepagents-retrieval.mdx"
+          ],
+          "sources": [
+            "deepagents-retrieval.mdx",
+            "knowledge-base.mdx"
+          ],
+          "hit": true,
+          "expect_not_found": false,
+          "not_found": false,
+          "review": "通过",
+          "point_hit": {
+            "Hybrid RAG": true,
+            "Agentic RAG": true,
+            "Self-Correction": true,
+            "Document": true
+          },
+          "latency_s": 197.2,
+          "tokens": 122253,
+          "tool_calls": [
+            "plan_queries",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -1480,29 +2206,37 @@
             "search_docs",
             "search_docs",
             "search_docs",
-            "search_docs",
             "review_answer"
           ]
         },
         {
-          "question": "middleware 在 agent loop 中处于什么位置、起什么作用？",
+          "question": "我想根据用户登录状态动态调整 agent 可用的工具，并且这些工具的输出必须是受约束的结构化数据（例如评分不能超过5）。LangChain 这边怎么支持？如果模型返回了不合法输出，agent 会如何处理？",
           "expected_sources": [
-            "middleware/overview.mdx"
+            "tools.mdx",
+            "structured-output.mdx"
           ],
           "sources": [
-            "middleware/overview.mdx",
+            "models.mdx",
+            "overview.mdx",
+            "multi-agent/handoffs-customer-support.mdx",
             "middleware/custom.mdx",
-            "human-in-the-loop.mdx"
+            "structured-output.mdx",
+            "middleware/built-in.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
           "not_found": false,
           "review": "通过",
-          "latency_s": 25.9,
-          "tokens": 14096,
+          "point_hit": {
+            "dynamic tool selection": false,
+            "create_agent|createAgent": true,
+            "toolStrategy": false,
+            "zod": true
+          },
+          "latency_s": 54.9,
+          "tokens": 16287,
           "tool_calls": [
-            "search_docs",
-            "search_docs",
+            "plan_queries",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -1512,21 +2246,95 @@
           ]
         },
         {
-          "question": "LangChain 的聊天消息有哪些类型？",
+          "question": "我想在 LangChain 里初始化 Claude 模型，并且要设置 temperature、timeout、max_tokens、max_retries 这些参数，应该怎么写？",
           "expected_sources": [
-            "messages.mdx"
+            "models.mdx"
           ],
           "sources": [
-            "models.mdx",
-            "messages.mdx"
+            "quickstart.mdx",
+            "models.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
           "not_found": false,
-          "review": "存疑",
-          "latency_s": 41.6,
-          "tokens": 16968,
+          "review": "通过",
+          "point_hit": {
+            "init_chat_model|initChatModel": true
+          },
+          "latency_s": 47.5,
+          "tokens": 6408,
           "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "review_answer"
+          ]
+        },
+        {
+          "question": "我想给 Agent 加个对话摘要功能：当 token 数超过 4000 时，自动把早期消息摘要成短内容，只保留最近 20 条消息。用 LangChain 应该怎么写？",
+          "expected_sources": [
+            "middleware/built-in.mdx"
+          ],
+          "sources": [
+            "middleware/built-in.mdx",
+            "context-engineering.mdx",
+            "short-term-memory.mdx",
+            "models.mdx"
+          ],
+          "hit": true,
+          "expect_not_found": false,
+          "not_found": false,
+          "review": "通过",
+          "point_hit": {
+            "create_agent": true,
+            "SummarizationMiddleware": true,
+            "middleware": true,
+            "trigger": true
+          },
+          "latency_s": 48.5,
+          "tokens": 15429,
+          "tool_calls": [
+            "plan_queries",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "review_answer"
+          ]
+        },
+        {
+          "question": "在 LangChain 1.x 中，我想创建一个带天气查询工具和自定义系统提示词的 agent，然后接收用户消息并获取结果，正确的写法是什么？",
+          "expected_sources": [
+            "overview.mdx"
+          ],
+          "sources": [
+            "agents.mdx",
+            "multi-agent/custom-workflow.mdx",
+            "overview.mdx",
+            "middleware/built-in.mdx",
+            "sql-agent.mdx",
+            "short-term-memory.mdx",
+            "middleware/custom.mdx",
+            "multi-agent/skills-sql-assistant.mdx",
+            "context-engineering.mdx",
+            "event-streaming.mdx",
+            "multi-agent/subagents.mdx",
+            "quickstart.mdx"
+          ],
+          "hit": true,
+          "expect_not_found": false,
+          "not_found": false,
+          "review": "通过",
+          "point_hit": {
+            "create_agent": true,
+            "init_chat_model": false,
+            "content_blocks": true
+          },
+          "latency_s": 51.3,
+          "tokens": 28087,
+          "tool_calls": [
+            "plan_queries",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -1538,9 +2346,85 @@
           ]
         },
         {
-          "question": "模型的 tool calling 是如何工作的？",
+          "question": "在LangChain中，我想让工具在每次调用时都能获取当前用户ID和请求ID，同时又想区分不同会话的历史消息。目前我把这些数据都放在memory里，感觉很混乱。正确的做法应该是什么？",
           "expected_sources": [
-            "models.mdx",
+            "agents.mdx"
+          ],
+          "sources": [
+            "context-engineering.mdx",
+            "agents.mdx",
+            "streaming.mdx",
+            "tools.mdx",
+            "middleware/custom.mdx"
+          ],
+          "hit": true,
+          "expect_not_found": false,
+          "not_found": false,
+          "review": "通过",
+          "point_hit": {
+            "thread_id": true,
+            "context": true,
+            "context_schema|contextSchema": true,
+            "runtime.context": true
+          },
+          "latency_s": 74.5,
+          "tokens": 36336,
+          "tool_calls": [
+            "plan_queries",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "review_answer"
+          ]
+        },
+        {
+          "question": "我想做一个多知识库路由：先判断用户问题该查 GitHub/Notion/Slack，把拆出的子问题并行发给三个带各自工具的 agent，最后汇总结果。具体在 LangChain 里怎么实现？",
+          "expected_sources": [
+            "multi-agent/router-knowledge-base.mdx"
+          ],
+          "sources": [
+            "multi-agent/router-knowledge-base.mdx",
+            "multi-agent/subagents-personal-assistant.mdx",
+            "multi-agent/index.mdx",
+            "overview.mdx",
+            "structured-output.mdx",
+            "multi-agent/router.mdx",
+            "multi-agent/subagents.mdx",
+            "multi-agent/custom-workflow.mdx"
+          ],
+          "hit": true,
+          "expect_not_found": false,
+          "not_found": false,
+          "review": "通过",
+          "point_hit": {
+            "create_agent|createAgent": true,
+            "StateGraph": true,
+            "StateSchema": false,
+            "Send": true
+          },
+          "latency_s": 74.6,
+          "tokens": 27538,
+          "tool_calls": [
+            "plan_queries",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "review_answer"
+          ]
+        },
+        {
+          "question": "我需要让一个工具在浏览器前端执行实际逻辑，但模型在服务端也能看到并调用它。我不想在Python进程里实现这个工具，LangChain里怎么定义和接入这种无后端实现的工具？",
+          "expected_sources": [
             "tools.mdx"
           ],
           "sources": [
@@ -1551,210 +2435,12 @@
           "expect_not_found": false,
           "not_found": false,
           "review": "通过",
-          "latency_s": 31.4,
-          "tokens": 8336,
-          "tool_calls": [
-            "search_docs",
-            "search_docs",
-            "review_answer"
-          ]
-        },
-        {
-          "question": "如何快速搭建并运行第一个 agent？",
-          "expected_sources": [
-            "quickstart.mdx",
-            "agents.mdx",
-            "overview.mdx"
-          ],
-          "sources": [
-            "quickstart.mdx",
-            "overview.mdx",
-            "middleware/custom.mdx",
-            "multi-agent/subagents.mdx",
-            "multi-agent/handoffs-customer-support.mdx",
-            "multi-agent/skills-sql-assistant.mdx",
-            "deepagents-retrieval.mdx",
-            "middleware/built-in.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": false,
-          "not_found": false,
-          "review": "通过",
-          "latency_s": 58.3,
-          "tokens": 17400,
-          "tool_calls": [
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "review_answer"
-          ]
-        },
-        {
-          "question": "如何用 embeddings 把文档构建成可检索的知识库？",
-          "expected_sources": [
-            "knowledge-base.mdx"
-          ],
-          "sources": [
-            "knowledge-base.mdx",
-            "deepagents-retrieval.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": false,
-          "not_found": false,
-          "review": "通过",
-          "latency_s": 87.7,
-          "tokens": 19659,
-          "tool_calls": [
-            "plan_queries",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "review_answer"
-          ]
-        },
-        {
-          "question": "什么是上下文工程？agent 的上下文分为哪些类型？",
-          "expected_sources": [
-            "context-engineering.mdx"
-          ],
-          "sources": [
-            "middleware/custom.mdx",
-            "agents.mdx",
-            "multi-agent/router-knowledge-base.mdx",
-            "context-engineering.mdx",
-            "short-term-memory.mdx",
-            "middleware/built-in.mdx",
-            "messages.mdx",
-            "quickstart.mdx",
-            "tools.mdx",
-            "structured-output.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": false,
-          "not_found": false,
-          "review": "通过",
-          "latency_s": 113.4,
-          "tokens": 78605,
-          "tool_calls": [
-            "plan_queries",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "review_answer"
-          ]
-        },
-        {
-          "question": "怎么获取 agent 的推理过程（reasoning content）流式输出？",
-          "expected_sources": [
-            "event-streaming.mdx",
-            "streaming.mdx"
-          ],
-          "sources": [
-            "streaming.mdx",
-            "event-streaming.mdx",
-            "models.mdx",
-            "tools.mdx",
-            "deepagents-retrieval.mdx",
-            "multi-agent/custom-workflow.mdx",
-            "agents.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": false,
-          "not_found": false,
-          "review": "通过",
-          "latency_s": 25.6,
-          "tokens": 21735,
-          "tool_calls": [
-            "plan_queries",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "review_answer"
-          ]
-        },
-        {
-          "question": "多 agent 系统里的 skills 模式是什么？什么时候适合用？",
-          "expected_sources": [
-            "multi-agent/skills.mdx"
-          ],
-          "sources": [
-            "multi-agent/index.mdx",
-            "multi-agent/router-knowledge-base.mdx",
-            "multi-agent/subagents-personal-assistant.mdx",
-            "multi-agent/skills.mdx",
-            "multi-agent/skills-sql-assistant.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": false,
-          "not_found": false,
-          "review": "通过",
-          "latency_s": 49.6,
-          "tokens": 20098,
-          "tool_calls": [
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "review_answer"
-          ]
-        },
-        {
-          "question": "怎么用 skills 模式构建一个 SQL 查询助手？",
-          "expected_sources": [
-            "multi-agent/skills-sql-assistant.mdx"
-          ],
-          "sources": [
-            "sql-agent.mdx",
-            "structured-output.mdx",
-            "multi-agent/skills-sql-assistant.mdx",
-            "multi-agent/skills.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": false,
-          "not_found": false,
-          "review": "通过",
-          "latency_s": 51.2,
-          "tokens": 48000,
+          "point_hit": {
+            "create_agent": true,
+            ".implement(...)": false
+          },
+          "latency_s": 58.2,
+          "tokens": 22146,
           "tool_calls": [
             "plan_queries",
             "search_docs",
@@ -1771,157 +2457,29 @@
           ]
         },
         {
-          "question": "怎么搭建一个 supervisor 模式的个人助理多 agent 系统？",
+          "question": "我想在 LangChain 里把 `get_weather` 这种函数作为工具，自动根据用户消息决定是否调用，并拿到最终回复。请给我一个最小可运行示例。",
           "expected_sources": [
-            "multi-agent/subagents-personal-assistant.mdx"
-          ],
-          "sources": [
-            "multi-agent/router-knowledge-base.mdx",
-            "sql-agent.mdx",
-            "overview.mdx",
-            "multi-agent/custom-workflow.mdx",
-            "middleware/built-in.mdx",
-            "multi-agent/subagents-personal-assistant.mdx",
-            "multi-agent/index.mdx",
-            "multi-agent/handoffs-customer-support.mdx",
-            "multi-agent/subagents.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": false,
-          "not_found": false,
-          "review": "通过",
-          "latency_s": 53.2,
-          "tokens": 29816,
-          "tool_calls": [
-            "plan_queries",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "review_answer"
-          ]
-        },
-        {
-          "question": "router 模式如何实现问题的自动分类和分发到不同领域的 agent？",
-          "expected_sources": [
-            "multi-agent/router-knowledge-base.mdx"
-          ],
-          "sources": [
-            "multi-agent/router-knowledge-base.mdx",
-            "multi-agent/router.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": false,
-          "not_found": false,
-          "review": "通过",
-          "latency_s": 67.4,
-          "tokens": 18466,
-          "tool_calls": [
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "review_answer"
-          ]
-        },
-        {
-          "question": "给 agent 接入知识库有哪些 RAG 架构，2-Step 和 Agentic RAG 有什么区别？",
-          "expected_sources": [
-            "deepagents-retrieval.mdx"
-          ],
-          "sources": [
-            "deepagents-retrieval.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": false,
-          "not_found": false,
-          "review": "通过",
-          "latency_s": 41.6,
-          "tokens": 20675,
-          "tool_calls": [
-            "plan_queries",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "review_answer"
-          ]
-        },
-        {
-          "question": "怎么安装 LangChain？Python 和 JS 各用什么命令？",
-          "expected_sources": [
-            "install.mdx"
-          ],
-          "sources": [
-            "install.mdx",
-            "multi-agent/subagents-personal-assistant.mdx",
-            "multi-agent/handoffs-customer-support.mdx",
-            "multi-agent/skills-sql-assistant.mdx",
-            "multi-agent/router-knowledge-base.mdx",
             "quickstart.mdx"
           ],
-          "hit": true,
+          "sources": [
+            "models.mdx",
+            "middleware/custom.mdx",
+            "middleware/built-in.mdx",
+            "multi-agent/subagents.mdx",
+            "overview.mdx"
+          ],
+          "hit": false,
           "expect_not_found": false,
           "not_found": false,
           "review": "通过",
-          "latency_s": 11.2,
-          "tokens": 8227,
+          "point_hit": {
+            "create_agent": true,
+            "agent.invoke": true,
+            "content_blocks": true
+          },
+          "latency_s": 40.4,
+          "tokens": 13494,
           "tool_calls": [
-            "search_docs",
-            "search_docs",
-            "review_answer"
-          ]
-        },
-        {
-          "question": "怎么把 LangChain 应用部署到 LangGraph Platform 并配置灰度发布？",
-          "expected_sources": [],
-          "sources": [
-            "tools.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": true,
-          "not_found": true,
-          "review": "通过",
-          "latency_s": 50.3,
-          "tokens": 21228,
-          "tool_calls": [
-            "plan_queries",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -1930,118 +2488,21 @@
           ]
         },
         {
-          "question": "LlamaIndex 和 LangChain 怎么集成使用？",
-          "expected_sources": [],
-          "sources": [
-            "agents.mdx",
-            "short-term-memory.mdx",
-            "multi-agent/subagents.mdx",
-            "middleware/built-in.mdx",
-            "multi-agent/skills-sql-assistant.mdx",
-            "sql-agent.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": true,
-          "not_found": true,
-          "review": "通过",
-          "latency_s": 47.0,
-          "tokens": 26860,
-          "tool_calls": [
-            "plan_queries",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "review_answer"
-          ]
-        },
-        {
-          "question": "LangChain 有 Go 语言版本吗？怎么安装？",
+          "question": "LangChain 如何部署到阿里云函数计算并配置触发器？",
           "expected_sources": [],
           "sources": [
             "install.mdx",
-            "multi-agent/skills-sql-assistant.mdx"
+            "multi-agent/skills-sql-assistant.mdx",
+            "knowledge-base.mdx",
+            "multi-agent/router-knowledge-base.mdx"
           ],
           "hit": true,
           "expect_not_found": true,
           "not_found": true,
           "review": "通过",
-          "latency_s": 25.5,
-          "tokens": 9109,
-          "tool_calls": [
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "review_answer"
-          ]
-        },
-        {
-          "question": "短期记忆和长期记忆分别用什么组件实现，适用场景有什么不同？",
-          "expected_sources": [
-            "short-term-memory.mdx",
-            "long-term-memory.mdx"
-          ],
-          "sources": [
-            "long-term-memory.mdx",
-            "short-term-memory.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": false,
-          "not_found": false,
-          "review": "通过",
-          "latency_s": 22.0,
-          "tokens": 11119,
-          "tool_calls": [
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "review_answer"
-          ]
-        },
-        {
-          "question": "middleware 和 subagents 两种模式分别适合解决什么问题？",
-          "expected_sources": [
-            "middleware/overview.mdx",
-            "multi-agent/subagents.mdx"
-          ],
-          "sources": [
-            "multi-agent/handoffs.mdx",
-            "multi-agent/subagents.mdx",
-            "multi-agent/router-knowledge-base.mdx",
-            "multi-agent/router.mdx",
-            "middleware/overview.mdx",
-            "middleware/custom.mdx",
-            "middleware/built-in.mdx",
-            "multi-agent/index.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": false,
-          "not_found": false,
-          "review": "通过",
-          "latency_s": 43.0,
-          "tokens": 32160,
+          "point_hit": {},
+          "latency_s": 44.7,
+          "tokens": 17626,
           "tool_calls": [
             "plan_queries",
             "search_docs",
@@ -2054,6 +2515,67 @@
             "search_docs",
             "search_docs",
             "search_docs",
+            "review_answer"
+          ]
+        },
+        {
+          "question": "LangChain 与 AutoGen 在多智能体编排上的核心差异是什么？",
+          "expected_sources": [],
+          "sources": [
+            "multi-agent/subagents-personal-assistant.mdx",
+            "multi-agent/handoffs-customer-support.mdx",
+            "multi-agent/index.mdx",
+            "multi-agent/custom-workflow.mdx"
+          ],
+          "hit": true,
+          "expect_not_found": true,
+          "not_found": true,
+          "review": "通过",
+          "point_hit": {},
+          "latency_s": 50.8,
+          "tokens": 16355,
+          "tool_calls": [
+            "plan_queries",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "review_answer"
+          ]
+        },
+        {
+          "question": "我想在 agent 每次调用模型前检查历史消息数量，超过 50 条就返回一句固定话术并终止本次运行，不要走后续工具调用。用 LangChain 怎么做？",
+          "expected_sources": [
+            "middleware/custom.mdx"
+          ],
+          "sources": [
+            "short-term-memory.mdx",
+            "middleware/custom.mdx",
+            "middleware/built-in.mdx",
+            "human-in-the-loop.mdx",
+            "models.mdx"
+          ],
+          "hit": true,
+          "expect_not_found": false,
+          "not_found": false,
+          "review": "通过",
+          "point_hit": {
+            "AgentMiddleware": true,
+            "hook_config": true,
+            "before_model": true,
+            "jump_to": true
+          },
+          "latency_s": 67.3,
+          "tokens": 32309,
+          "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -2067,25 +2589,39 @@
           ]
         },
         {
-          "question": "tool calling 和结构化输出是什么关系，怎么配合实现可靠的工具调用链？",
-          "expected_sources": [
-            "models.mdx",
-            "structured-output.mdx"
-          ],
+          "question": "Milvus 集群如何部署到 Kubernetes 上？",
+          "expected_sources": [],
           "sources": [
-            "structured-output.mdx",
-            "context-engineering.mdx",
-            "models.mdx",
-            "multi-agent/subagents-personal-assistant.mdx",
-            "middleware/built-in.mdx",
-            "tools.mdx"
+            "knowledge-base.mdx"
           ],
           "hit": true,
-          "expect_not_found": false,
-          "not_found": false,
+          "expect_not_found": true,
+          "not_found": true,
           "review": "通过",
-          "latency_s": 44.5,
-          "tokens": 16203,
+          "point_hit": {},
+          "latency_s": 47.6,
+          "tokens": 7493,
+          "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "review_answer"
+          ]
+        },
+        {
+          "question": "LangChain 如何训练图像分类模型？",
+          "expected_sources": [],
+          "sources": [],
+          "hit": true,
+          "expect_not_found": true,
+          "not_found": true,
+          "review": "通过",
+          "point_hit": {},
+          "latency_s": 59.4,
+          "tokens": 7263,
           "tool_calls": [
             "plan_queries",
             "search_docs",

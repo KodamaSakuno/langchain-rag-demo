@@ -1,544 +1,754 @@
 {
   "k": 5,
   "threshold": 0.0,
-  "num_questions": 24,
-  "recall_at_k": 0.9166666666666666,
-  "mrr_at_k": 0.7354166666666666,
+  "rewrite": false,
+  "num_questions": 32,
+  "recall_at_k": 0.96875,
+  "mrr_at_k": 0.8645833333333333,
   "details": [
     {
-      "question": "如何给 agent 添加短期记忆，让它记住当前对话的历史？",
+      "question": "在构建技能助手时，有哪些渐进式披露策略可以用来加载技能内容？",
+      "query_text": "在构建技能助手时，有哪些渐进式披露策略可以用来加载技能内容？",
       "expected_sources": [
-        "short-term-memory.mdx"
+        "multi-agent/skills-sql-assistant.mdx"
       ],
       "retrieved_sources": [
-        "short-term-memory.mdx",
-        "agents.mdx",
-        "short-term-memory.mdx",
-        "short-term-memory.mdx",
-        "short-term-memory.mdx"
-      ],
-      "scores": [
-        0.6074,
-        0.5497,
-        0.5428,
-        0.5283,
-        0.5237
-      ],
-      "hit": true,
-      "rank": 1
-    },
-    {
-      "question": "怎样跨会话记住用户的偏好信息？",
-      "expected_sources": [
-        "long-term-memory.mdx",
-        "short-term-memory.mdx"
-      ],
-      "retrieved_sources": [
-        "agents.mdx",
-        "context-engineering.mdx",
-        "context-engineering.mdx",
-        "context-engineering.mdx",
-        "short-term-memory.mdx"
-      ],
-      "scores": [
-        0.507,
-        0.4926,
-        0.4853,
-        0.477,
-        0.4651
-      ],
-      "hit": true,
-      "rank": 5
-    },
-    {
-      "question": "如何定义一个自定义工具交给 agent 调用？",
-      "expected_sources": [
-        "tools.mdx"
-      ],
-      "retrieved_sources": [
-        "agents.mdx",
-        "multi-agent/subagents.mdx",
-        "multi-agent/subagents-personal-assistant.mdx",
-        "sql-agent.mdx",
-        "agents.mdx"
-      ],
-      "scores": [
-        0.4976,
-        0.4916,
-        0.4874,
-        0.4853,
-        0.4824
-      ],
-      "hit": false,
-      "rank": null
-    },
-    {
-      "question": "工具执行报错时怎么处理错误？",
-      "expected_sources": [
-        "tools.mdx"
-      ],
-      "retrieved_sources": [
-        "structured-output.mdx",
-        "middleware/built-in.mdx",
-        "structured-output.mdx",
-        "middleware/built-in.mdx",
-        "structured-output.mdx"
-      ],
-      "scores": [
-        0.5137,
-        0.5069,
-        0.5061,
-        0.5023,
-        0.5023
-      ],
-      "hit": false,
-      "rank": null
-    },
-    {
-      "question": "如何让模型输出符合指定 schema 的结构化结果？",
-      "expected_sources": [
-        "structured-output.mdx"
-      ],
-      "retrieved_sources": [
-        "context-engineering.mdx",
-        "structured-output.mdx",
-        "structured-output.mdx",
-        "structured-output.mdx",
-        "structured-output.mdx"
-      ],
-      "scores": [
-        0.5235,
-        0.4737,
-        0.4604,
-        0.4545,
-        0.4503
-      ],
-      "hit": true,
-      "rank": 2
-    },
-    {
-      "question": "ProviderStrategy 和 ToolStrategy 有什么区别？",
-      "expected_sources": [
-        "structured-output.mdx"
-      ],
-      "retrieved_sources": [
-        "structured-output.mdx",
-        "middleware/built-in.mdx",
-        "structured-output.mdx",
-        "middleware/built-in.mdx",
-        "structured-output.mdx"
-      ],
-      "scores": [
-        0.4334,
-        0.3877,
-        0.3821,
-        0.3779,
-        0.3727
-      ],
-      "hit": true,
-      "rank": 1
-    },
-    {
-      "question": "创建 agent 时需要指定 checkpointer 是为什么？",
-      "expected_sources": [
-        "short-term-memory.mdx",
-        "agents.mdx"
-      ],
-      "retrieved_sources": [
-        "quickstart.mdx",
-        "short-term-memory.mdx",
-        "multi-agent/handoffs-customer-support.mdx",
         "multi-agent/skills-sql-assistant.mdx",
+        "multi-agent/skills-sql-assistant.mdx",
+        "multi-agent/skills-sql-assistant.mdx",
+        "multi-agent/skills.mdx",
         "multi-agent/skills-sql-assistant.mdx"
       ],
       "scores": [
-        0.5248,
-        0.5095,
-        0.4858,
-        0.4795,
-        0.4717
-      ],
-      "hit": true,
-      "rank": 2
-    },
-    {
-      "question": "如何中断 agent 的执行，等待人工审批后再继续？",
-      "expected_sources": [
-        "human-in-the-loop.mdx"
-      ],
-      "retrieved_sources": [
-        "sql-agent.mdx",
-        "sql-agent.mdx",
-        "sql-agent.mdx",
-        "middleware/built-in.mdx",
-        "human-in-the-loop.mdx"
-      ],
-      "scores": [
-        0.575,
-        0.5654,
-        0.5624,
-        0.5439,
-        0.5437
-      ],
-      "hit": true,
-      "rank": 5
-    },
-    {
-      "question": "stream 有哪些模式？怎么流式输出 LLM 的 token？",
-      "expected_sources": [
-        "streaming.mdx"
-      ],
-      "retrieved_sources": [
-        "streaming.mdx",
-        "streaming.mdx",
-        "streaming.mdx",
-        "streaming.mdx",
-        "streaming.mdx"
-      ],
-      "scores": [
-        0.6438,
-        0.5493,
-        0.5329,
-        0.5261,
-        0.5007
+        0.5308,
+        0.5206,
+        0.5109,
+        0.495,
+        0.4653
       ],
       "hit": true,
       "rank": 1
     },
     {
-      "question": "如何构建一个能查询 SQL 数据库的 agent？",
+      "question": "在 LangGraph 里，我想让工具执行后直接更新状态并触发下一步流转，应该怎么写工具返回值？",
+      "query_text": "在 LangGraph 里，我想让工具执行后直接更新状态并触发下一步流转，应该怎么写工具返回值？",
       "expected_sources": [
-        "sql-agent.mdx"
+        "multi-agent/handoffs.mdx"
       ],
       "retrieved_sources": [
-        "sql-agent.mdx",
-        "sql-agent.mdx",
-        "multi-agent/skills-sql-assistant.mdx",
-        "multi-agent/skills-sql-assistant.mdx",
-        "sql-agent.mdx"
+        "multi-agent/handoffs.mdx",
+        "streaming.mdx",
+        "middleware/custom.mdx",
+        "multi-agent/handoffs.mdx",
+        "multi-agent/custom-workflow.mdx"
       ],
       "scores": [
-        0.6189,
-        0.5719,
-        0.5684,
-        0.5594,
-        0.5198
+        0.4824,
+        0.4735,
+        0.4556,
+        0.4515,
+        0.4478
       ],
       "hit": true,
       "rank": 1
     },
     {
-      "question": "多 agent 系统有哪些常见的协作模式？",
+      "question": "我想让同一个链里的多个模型各自可配置不同参数，用 init_chat_model 创建模型时怎么设置默认值和可配置项？调用时又怎么覆盖这些配置？",
+      "query_text": "我想让同一个链里的多个模型各自可配置不同参数，用 init_chat_model 创建模型时怎么设置默认值和可配置项？调用时又怎么覆盖这些配置？",
       "expected_sources": [
-        "multi-agent/index.mdx"
+        "models.mdx"
       ],
       "retrieved_sources": [
-        "multi-agent/index.mdx",
-        "multi-agent/index.mdx",
-        "multi-agent/custom-workflow.mdx",
-        "multi-agent/index.mdx",
-        "multi-agent/subagents-personal-assistant.mdx"
+        "models.mdx",
+        "models.mdx",
+        "models.mdx",
+        "models.mdx",
+        "models.mdx"
       ],
       "scores": [
-        0.5157,
-        0.5092,
-        0.5079,
-        0.5003,
-        0.493
+        0.5833,
+        0.539,
+        0.5218,
+        0.5086,
+        0.5047
       ],
       "hit": true,
       "rank": 1
     },
     {
-      "question": "subagents 模式适合什么场景，怎么实现？",
+      "question": "在 LangChain 中，工具（tools）在底层是什么？模型是如何决定调用工具及传入参数的？",
+      "query_text": "在 LangChain 中，工具（tools）在底层是什么？模型是如何决定调用工具及传入参数的？",
+      "expected_sources": [
+        "tools.mdx"
+      ],
+      "retrieved_sources": [
+        "tools.mdx",
+        "models.mdx",
+        "quickstart.mdx",
+        "structured-output.mdx",
+        "structured-output.mdx"
+      ],
+      "scores": [
+        0.5892,
+        0.544,
+        0.5146,
+        0.5127,
+        0.4963
+      ],
+      "hit": true,
+      "rank": 1
+    },
+    {
+      "question": "多个子代理并行返回结果前，主代理需要等待所有结果才能回复用户。这种同步等待方式适合哪些任务场景？有什么明显的取舍？",
+      "query_text": "多个子代理并行返回结果前，主代理需要等待所有结果才能回复用户。这种同步等待方式适合哪些任务场景？有什么明显的取舍？",
       "expected_sources": [
         "multi-agent/subagents.mdx"
       ],
       "retrieved_sources": [
         "multi-agent/subagents.mdx",
         "multi-agent/subagents.mdx",
-        "multi-agent/subagents.mdx",
-        "multi-agent/subagents.mdx",
-        "middleware/built-in.mdx"
-      ],
-      "scores": [
-        0.5537,
-        0.5418,
-        0.5383,
-        0.5275,
-        0.5186
-      ],
-      "hit": true,
-      "rank": 1
-    },
-    {
-      "question": "router 模式下有状态和无状态有什么区别？",
-      "expected_sources": [
-        "multi-agent/router.mdx"
-      ],
-      "retrieved_sources": [
-        "multi-agent/router-knowledge-base.mdx",
         "multi-agent/router.mdx",
-        "multi-agent/router-knowledge-base.mdx",
-        "multi-agent/router-knowledge-base.mdx",
-        "multi-agent/router-knowledge-base.mdx"
+        "multi-agent/subagents.mdx",
+        "models.mdx"
       ],
       "scores": [
-        0.4388,
-        0.4062,
-        0.4004,
-        0.3997,
-        0.3889
-      ],
-      "hit": true,
-      "rank": 2
-    },
-    {
-      "question": "handoffs 模式怎么实现客服工单在机器人之间的流转？",
-      "expected_sources": [
-        "multi-agent/handoffs.mdx",
-        "multi-agent/handoffs-customer-support.mdx"
-      ],
-      "retrieved_sources": [
-        "multi-agent/handoffs.mdx",
-        "multi-agent/handoffs.mdx",
-        "multi-agent/handoffs.mdx",
-        "multi-agent/handoffs-customer-support.mdx",
-        "multi-agent/handoffs.mdx"
-      ],
-      "scores": [
-        0.5246,
-        0.5157,
-        0.5014,
-        0.4811,
-        0.4791
+        0.4584,
+        0.4519,
+        0.4341,
+        0.4224,
+        0.4216
       ],
       "hit": true,
       "rank": 1
     },
     {
-      "question": "如何用自定义 workflow 编排多个 agent 组成 RAG 流水线？",
+      "question": "我想遍历一条消息里的内容块，访问 content_blocks 属性得到的是什么形式的数据？每个块长什么样？",
+      "query_text": "我想遍历一条消息里的内容块，访问 content_blocks 属性得到的是什么形式的数据？每个块长什么样？",
       "expected_sources": [
-        "multi-agent/custom-workflow.mdx"
+        "messages.mdx"
       ],
       "retrieved_sources": [
-        "multi-agent/custom-workflow.mdx",
-        "deepagents-retrieval.mdx",
-        "multi-agent/router-knowledge-base.mdx",
-        "multi-agent/router-knowledge-base.mdx",
-        "multi-agent/router-knowledge-base.mdx"
+        "messages.mdx",
+        "messages.mdx",
+        "messages.mdx",
+        "messages.mdx",
+        "messages.mdx"
       ],
       "scores": [
-        0.5418,
-        0.5248,
-        0.4911,
-        0.4773,
-        0.4766
+        0.5025,
+        0.4668,
+        0.4463,
+        0.4367,
+        0.4346
       ],
       "hit": true,
       "rank": 1
     },
     {
-      "question": "如何编写自定义 middleware，有哪些钩子可以用？",
+      "question": "向 VectorStore 添加文档后，如何进行查询？查询方式有哪些？这些查询方法返回什么？",
+      "query_text": "向 VectorStore 添加文档后，如何进行查询？查询方式有哪些？这些查询方法返回什么？",
       "expected_sources": [
-        "middleware/custom.mdx"
+        "knowledge-base.mdx"
       ],
       "retrieved_sources": [
-        "middleware/custom.mdx",
-        "middleware/custom.mdx",
-        "middleware/custom.mdx",
-        "middleware/built-in.mdx",
-        "multi-agent/skills-sql-assistant.mdx"
+        "knowledge-base.mdx",
+        "knowledge-base.mdx",
+        "knowledge-base.mdx",
+        "knowledge-base.mdx",
+        "knowledge-base.mdx"
       ],
       "scores": [
-        0.5526,
-        0.5514,
-        0.5484,
-        0.5479,
-        0.5415
-      ],
-      "hit": true,
-      "rank": 1
-    },
-    {
-      "question": "LangChain 提供了哪些内置 middleware？",
-      "expected_sources": [
-        "middleware/built-in.mdx"
-      ],
-      "retrieved_sources": [
-        "middleware/built-in.mdx",
-        "middleware/overview.mdx",
-        "models.mdx",
-        "middleware/custom.mdx",
-        "install.mdx"
-      ],
-      "scores": [
-        0.5718,
-        0.5129,
-        0.482,
-        0.472,
+        0.6065,
+        0.5213,
+        0.5203,
+        0.5145,
         0.4652
       ],
       "hit": true,
       "rank": 1
     },
     {
-      "question": "middleware 在 agent loop 中处于什么位置、起什么作用？",
+      "question": "在构建一个结合检索的 RAG 流程时，WNBA stats assistant 的工作流里定义了哪三类节点？各自有什么特点？",
+      "query_text": "在构建一个结合检索的 RAG 流程时，WNBA stats assistant 的工作流里定义了哪三类节点？各自有什么特点？",
       "expected_sources": [
-        "middleware/overview.mdx"
+        "multi-agent/custom-workflow.mdx"
       ],
       "retrieved_sources": [
-        "middleware/overview.mdx",
-        "middleware/overview.mdx",
+        "multi-agent/custom-workflow.mdx",
+        "multi-agent/custom-workflow.mdx",
+        "multi-agent/custom-workflow.mdx",
+        "deepagents-retrieval.mdx",
+        "deepagents-retrieval.mdx"
+      ],
+      "scores": [
+        0.4395,
+        0.4179,
+        0.4004,
+        0.3763,
+        0.3552
+      ],
+      "hit": true,
+      "rank": 1
+    },
+    {
+      "question": "在 LangGraph 里我想把同一个 query 按分类结果同时发给多个专用 agent 处理，代码上该怎么写？",
+      "query_text": "在 LangGraph 里我想把同一个 query 按分类结果同时发给多个专用 agent 处理，代码上该怎么写？",
+      "expected_sources": [
+        "multi-agent/router.mdx"
+      ],
+      "retrieved_sources": [
+        "multi-agent/router.mdx",
+        "multi-agent/router.mdx",
+        "multi-agent/router.mdx",
+        "multi-agent/router.mdx",
+        "multi-agent/router.mdx"
+      ],
+      "scores": [
+        0.6027,
+        0.5962,
+        0.5302,
+        0.519,
+        0.5103
+      ],
+      "hit": true,
+      "rank": 1
+    },
+    {
+      "question": "LLM 上下文窗口有 token 限制，消息历史快接近上限时怎么截断？用 LangChain 的话具体怎么做？",
+      "query_text": "LLM 上下文窗口有 token 限制，消息历史快接近上限时怎么截断？用 LangChain 的话具体怎么做？",
+      "expected_sources": [
+        "short-term-memory.mdx"
+      ],
+      "retrieved_sources": [
+        "short-term-memory.mdx",
+        "short-term-memory.mdx",
         "context-engineering.mdx",
-        "context-engineering.mdx",
-        "middleware/custom.mdx"
+        "short-term-memory.mdx",
+        "middleware/built-in.mdx"
       ],
       "scores": [
-        0.5856,
-        0.5502,
-        0.5381,
-        0.5269,
-        0.5132
+        0.6709,
+        0.5792,
+        0.567,
+        0.4898,
+        0.4676
       ],
       "hit": true,
       "rank": 1
     },
     {
-      "question": "LangChain 的聊天消息有哪些类型？",
+      "question": "我想在客服Agent的每个step里动态切换system prompt和工具，比如根据current_step配置不同行为，LangChain里怎么实现？",
+      "query_text": "我想在客服Agent的每个step里动态切换system prompt和工具，比如根据current_step配置不同行为，LangChain里怎么实现？",
       "expected_sources": [
-        "messages.mdx"
+        "multi-agent/handoffs-customer-support.mdx"
       ],
       "retrieved_sources": [
-        "messages.mdx",
-        "messages.mdx",
-        "messages.mdx",
-        "multi-agent/subagents-personal-assistant.mdx",
-        "messages.mdx"
-      ],
-      "scores": [
-        0.5606,
-        0.5549,
-        0.5349,
-        0.5197,
-        0.5196
-      ],
-      "hit": true,
-      "rank": 1
-    },
-    {
-      "question": "模型的 tool calling 是如何工作的？",
-      "expected_sources": [
-        "models.mdx",
-        "tools.mdx"
-      ],
-      "retrieved_sources": [
-        "models.mdx",
-        "messages.mdx",
-        "models.mdx",
-        "tools.mdx",
-        "models.mdx"
-      ],
-      "scores": [
-        0.584,
-        0.5649,
-        0.5639,
-        0.5513,
-        0.5307
-      ],
-      "hit": true,
-      "rank": 1
-    },
-    {
-      "question": "如何快速搭建并运行第一个 agent？",
-      "expected_sources": [
-        "quickstart.mdx",
+        "multi-agent/handoffs-customer-support.mdx",
+        "multi-agent/handoffs-customer-support.mdx",
+        "multi-agent/handoffs-customer-support.mdx",
         "agents.mdx",
-        "overview.mdx"
-      ],
-      "retrieved_sources": [
-        "quickstart.mdx",
-        "agents.mdx",
-        "middleware/built-in.mdx",
-        "sql-agent.mdx",
         "multi-agent/handoffs.mdx"
       ],
       "scores": [
-        0.5219,
-        0.497,
-        0.4709,
-        0.4707,
-        0.4702
+        0.5625,
+        0.5363,
+        0.5305,
+        0.5234,
+        0.5227
       ],
       "hit": true,
       "rank": 1
     },
     {
-      "question": "如何用 embeddings 把文档构建成可检索的知识库？",
+      "question": "在 supervisor 模式里，sub-agent 明明调用了工具，但最终返回给 supervisor 的消息里却老是缺这些结果，该怎么修？",
+      "query_text": "在 supervisor 模式里，sub-agent 明明调用了工具，但最终返回给 supervisor 的消息里却老是缺这些结果，该怎么修？",
       "expected_sources": [
-        "knowledge-base.mdx"
+        "multi-agent/subagents-personal-assistant.mdx"
       ],
       "retrieved_sources": [
-        "knowledge-base.mdx",
-        "knowledge-base.mdx",
-        "knowledge-base.mdx",
-        "deepagents-retrieval.mdx",
-        "knowledge-base.mdx"
+        "multi-agent/subagents-personal-assistant.mdx",
+        "multi-agent/subagents-personal-assistant.mdx",
+        "multi-agent/subagents-personal-assistant.mdx",
+        "multi-agent/subagents.mdx",
+        "multi-agent/subagents-personal-assistant.mdx"
       ],
       "scores": [
-        0.5501,
-        0.5035,
-        0.4854,
-        0.4807,
-        0.4656
+        0.4828,
+        0.4727,
+        0.4715,
+        0.4693,
+        0.4644
       ],
       "hit": true,
       "rank": 1
     },
     {
-      "question": "什么是上下文工程？agent 的上下文分为哪些类型？",
+      "question": "如何在模型调用层注入状态更新，并在工具返回时更新对话历史？",
+      "query_text": "如何在模型调用层注入状态更新，并在工具返回时更新对话历史？",
       "expected_sources": [
         "context-engineering.mdx"
       ],
       "retrieved_sources": [
-        "agents.mdx",
         "context-engineering.mdx",
-        "agents.mdx",
-        "overview.mdx",
-        "multi-agent/subagents.mdx"
+        "context-engineering.mdx",
+        "middleware/custom.mdx",
+        "middleware/custom.mdx",
+        "context-engineering.mdx"
       ],
       "scores": [
-        0.4227,
-        0.4096,
-        0.4091,
-        0.4068,
-        0.405
+        0.5593,
+        0.5416,
+        0.5151,
+        0.513,
+        0.5001
+      ],
+      "hit": true,
+      "rank": 1
+    },
+    {
+      "question": "用 TypedDict 定义多智能体路由状态时，怎样把每个子智能体返回的结果收集合并起来？",
+      "query_text": "用 TypedDict 定义多智能体路由状态时，怎样把每个子智能体返回的结果收集合并起来？",
+      "expected_sources": [
+        "multi-agent/router-knowledge-base.mdx"
+      ],
+      "retrieved_sources": [
+        "multi-agent/router-knowledge-base.mdx",
+        "multi-agent/router-knowledge-base.mdx",
+        "multi-agent/router-knowledge-base.mdx",
+        "multi-agent/router-knowledge-base.mdx",
+        "multi-agent/router-knowledge-base.mdx"
+      ],
+      "scores": [
+        0.4219,
+        0.4216,
+        0.4072,
+        0.3882,
+        0.3776
+      ],
+      "hit": true,
+      "rank": 1
+    },
+    {
+      "question": "在 LangChain 中如何实现多轮对话的持久化，让后续轮次能恢复同一段历史？本地和部署环境有何区别？thread_id 和 streamMode、context 的传参关系是怎样的？",
+      "query_text": "在 LangChain 中如何实现多轮对话的持久化，让后续轮次能恢复同一段历史？本地和部署环境有何区别？thread_id 和 streamMode、context 的传参关系是怎样的？",
+      "expected_sources": [
+        "streaming.mdx"
+      ],
+      "retrieved_sources": [
+        "streaming.mdx",
+        "agents.mdx",
+        "streaming.mdx",
+        "streaming.mdx",
+        "agents.mdx"
+      ],
+      "scores": [
+        0.6288,
+        0.5738,
+        0.5704,
+        0.5587,
+        0.5377
+      ],
+      "hit": true,
+      "rank": 1
+    },
+    {
+      "question": "同一个用户重复请求时，coffee agent 和基于 router 的方案在调用次数上有什么区别？分别说明原因。",
+      "query_text": "同一个用户重复请求时，coffee agent 和基于 router 的方案在调用次数上有什么区别？分别说明原因。",
+      "expected_sources": [
+        "multi-agent/index.mdx"
+      ],
+      "retrieved_sources": [
+        "multi-agent/index.mdx",
+        "multi-agent/subagents.mdx",
+        "multi-agent/index.mdx",
+        "multi-agent/router.mdx",
+        "multi-agent/index.mdx"
+      ],
+      "scores": [
+        0.5725,
+        0.498,
+        0.4924,
+        0.4902,
+        0.4786
+      ],
+      "hit": true,
+      "rank": 1
+    },
+    {
+      "question": "我想在本地开发一个 LangGraph agent，既要通过自定义流转换器输出工具活动事件，又要让多轮对话能通过 thread_id 恢复历史。代码里该怎么配置？",
+      "query_text": "我想在本地开发一个 LangGraph agent，既要通过自定义流转换器输出工具活动事件，又要让多轮对话能通过 thread_id 恢复历史。代码里该怎么配置？",
+      "expected_sources": [
+        "streaming.mdx",
+        "event-streaming.mdx"
+      ],
+      "retrieved_sources": [
+        "streaming.mdx",
+        "agents.mdx",
+        "event-streaming.mdx",
+        "human-in-the-loop.mdx",
+        "streaming.mdx"
+      ],
+      "scores": [
+        0.5748,
+        0.5545,
+        0.5386,
+        0.5192,
+        0.5155
+      ],
+      "hit": true,
+      "rank": 1
+    },
+    {
+      "question": "我需要Agent在最终回复中输出特定结构的数据，同时要在多轮对话中保持上下文。LangChain里该怎么做？",
+      "query_text": "我需要Agent在最终回复中输出特定结构的数据，同时要在多轮对话中保持上下文。LangChain里该怎么做？",
+      "expected_sources": [
+        "context-engineering.mdx",
+        "agents.mdx"
+      ],
+      "retrieved_sources": [
+        "structured-output.mdx",
+        "structured-output.mdx",
+        "structured-output.mdx",
+        "context-engineering.mdx",
+        "multi-agent/router-knowledge-base.mdx"
+      ],
+      "scores": [
+        0.5521,
+        0.5396,
+        0.5095,
+        0.5094,
+        0.4992
+      ],
+      "hit": true,
+      "rank": 4
+    },
+    {
+      "question": "在 LangChain 里，我想让主代理既能调用多个专家子代理，又能按需加载不同专业技能（比如 write_sql），这两种能力扩展方式分别怎么实现？它们的共同思路是什么？",
+      "query_text": "在 LangChain 里，我想让主代理既能调用多个专家子代理，又能按需加载不同专业技能（比如 write_sql），这两种能力扩展方式分别怎么实现？它们的共同思路是什么？",
+      "expected_sources": [
+        "multi-agent/subagents.mdx",
+        "multi-agent/skills.mdx"
+      ],
+      "retrieved_sources": [
+        "multi-agent/skills.mdx",
+        "multi-agent/skills.mdx",
+        "multi-agent/skills.mdx",
+        "multi-agent/skills.mdx",
+        "multi-agent/skills.mdx"
+      ],
+      "scores": [
+        0.5298,
+        0.5289,
+        0.4877,
+        0.4717,
+        0.467
+      ],
+      "hit": true,
+      "rank": 1
+    },
+    {
+      "question": "我想让SQL agent用sqlite3连接Chinook库，同时按需通过load_skill加载销售分析用的schema。这个agent的模型需要什么能力？如何利用custom agent state来约束工具的使用？",
+      "query_text": "我想让SQL agent用sqlite3连接Chinook库，同时按需通过load_skill加载销售分析用的schema。这个agent的模型需要什么能力？如何利用custom agent state来约束工具的使用？",
+      "expected_sources": [
+        "sql-agent.mdx",
+        "multi-agent/skills-sql-assistant.mdx"
+      ],
+      "retrieved_sources": [
+        "multi-agent/skills-sql-assistant.mdx",
+        "multi-agent/skills-sql-assistant.mdx",
+        "multi-agent/skills.mdx",
+        "multi-agent/skills-sql-assistant.mdx",
+        "multi-agent/skills-sql-assistant.mdx"
+      ],
+      "scores": [
+        0.579,
+        0.498,
+        0.4851,
+        0.4836,
+        0.4789
+      ],
+      "hit": true,
+      "rank": 1
+    },
+    {
+      "question": "我用可配置模型做工具调用，现在需要在同一个流程里支持用户上传图片（拿到的是 provider-managed File ID）。我该怎么构造消息并调用？还能继续拿到 .tool_calls 吗？",
+      "query_text": "我用可配置模型做工具调用，现在需要在同一个流程里支持用户上传图片（拿到的是 provider-managed File ID）。我该怎么构造消息并调用？还能继续拿到 .tool_calls 吗？",
+      "expected_sources": [
+        "messages.mdx",
+        "models.mdx"
+      ],
+      "retrieved_sources": [
+        "models.mdx",
+        "event-streaming.mdx",
+        "structured-output.mdx",
+        "structured-output.mdx",
+        "models.mdx"
+      ],
+      "scores": [
+        0.5263,
+        0.5138,
+        0.4963,
+        0.4903,
+        0.4857
+      ],
+      "hit": true,
+      "rank": 1
+    },
+    {
+      "question": "我想在同一个LangGraph工具里既读取当前short-term memory（agent state），又把一些信息写入long-term memory。工具函数应该怎么写？运行时通过什么区分这两类记忆？",
+      "query_text": "我想在同一个LangGraph工具里既读取当前short-term memory（agent state），又把一些信息写入long-term memory。工具函数应该怎么写？运行时通过什么区分这两类记忆？",
+      "expected_sources": [
+        "long-term-memory.mdx",
+        "short-term-memory.mdx"
+      ],
+      "retrieved_sources": [
+        "long-term-memory.mdx",
+        "short-term-memory.mdx",
+        "quickstart.mdx",
+        "short-term-memory.mdx",
+        "multi-agent/handoffs-customer-support.mdx"
+      ],
+      "scores": [
+        0.6494,
+        0.617,
+        0.5926,
+        0.5755,
+        0.5703
+      ],
+      "hit": true,
+      "rank": 1
+    },
+    {
+      "question": "在基于Nike 10-K的RAG系统中，用户问“Nike的直营业务是怎么运作的？” 检索器返回两个Document块：一块包含美国零售门店数量，另一块介绍NIKE Direct operations包含零售店和数字平台。仅靠单块回答不完整。面对这种需要多源整合且语义宽泛的查询，应该采用哪种RAG架构？它为什么适合？",
+      "query_text": "在基于Nike 10-K的RAG系统中，用户问“Nike的直营业务是怎么运作的？” 检索器返回两个Document块：一块包含美国零售门店数量，另一块介绍NIKE Direct operations包含零售店和数字平台。仅靠单块回答不完整。面对这种需要多源整合且语义宽泛的查询，应该采用哪种RAG架构？它为什么适合？",
+      "expected_sources": [
+        "knowledge-base.mdx",
+        "deepagents-retrieval.mdx"
+      ],
+      "retrieved_sources": [
+        "knowledge-base.mdx",
+        "knowledge-base.mdx",
+        "knowledge-base.mdx",
+        "knowledge-base.mdx",
+        "deepagents-retrieval.mdx"
+      ],
+      "scores": [
+        0.5415,
+        0.5415,
+        0.5137,
+        0.4476,
+        0.4061
+      ],
+      "hit": true,
+      "rank": 1
+    },
+    {
+      "question": "我想根据用户登录状态动态调整 agent 可用的工具，并且这些工具的输出必须是受约束的结构化数据（例如评分不能超过5）。LangChain 这边怎么支持？如果模型返回了不合法输出，agent 会如何处理？",
+      "query_text": "我想根据用户登录状态动态调整 agent 可用的工具，并且这些工具的输出必须是受约束的结构化数据（例如评分不能超过5）。LangChain 这边怎么支持？如果模型返回了不合法输出，agent 会如何处理？",
+      "expected_sources": [
+        "tools.mdx",
+        "structured-output.mdx"
+      ],
+      "retrieved_sources": [
+        "structured-output.mdx",
+        "structured-output.mdx",
+        "structured-output.mdx",
+        "structured-output.mdx",
+        "structured-output.mdx"
+      ],
+      "scores": [
+        0.6286,
+        0.5662,
+        0.5598,
+        0.5402,
+        0.54
+      ],
+      "hit": true,
+      "rank": 1
+    },
+    {
+      "question": "我想在 LangChain 里初始化 Claude 模型，并且要设置 temperature、timeout、max_tokens、max_retries 这些参数，应该怎么写？",
+      "query_text": "我想在 LangChain 里初始化 Claude 模型，并且要设置 temperature、timeout、max_tokens、max_retries 这些参数，应该怎么写？",
+      "expected_sources": [
+        "models.mdx"
+      ],
+      "retrieved_sources": [
+        "quickstart.mdx",
+        "quickstart.mdx",
+        "models.mdx",
+        "quickstart.mdx",
+        "models.mdx"
+      ],
+      "scores": [
+        0.5469,
+        0.5293,
+        0.483,
+        0.4614,
+        0.4594
+      ],
+      "hit": true,
+      "rank": 3
+    },
+    {
+      "question": "我想给 Agent 加个对话摘要功能：当 token 数超过 4000 时，自动把早期消息摘要成短内容，只保留最近 20 条消息。用 LangChain 应该怎么写？",
+      "query_text": "我想给 Agent 加个对话摘要功能：当 token 数超过 4000 时，自动把早期消息摘要成短内容，只保留最近 20 条消息。用 LangChain 应该怎么写？",
+      "expected_sources": [
+        "middleware/built-in.mdx"
+      ],
+      "retrieved_sources": [
+        "context-engineering.mdx",
+        "multi-agent/handoffs-customer-support.mdx",
+        "middleware/built-in.mdx",
+        "short-term-memory.mdx",
+        "short-term-memory.mdx"
+      ],
+      "scores": [
+        0.6038,
+        0.5416,
+        0.5375,
+        0.5214,
+        0.5138
+      ],
+      "hit": true,
+      "rank": 3
+    },
+    {
+      "question": "在 LangChain 1.x 中，我想创建一个带天气查询工具和自定义系统提示词的 agent，然后接收用户消息并获取结果，正确的写法是什么？",
+      "query_text": "在 LangChain 1.x 中，我想创建一个带天气查询工具和自定义系统提示词的 agent，然后接收用户消息并获取结果，正确的写法是什么？",
+      "expected_sources": [
+        "overview.mdx"
+      ],
+      "retrieved_sources": [
+        "overview.mdx",
+        "streaming.mdx",
+        "event-streaming.mdx",
+        "quickstart.mdx",
+        "event-streaming.mdx"
+      ],
+      "scores": [
+        0.6449,
+        0.5776,
+        0.5775,
+        0.5628,
+        0.5606
+      ],
+      "hit": true,
+      "rank": 1
+    },
+    {
+      "question": "在LangChain中，我想让工具在每次调用时都能获取当前用户ID和请求ID，同时又想区分不同会话的历史消息。目前我把这些数据都放在memory里，感觉很混乱。正确的做法应该是什么？",
+      "query_text": "在LangChain中，我想让工具在每次调用时都能获取当前用户ID和请求ID，同时又想区分不同会话的历史消息。目前我把这些数据都放在memory里，感觉很混乱。正确的做法应该是什么？",
+      "expected_sources": [
+        "agents.mdx"
+      ],
+      "retrieved_sources": [
+        "agents.mdx",
+        "agents.mdx",
+        "multi-agent/router-knowledge-base.mdx",
+        "agents.mdx",
+        "streaming.mdx"
+      ],
+      "scores": [
+        0.5125,
+        0.4884,
+        0.4761,
+        0.4703,
+        0.4592
+      ],
+      "hit": true,
+      "rank": 1
+    },
+    {
+      "question": "我想做一个多知识库路由：先判断用户问题该查 GitHub/Notion/Slack，把拆出的子问题并行发给三个带各自工具的 agent，最后汇总结果。具体在 LangChain 里怎么实现？",
+      "query_text": "我想做一个多知识库路由：先判断用户问题该查 GitHub/Notion/Slack，把拆出的子问题并行发给三个带各自工具的 agent，最后汇总结果。具体在 LangChain 里怎么实现？",
+      "expected_sources": [
+        "multi-agent/router-knowledge-base.mdx"
+      ],
+      "retrieved_sources": [
+        "multi-agent/router.mdx",
+        "multi-agent/router-knowledge-base.mdx",
+        "multi-agent/custom-workflow.mdx",
+        "multi-agent/router-knowledge-base.mdx",
+        "multi-agent/router-knowledge-base.mdx"
+      ],
+      "scores": [
+        0.6363,
+        0.6142,
+        0.5833,
+        0.5442,
+        0.5247
       ],
       "hit": true,
       "rank": 2
     },
     {
-      "question": "怎么获取 agent 的推理过程（reasoning content）流式输出？",
+      "question": "我需要让一个工具在浏览器前端执行实际逻辑，但模型在服务端也能看到并调用它。我不想在Python进程里实现这个工具，LangChain里怎么定义和接入这种无后端实现的工具？",
+      "query_text": "我需要让一个工具在浏览器前端执行实际逻辑，但模型在服务端也能看到并调用它。我不想在Python进程里实现这个工具，LangChain里怎么定义和接入这种无后端实现的工具？",
       "expected_sources": [
-        "event-streaming.mdx",
-        "streaming.mdx"
+        "tools.mdx"
       ],
       "retrieved_sources": [
-        "quickstart.mdx",
-        "multi-agent/custom-workflow.mdx",
-        "multi-agent/router-knowledge-base.mdx",
-        "streaming.mdx",
-        "deepagents-retrieval.mdx"
+        "tools.mdx",
+        "tools.mdx",
+        "event-streaming.mdx",
+        "structured-output.mdx",
+        "event-streaming.mdx"
       ],
       "scores": [
-        0.458,
-        0.4519,
-        0.4516,
-        0.4488,
-        0.4477
+        0.5732,
+        0.5728,
+        0.5404,
+        0.5353,
+        0.5274
+      ],
+      "hit": true,
+      "rank": 1
+    },
+    {
+      "question": "我想在 LangChain 里把 `get_weather` 这种函数作为工具，自动根据用户消息决定是否调用，并拿到最终回复。请给我一个最小可运行示例。",
+      "query_text": "我想在 LangChain 里把 `get_weather` 这种函数作为工具，自动根据用户消息决定是否调用，并拿到最终回复。请给我一个最小可运行示例。",
+      "expected_sources": [
+        "quickstart.mdx"
+      ],
+      "retrieved_sources": [
+        "overview.mdx",
+        "models.mdx",
+        "event-streaming.mdx",
+        "quickstart.mdx",
+        "event-streaming.mdx"
+      ],
+      "scores": [
+        0.5985,
+        0.5789,
+        0.547,
+        0.5413,
+        0.5398
       ],
       "hit": true,
       "rank": 4
+    },
+    {
+      "question": "我想在 agent 每次调用模型前检查历史消息数量，超过 50 条就返回一句固定话术并终止本次运行，不要走后续工具调用。用 LangChain 怎么做？",
+      "query_text": "我想在 agent 每次调用模型前检查历史消息数量，超过 50 条就返回一句固定话术并终止本次运行，不要走后续工具调用。用 LangChain 怎么做？",
+      "expected_sources": [
+        "middleware/custom.mdx"
+      ],
+      "retrieved_sources": [
+        "agents.mdx",
+        "quickstart.mdx",
+        "overview.mdx",
+        "structured-output.mdx",
+        "models.mdx"
+      ],
+      "scores": [
+        0.5336,
+        0.5189,
+        0.4978,
+        0.4966,
+        0.4959
+      ],
+      "hit": false,
+      "rank": null
     }
   ]
 }

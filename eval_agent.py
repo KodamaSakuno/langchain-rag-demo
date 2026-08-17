@@ -24,6 +24,7 @@ def run_group(questions: list[dict], multi_agent: bool) -> dict:
     details = []
     hits = honest = 0
     total_latency = total_tokens = 0
+    point_recalls = []  # 答案级断言：expected_points 的逐题召回率
     verdicts = {"通过": 0, "存疑": 0}
 
     for q in questions:
@@ -41,8 +42,8 @@ def run_group(questions: list[dict], multi_agent: bool) -> dict:
             details.append({
                 "question": q["question"], "expected_sources": q["expected_sources"],
                 "sources": [], "hit": False, "not_found": False, "review": "",
-                "latency_s": round(latency, 1), "tokens": 0, "tool_calls": [],
-                "error": str(e)[:200],
+                "point_hit": {}, "latency_s": round(latency, 1), "tokens": 0,
+                "tool_calls": [], "error": str(e)[:200],
             })
             print(f"  ✗ {q['question'][:30]} | {latency:.0f}s | ERROR: {str(e)[:80]}")
             continue
@@ -67,6 +68,17 @@ def run_group(questions: list[dict], multi_agent: bool) -> dict:
             if verdict in verdicts:
                 verdicts[verdict] += 1
 
+        # 答案级断言：关键要点（API 名/专有名词）大小写不敏感子串匹配；
+        # 要点可写 "create_agent|createAgent" 形式表示任一写法命中即可（语料含 Python/JS 双语文档）
+        points = q.get("expected_points") or []
+        point_hit = {}
+        if points:
+            answer_lower = resp.answer.lower()
+            for p in points:
+                variants = [v.strip().lower() for v in p.split("|")]
+                point_hit[p] = any(v in answer_lower for v in variants)
+            point_recalls.append(sum(point_hit.values()) / len(points))
+
         details.append({
             "question": q["question"],
             "expected_sources": q["expected_sources"],
@@ -75,6 +87,7 @@ def run_group(questions: list[dict], multi_agent: bool) -> dict:
             "expect_not_found": bool(q.get("expect_not_found")),
             "not_found": not_found,
             "review": verdict,
+            "point_hit": point_hit,
             "latency_s": round(latency, 1),
             "tokens": resp.token_usage["total_tokens"],
             "tool_calls": [t["tool"] for t in resp.tool_calls],
@@ -88,6 +101,7 @@ def run_group(questions: list[dict], multi_agent: bool) -> dict:
         "num_questions": n,
         "source_hit_rate": hits / n if n else 0.0,
         "hallucination_free_rate": honest / n if n else 0.0,
+        "point_recall": round(sum(point_recalls) / len(point_recalls), 4) if point_recalls else None,
         "avg_latency_s": round(total_latency / n, 1) if n else 0.0,
         "avg_tokens": round(total_tokens / n) if n else 0,
         "review_verdicts": verdicts if multi_agent else None,
@@ -119,6 +133,8 @@ def main():
         groups.append(run_group(questions, multi_agent=ma))
         g = groups[-1]
         print(f"来源命中率: {g['source_hit_rate']:.2%} | 平均延迟: {g['avg_latency_s']}s | 平均 token: {g['avg_tokens']}")
+        if g["point_recall"] is not None:
+            print(f"要点召回率: {g['point_recall']:.2%}")
         if g["review_verdicts"]:
             print(f"审校结论: {g['review_verdicts']}")
 
