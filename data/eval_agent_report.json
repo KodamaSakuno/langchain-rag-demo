@@ -3,11 +3,11 @@
     {
       "multi_agent": false,
       "num_questions": 36,
-      "source_hit_rate": 0.8888888888888888,
-      "hallucination_free_rate": 0.9166666666666666,
-      "point_recall": 0.7052,
-      "avg_latency_s": 16.1,
-      "avg_tokens": 12370,
+      "source_hit_rate": 0.8055555555555556,
+      "hallucination_free_rate": 0.8611111111111112,
+      "point_recall": 0.6609,
+      "avg_latency_s": 18.0,
+      "avg_tokens": 13415,
       "review_verdicts": null,
       "details": [
         {
@@ -23,14 +23,14 @@
           "not_found": false,
           "review": "",
           "point_hit": {
-            "Progressive disclosure strategies": false,
+            "Progressive disclosure strategies": true,
             "Single load": true,
             "Paginated": true,
             "Search-based": true,
             "Hierarchical": true
           },
-          "latency_s": 6.5,
-          "tokens": 2594,
+          "latency_s": 6.2,
+          "tokens": 2680,
           "tool_calls": [
             "search_docs",
             "search_docs"
@@ -43,7 +43,9 @@
           ],
           "sources": [
             "tools.mdx",
-            "multi-agent/handoffs.mdx"
+            "middleware/custom.mdx",
+            "multi-agent/handoffs.mdx",
+            "structured-output.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
@@ -55,9 +57,10 @@
             "ToolRuntime": true,
             "tool_call_id|toolCallId": true
           },
-          "latency_s": 13.3,
-          "tokens": 9300,
+          "latency_s": 13.5,
+          "tokens": 7350,
           "tool_calls": [
+            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -73,6 +76,7 @@
             "models.mdx"
           ],
           "sources": [
+            "context-engineering.mdx",
             "models.mdx"
           ],
           "hit": true,
@@ -85,9 +89,17 @@
             "config_prefix": true,
             "configurable": true
           },
-          "latency_s": 5.3,
-          "tokens": 2896,
+          "latency_s": 14.7,
+          "tokens": 12851,
           "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
             "search_docs",
             "search_docs"
           ]
@@ -98,11 +110,10 @@
             "tools.mdx"
           ],
           "sources": [
-            "models.mdx",
             "tools.mdx",
-            "middleware/built-in.mdx",
-            "multi-agent/handoffs.mdx",
-            "structured-output.mdx"
+            "models.mdx",
+            "middleware/custom.mdx",
+            "event-streaming.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
@@ -113,11 +124,9 @@
             "chat model": true,
             "Tool calling": false
           },
-          "latency_s": 11.7,
-          "tokens": 7846,
+          "latency_s": 7.9,
+          "tokens": 5069,
           "tool_calls": [
-            "search_docs",
-            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs"
@@ -129,20 +138,37 @@
             "multi-agent/subagents.mdx"
           ],
           "sources": [
-            "multi-agent/router-knowledge-base.mdx"
+            "multi-agent/index.mdx",
+            "multi-agent/handoffs.mdx",
+            "multi-agent/subagents.mdx",
+            "multi-agent/subagents-personal-assistant.mdx"
           ],
-          "hit": false,
+          "hit": true,
           "expect_not_found": false,
-          "not_found": true,
+          "not_found": false,
           "review": "",
           "point_hit": {
             "sync": false,
-            "subagent": false,
+            "subagent": true,
             "order dependencies": false
           },
-          "latency_s": 17.4,
-          "tokens": 7106,
+          "latency_s": 35.5,
+          "tokens": 39745,
           "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -174,12 +200,9 @@
             "text": true,
             "reasoning": true
           },
-          "latency_s": 18.4,
-          "tokens": 11630,
+          "latency_s": 11.7,
+          "tokens": 7422,
           "tool_calls": [
-            "search_docs",
-            "search_docs",
-            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -208,8 +231,8 @@
             "max_marginal_relevance_search": true,
             "max_marginal_relevance_search|maxMarginalRelevanceSearch": true
           },
-          "latency_s": 9.5,
-          "tokens": 7024,
+          "latency_s": 8.3,
+          "tokens": 4638,
           "tool_calls": [
             "search_docs",
             "search_docs",
@@ -231,13 +254,21 @@
           "review": "",
           "point_hit": {
             "Rewrite": false,
-            "Retrieve": true,
-            "Agent": false,
+            "Retrieve": false,
+            "Agent": true,
             "vector similarity search": false
           },
-          "latency_s": 8.5,
-          "tokens": 5277,
+          "latency_s": 17.3,
+          "tokens": 11632,
           "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -252,8 +283,9 @@
             "multi-agent/router.mdx"
           ],
           "sources": [
+            "multi-agent/router.mdx",
             "multi-agent/router-knowledge-base.mdx",
-            "multi-agent/router.mdx"
+            "multi-agent/custom-workflow.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
@@ -261,13 +293,12 @@
           "review": "",
           "point_hit": {
             "Send": true,
-            "route_query": true,
-            "classify_query": false
+            "route_query": false,
+            "classify_query": true
           },
-          "latency_s": 15.0,
-          "tokens": 8251,
+          "latency_s": 10.9,
+          "tokens": 7659,
           "tool_calls": [
-            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -282,21 +313,21 @@
             "short-term-memory.mdx"
           ],
           "sources": [
-            "short-term-memory.mdx"
+            "short-term-memory.mdx",
+            "middleware/built-in.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
           "not_found": false,
           "review": "",
           "point_hit": {
-            "trim messages": true,
+            "trim messages": false,
             "strategy": true,
-            "max_tokens": false
+            "max_tokens": true
           },
-          "latency_s": 13.8,
-          "tokens": 15327,
+          "latency_s": 9.1,
+          "tokens": 9135,
           "tool_calls": [
-            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -309,13 +340,15 @@
             "multi-agent/handoffs-customer-support.mdx"
           ],
           "sources": [
-            "tools.mdx",
-            "multi-agent/handoffs-customer-support.mdx",
-            "multi-agent/handoffs.mdx",
             "sql-agent.mdx",
-            "middleware/custom.mdx"
+            "middleware/custom.mdx",
+            "context-engineering.mdx",
+            "tools.mdx",
+            "short-term-memory.mdx",
+            "multi-agent/skills-sql-assistant.mdx",
+            "agents.mdx"
           ],
-          "hit": true,
+          "hit": false,
           "expect_not_found": false,
           "not_found": false,
           "review": "",
@@ -325,9 +358,13 @@
             "request.state": true,
             "request.override": true
           },
-          "latency_s": 16.9,
-          "tokens": 13701,
+          "latency_s": 21.3,
+          "tokens": 13675,
           "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -345,10 +382,7 @@
           ],
           "sources": [
             "multi-agent/subagents-personal-assistant.mdx",
-            "multi-agent/subagents.mdx",
-            "structured-output.mdx",
-            "messages.mdx",
-            "event-streaming.mdx"
+            "multi-agent/subagents.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
@@ -359,18 +393,9 @@
             "final message": false,
             "supervisor_complete.ts": false
           },
-          "latency_s": 30.6,
-          "tokens": 36926,
+          "latency_s": 16.0,
+          "tokens": 10775,
           "tool_calls": [
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -389,9 +414,10 @@
             "context-engineering.mdx"
           ],
           "sources": [
+            "tools.mdx",
             "context-engineering.mdx",
-            "models.mdx",
             "middleware/custom.mdx",
+            "human-in-the-loop.mdx",
             "multi-agent/handoffs-customer-support.mdx"
           ],
           "hit": true,
@@ -403,9 +429,17 @@
             "wrap_model_call|wrapModelCall": true,
             "wrap_tool_call|wrapToolCall": true
           },
-          "latency_s": 12.9,
-          "tokens": 7455,
+          "latency_s": 17.4,
+          "tokens": 22633,
           "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -421,26 +455,23 @@
           "sources": [
             "multi-agent/subagents-personal-assistant.mdx",
             "multi-agent/subagents.mdx",
-            "models.mdx",
+            "multi-agent/router.mdx",
+            "multi-agent/index.mdx",
             "structured-output.mdx"
           ],
           "hit": false,
           "expect_not_found": false,
-          "not_found": true,
+          "not_found": false,
           "review": "",
           "point_hit": {
-            "RouterState": false,
+            "RouterState": true,
             "Annotated": true,
             "operator.add": false,
             "AgentOutput": false
           },
-          "latency_s": 39.1,
-          "tokens": 33719,
+          "latency_s": 48.8,
+          "tokens": 39471,
           "tool_calls": [
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -476,9 +507,8 @@
           ],
           "sources": [
             "streaming.mdx",
-            "quickstart.mdx",
-            "middleware/built-in.mdx",
-            "short-term-memory.mdx"
+            "agents.mdx",
+            "tools.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
@@ -490,9 +520,13 @@
             "InMemorySaver": true,
             "configurable": true
           },
-          "latency_s": 16.2,
-          "tokens": 4995,
+          "latency_s": 13.6,
+          "tokens": 6882,
           "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -508,23 +542,33 @@
           ],
           "sources": [
             "multi-agent/index.mdx",
-            "multi-agent/subagents.mdx",
             "multi-agent/router-knowledge-base.mdx",
+            "multi-agent/subagents.mdx",
             "multi-agent/router.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
-          "not_found": false,
+          "not_found": true,
           "review": "",
           "point_hit": {
-            "buy_coffee": true,
+            "buy_coffee": false,
             "LLM routing call": false,
             "stateful agent": false,
             "handoff": true
           },
-          "latency_s": 5.8,
-          "tokens": 2841,
+          "latency_s": 27.2,
+          "tokens": 22347,
           "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
             "search_docs",
             "search_docs"
           ]
@@ -537,14 +581,12 @@
           ],
           "sources": [
             "streaming.mdx",
-            "human-in-the-loop.mdx",
             "event-streaming.mdx",
-            "models.mdx",
-            "tools.mdx",
+            "middleware/built-in.mdx",
+            "quickstart.mdx",
             "multi-agent/skills-sql-assistant.mdx",
-            "multi-agent/handoffs-customer-support.mdx",
-            "multi-agent/subagents-personal-assistant.mdx",
-            "quickstart.mdx"
+            "deepagents-retrieval.mdx",
+            "tools.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
@@ -556,9 +598,13 @@
             "stream_events": false,
             "transformers": false
           },
-          "latency_s": 12.8,
-          "tokens": 12250,
+          "latency_s": 16.4,
+          "tokens": 14059,
           "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -575,14 +621,12 @@
             "agents.mdx"
           ],
           "sources": [
-            "multi-agent/index.mdx",
             "structured-output.mdx",
-            "short-term-memory.mdx",
-            "agents.mdx",
-            "multi-agent/skills-sql-assistant.mdx",
-            "multi-agent/handoffs-customer-support.mdx"
+            "multi-agent/index.mdx",
+            "multi-agent/router-knowledge-base.mdx",
+            "short-term-memory.mdx"
           ],
-          "hit": true,
+          "hit": false,
           "expect_not_found": false,
           "not_found": false,
           "review": "",
@@ -592,11 +636,9 @@
             "invoke": true,
             "thread_id": true
           },
-          "latency_s": 11.8,
-          "tokens": 8638,
+          "latency_s": 11.2,
+          "tokens": 6805,
           "tool_calls": [
-            "search_docs",
-            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -612,12 +654,12 @@
             "multi-agent/skills.mdx"
           ],
           "sources": [
+            "agents.mdx",
+            "short-term-memory.mdx",
             "multi-agent/subagents.mdx",
-            "middleware/custom.mdx",
-            "multi-agent/subagents-personal-assistant.mdx",
-            "multi-agent/handoffs.mdx",
-            "multi-agent/skills.mdx",
-            "multi-agent/skills-sql-assistant.mdx"
+            "middleware/built-in.mdx",
+            "tools.mdx",
+            "middleware/custom.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
@@ -627,12 +669,18 @@
             "Main Agent": false,
             "Subagent": true,
             "tool": true,
-            "load_skill": true,
+            "load_skill": false,
             "create_agent|createAgent": true
           },
-          "latency_s": 15.8,
-          "tokens": 11012,
+          "latency_s": 16.5,
+          "tokens": 11437,
           "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -648,28 +696,28 @@
           ],
           "sources": [
             "multi-agent/skills-sql-assistant.mdx",
-            "short-term-memory.mdx",
-            "multi-agent/custom-workflow.mdx",
-            "middleware/custom.mdx",
-            "agents.mdx",
-            "structured-output.mdx",
-            "multi-agent/subagents.mdx",
-            "event-streaming.mdx",
-            "middleware/built-in.mdx"
+            "multi-agent/skills.mdx",
+            "sql-agent.mdx",
+            "structured-output.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
-          "not_found": false,
+          "not_found": true,
           "review": "",
           "point_hit": {
-            "tool-calling": false,
+            "tool-calling": true,
             "sqlite3": true,
             "load_skill": true,
-            "custom agent state": true
+            "custom agent state": false
           },
-          "latency_s": 18.4,
-          "tokens": 13121,
+          "latency_s": 23.9,
+          "tokens": 26037,
           "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -691,22 +739,23 @@
           "sources": [
             "models.mdx",
             "messages.mdx",
-            "structured-output.mdx",
-            "multi-agent/subagents-personal-assistant.mdx"
+            "structured-output.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
-          "not_found": false,
+          "not_found": true,
           "review": "",
           "point_hit": {
             "HumanMessage": true,
-            "source_type: \"id\"": false,
+            "source_type: \"id\"": true,
             "model_with_tools.invoke": false,
-            "configurable": false
+            "configurable": true
           },
-          "latency_s": 19.3,
-          "tokens": 10846,
+          "latency_s": 21.4,
+          "tokens": 14607,
           "tool_calls": [
+            "search_docs",
+            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -740,9 +789,10 @@
             "ToolRuntime": true,
             "runtime.store": true
           },
-          "latency_s": 18.3,
-          "tokens": 16435,
+          "latency_s": 24.0,
+          "tokens": 27768,
           "tool_calls": [
+            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -761,25 +811,20 @@
             "knowledge-base.mdx",
             "deepagents-retrieval.mdx"
           ],
-          "sources": [
-            "deepagents-retrieval.mdx"
-          ],
-          "hit": true,
+          "sources": [],
+          "hit": false,
           "expect_not_found": false,
-          "not_found": false,
+          "not_found": true,
           "review": "",
           "point_hit": {
-            "Hybrid RAG": true,
-            "Agentic RAG": true,
+            "Hybrid RAG": false,
+            "Agentic RAG": false,
             "Self-Correction": false,
-            "Document": true
+            "Document": false
           },
-          "latency_s": 19.2,
-          "tokens": 9854,
+          "latency_s": 14.6,
+          "tokens": 6607,
           "tool_calls": [
-            "search_docs",
-            "search_docs",
-            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -799,28 +844,25 @@
             "structured-output.mdx"
           ],
           "sources": [
+            "context-engineering.mdx",
+            "tools.mdx",
             "structured-output.mdx",
-            "middleware/built-in.mdx",
-            "event-streaming.mdx",
             "middleware/custom.mdx",
-            "multi-agent/skills-sql-assistant.mdx",
-            "quickstart.mdx"
+            "models.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
           "not_found": false,
           "review": "",
           "point_hit": {
-            "dynamic tool selection": false,
+            "dynamic tool selection": true,
             "create_agent|createAgent": true,
             "toolStrategy": true,
-            "zod": true
+            "zod": false
           },
-          "latency_s": 27.9,
-          "tokens": 21887,
+          "latency_s": 30.0,
+          "tokens": 24282,
           "tool_calls": [
-            "search_docs",
-            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -856,8 +898,8 @@
           "point_hit": {
             "init_chat_model|initChatModel": true
           },
-          "latency_s": 5.7,
-          "tokens": 2880,
+          "latency_s": 5.1,
+          "tokens": 2838,
           "tool_calls": [
             "search_docs",
             "search_docs"
@@ -869,6 +911,7 @@
             "middleware/built-in.mdx"
           ],
           "sources": [
+            "short-term-memory.mdx",
             "middleware/built-in.mdx",
             "context-engineering.mdx",
             "multi-agent/handoffs-customer-support.mdx"
@@ -883,8 +926,8 @@
             "middleware": true,
             "trigger": true
           },
-          "latency_s": 7.9,
-          "tokens": 4833,
+          "latency_s": 11.2,
+          "tokens": 6962,
           "tool_calls": [
             "search_docs",
             "search_docs",
@@ -898,14 +941,21 @@
             "overview.mdx"
           ],
           "sources": [
+            "sql-agent.mdx",
+            "multi-agent/router-knowledge-base.mdx",
+            "middleware/built-in.mdx",
+            "multi-agent/skills-sql-assistant.mdx",
             "middleware/custom.mdx",
             "quickstart.mdx",
-            "sql-agent.mdx",
             "overview.mdx",
             "multi-agent/handoffs-customer-support.mdx",
+            "multi-agent/subagents-personal-assistant.mdx",
+            "agents.mdx",
             "structured-output.mdx",
-            "event-streaming.mdx",
-            "middleware/built-in.mdx"
+            "multi-agent/custom-workflow.mdx",
+            "multi-agent/subagents.mdx",
+            "messages.mdx",
+            "tools.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
@@ -913,11 +963,11 @@
           "review": "",
           "point_hit": {
             "create_agent": true,
-            "init_chat_model": true,
+            "init_chat_model": false,
             "content_blocks": true
           },
-          "latency_s": 18.9,
-          "tokens": 18058,
+          "latency_s": 20.5,
+          "tokens": 19922,
           "tool_calls": [
             "search_docs",
             "search_docs",
@@ -935,25 +985,35 @@
             "agents.mdx"
           ],
           "sources": [
-            "agents.mdx",
-            "context-engineering.mdx",
-            "short-term-memory.mdx",
-            "streaming.mdx",
-            "tools.mdx"
+            "quickstart.mdx",
+            "structured-output.mdx",
+            "models.mdx",
+            "tools.mdx",
+            "multi-agent/handoffs.mdx"
           ],
-          "hit": true,
+          "hit": false,
           "expect_not_found": false,
           "not_found": false,
           "review": "",
           "point_hit": {
             "thread_id": true,
             "context": true,
-            "context_schema|contextSchema": true,
+            "context_schema|contextSchema": false,
             "runtime.context": true
           },
-          "latency_s": 18.2,
-          "tokens": 12300,
+          "latency_s": 38.6,
+          "tokens": 17597,
           "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -972,11 +1032,10 @@
             "multi-agent/router-knowledge-base.mdx"
           ],
           "sources": [
+            "multi-agent/index.mdx",
             "multi-agent/router-knowledge-base.mdx",
-            "overview.mdx",
-            "multi-agent/custom-workflow.mdx",
-            "deepagents-retrieval.mdx",
-            "multi-agent/router.mdx"
+            "multi-agent/router.mdx",
+            "multi-agent/custom-workflow.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
@@ -988,20 +1047,9 @@
             "StateSchema": false,
             "Send": true
           },
-          "latency_s": 27.3,
-          "tokens": 28219,
+          "latency_s": 16.5,
+          "tokens": 9995,
           "tool_calls": [
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -1016,32 +1064,19 @@
           ],
           "sources": [
             "tools.mdx",
-            "overview.mdx",
-            "models.mdx"
+            "quickstart.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
           "not_found": false,
           "review": "",
           "point_hit": {
-            "create_agent": false,
-            ".implement(...)": false
+            "create_agent|createAgent": false,
+            ".implement": false
           },
-          "latency_s": 28.8,
-          "tokens": 27321,
+          "latency_s": 21.9,
+          "tokens": 11118,
           "tool_calls": [
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -1061,26 +1096,70 @@
           ],
           "sources": [
             "models.mdx",
-            "multi-agent/subagents.mdx",
-            "multi-agent/subagents-personal-assistant.mdx",
-            "middleware/built-in.mdx",
-            "structured-output.mdx",
-            "deepagents-retrieval.mdx",
-            "middleware/custom.mdx",
-            "event-streaming.mdx"
+            "tools.mdx",
+            "messages.mdx",
+            "structured-output.mdx"
           ],
           "hit": false,
           "expect_not_found": false,
           "not_found": false,
           "review": "",
           "point_hit": {
-            "create_agent": true,
-            "agent.invoke": true,
+            "create_agent": false,
+            "agent.invoke": false,
             "content_blocks": false
           },
-          "latency_s": 12.5,
-          "tokens": 11433,
+          "latency_s": 11.2,
+          "tokens": 7502,
           "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs"
+          ]
+        },
+        {
+          "question": "我想在 agent 每次调用模型前检查历史消息数量，超过 50 条就返回一句固定话术并终止本次运行，不要走后续工具调用。用 LangChain 怎么做？",
+          "expected_sources": [
+            "middleware/custom.mdx"
+          ],
+          "sources": [
+            "human-in-the-loop.mdx",
+            "multi-agent/subagents-personal-assistant.mdx",
+            "structured-output.mdx",
+            "middleware/built-in.mdx",
+            "event-streaming.mdx",
+            "middleware/custom.mdx",
+            "multi-agent/skills-sql-assistant.mdx",
+            "context-engineering.mdx",
+            "models.mdx",
+            "short-term-memory.mdx"
+          ],
+          "hit": true,
+          "expect_not_found": false,
+          "not_found": false,
+          "review": "",
+          "point_hit": {
+            "AgentMiddleware": true,
+            "hook_config": false,
+            "before_model": true,
+            "jump_to": true
+          },
+          "latency_s": 31.5,
+          "tokens": 26428,
+          "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -1095,18 +1174,65 @@
           "expected_sources": [],
           "sources": [
             "install.mdx",
-            "overview.mdx",
             "multi-agent/skills-sql-assistant.mdx",
+            "multi-agent/router-knowledge-base.mdx",
             "knowledge-base.mdx",
-            "multi-agent/router-knowledge-base.mdx"
+            "models.mdx"
           ],
           "hit": true,
           "expect_not_found": true,
           "not_found": true,
           "review": "",
           "point_hit": {},
-          "latency_s": 13.8,
-          "tokens": 6948,
+          "latency_s": 12.7,
+          "tokens": 9273,
+          "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs"
+          ]
+        },
+        {
+          "question": "Milvus 集群如何部署到 Kubernetes 上？",
+          "expected_sources": [],
+          "sources": [
+            "multi-agent/custom-workflow.mdx",
+            "knowledge-base.mdx"
+          ],
+          "hit": true,
+          "expect_not_found": true,
+          "not_found": true,
+          "review": "",
+          "point_hit": {},
+          "latency_s": 10.4,
+          "tokens": 4260,
+          "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs"
+          ]
+        },
+        {
+          "question": "LangChain 如何训练图像分类模型？",
+          "expected_sources": [],
+          "sources": [],
+          "hit": true,
+          "expect_not_found": true,
+          "not_found": true,
+          "review": "",
+          "point_hit": {},
+          "latency_s": 14.6,
+          "tokens": 4631,
           "tool_calls": [
             "search_docs",
             "search_docs",
@@ -1124,107 +1250,20 @@
           "sources": [
             "multi-agent/handoffs-customer-support.mdx",
             "multi-agent/index.mdx",
-            "multi-agent/subagents-personal-assistant.mdx"
+            "multi-agent/subagents-personal-assistant.mdx",
+            "multi-agent/router-knowledge-base.mdx",
+            "sql-agent.mdx"
           ],
           "hit": true,
           "expect_not_found": true,
           "not_found": true,
           "review": "",
           "point_hit": {},
-          "latency_s": 10.2,
-          "tokens": 4296,
+          "latency_s": 15.4,
+          "tokens": 6856,
           "tool_calls": [
             "search_docs",
             "search_docs",
-            "search_docs",
-            "search_docs"
-          ]
-        },
-        {
-          "question": "我想在 agent 每次调用模型前检查历史消息数量，超过 50 条就返回一句固定话术并终止本次运行，不要走后续工具调用。用 LangChain 怎么做？",
-          "expected_sources": [
-            "middleware/custom.mdx"
-          ],
-          "sources": [
-            "middleware/custom.mdx",
-            "short-term-memory.mdx",
-            "human-in-the-loop.mdx",
-            "multi-agent/custom-workflow.mdx",
-            "agents.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": false,
-          "not_found": false,
-          "review": "",
-          "point_hit": {
-            "AgentMiddleware": true,
-            "hook_config": true,
-            "before_model": true,
-            "jump_to": true
-          },
-          "latency_s": 37.5,
-          "tokens": 42840,
-          "tool_calls": [
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs"
-          ]
-        },
-        {
-          "question": "Milvus 集群如何部署到 Kubernetes 上？",
-          "expected_sources": [],
-          "sources": [],
-          "hit": true,
-          "expect_not_found": true,
-          "not_found": true,
-          "review": "",
-          "point_hit": {},
-          "latency_s": 7.3,
-          "tokens": 2774,
-          "tool_calls": [
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs"
-          ]
-        },
-        {
-          "question": "LangChain 如何训练图像分类模型？",
-          "expected_sources": [],
-          "sources": [],
-          "hit": true,
-          "expect_not_found": true,
-          "not_found": true,
-          "review": "",
-          "point_hit": {},
-          "latency_s": 6.6,
-          "tokens": 2473,
-          "tool_calls": [
             "search_docs",
             "search_docs",
             "search_docs",
@@ -1236,14 +1275,14 @@
     {
       "multi_agent": true,
       "num_questions": 36,
-      "source_hit_rate": 0.9166666666666666,
-      "hallucination_free_rate": 0.9444444444444444,
-      "point_recall": 0.8026,
-      "avg_latency_s": 70.7,
-      "avg_tokens": 29927,
+      "source_hit_rate": 0.9444444444444444,
+      "hallucination_free_rate": 0.8888888888888888,
+      "point_recall": 0.7896,
+      "avg_latency_s": 74.5,
+      "avg_tokens": 26881,
       "review_verdicts": {
-        "通过": 32,
-        "存疑": 4
+        "通过": 26,
+        "存疑": 10
       },
       "details": [
         {
@@ -1253,11 +1292,11 @@
           ],
           "sources": [
             "multi-agent/skills-sql-assistant.mdx",
-            "multi-agent/skills.mdx"
+            "structured-output.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
-          "not_found": false,
+          "not_found": true,
           "review": "通过",
           "point_hit": {
             "Progressive disclosure strategies": true,
@@ -1266,9 +1305,15 @@
             "Search-based": true,
             "Hierarchical": true
           },
-          "latency_s": 18.2,
-          "tokens": 6247,
+          "latency_s": 38.2,
+          "tokens": 17529,
           "tool_calls": [
+            "plan_queries",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
             "search_docs",
             "search_docs",
             "review_answer"
@@ -1290,17 +1335,12 @@
           "point_hit": {
             "Command": true,
             "ToolMessage": true,
-            "ToolRuntime": true,
+            "ToolRuntime": false,
             "tool_call_id|toolCallId": true
           },
-          "latency_s": 47.7,
-          "tokens": 18736,
+          "latency_s": 32.3,
+          "tokens": 8758,
           "tool_calls": [
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -1319,21 +1359,17 @@
           "hit": true,
           "expect_not_found": false,
           "not_found": false,
-          "review": "通过",
+          "review": "存疑",
           "point_hit": {
             "init_chat_model": true,
             "configurable_fields": true,
             "config_prefix": true,
             "configurable": true
           },
-          "latency_s": 30.3,
-          "tokens": 13283,
+          "latency_s": 108.8,
+          "tokens": 7112,
           "tool_calls": [
             "plan_queries",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
             "search_docs",
             "search_docs",
             "review_answer"
@@ -1346,28 +1382,23 @@
           ],
           "sources": [
             "models.mdx",
-            "quickstart.mdx",
+            "middleware/built-in.mdx",
+            "tools.mdx",
             "structured-output.mdx"
           ],
-          "hit": false,
+          "hit": true,
           "expect_not_found": false,
           "not_found": false,
           "review": "通过",
           "point_hit": {
             "Tools": true,
-            "chat model": false,
-            "Tool calling": true
+            "chat model": true,
+            "Tool calling": false
           },
-          "latency_s": 50.2,
-          "tokens": 22716,
+          "latency_s": 50.4,
+          "tokens": 12338,
           "tool_calls": [
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
+            "plan_queries",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -1383,10 +1414,11 @@
             "multi-agent/subagents.mdx"
           ],
           "sources": [
-            "multi-agent/subagents-personal-assistant.mdx",
             "multi-agent/index.mdx",
+            "multi-agent/subagents-personal-assistant.mdx",
+            "multi-agent/subagents.mdx",
             "multi-agent/router.mdx",
-            "multi-agent/subagents.mdx"
+            "multi-agent/router-knowledge-base.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
@@ -1397,8 +1429,8 @@
             "subagent": false,
             "order dependencies": false
           },
-          "latency_s": 54.9,
-          "tokens": 23115,
+          "latency_s": 73.3,
+          "tokens": 29628,
           "tool_calls": [
             "search_docs",
             "search_docs",
@@ -1432,7 +1464,7 @@
           "hit": true,
           "expect_not_found": false,
           "not_found": false,
-          "review": "存疑",
+          "review": "通过",
           "point_hit": {
             "content_blocks": true,
             "typed dictionaries": false,
@@ -1440,20 +1472,9 @@
             "text": true,
             "reasoning": true
           },
-          "latency_s": 72.3,
-          "tokens": 25912,
+          "latency_s": 24.7,
+          "tokens": 6173,
           "tool_calls": [
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
             "search_docs",
             "search_docs",
             "review_answer"
@@ -1477,10 +1498,10 @@
             "max_marginal_relevance_search": true,
             "max_marginal_relevance_search|maxMarginalRelevanceSearch": true
           },
-          "latency_s": 51.6,
-          "tokens": 13153,
+          "latency_s": 47.7,
+          "tokens": 11984,
           "tool_calls": [
-            "plan_queries",
+            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -1495,36 +1516,21 @@
             "multi-agent/custom-workflow.mdx"
           ],
           "sources": [
-            "deepagents-retrieval.mdx",
-            "knowledge-base.mdx"
+            "multi-agent/custom-workflow.mdx"
           ],
-          "hit": false,
+          "hit": true,
           "expect_not_found": false,
-          "not_found": true,
+          "not_found": false,
           "review": "通过",
           "point_hit": {
-            "Rewrite": false,
+            "Rewrite": true,
             "Retrieve": true,
             "Agent": true,
             "vector similarity search": false
           },
-          "latency_s": 58.4,
-          "tokens": 26553,
+          "latency_s": 22.0,
+          "tokens": 7828,
           "tool_calls": [
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -1538,21 +1544,29 @@
             "multi-agent/router.mdx"
           ],
           "sources": [
-            "multi-agent/router.mdx"
+            "multi-agent/router-knowledge-base.mdx",
+            "multi-agent/router.mdx",
+            "overview.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
-          "not_found": false,
+          "not_found": true,
           "review": "通过",
           "point_hit": {
             "Send": true,
-            "route_query": true,
+            "route_query": false,
             "classify_query": false
           },
-          "latency_s": 165.4,
-          "tokens": 17159,
+          "latency_s": 100.1,
+          "tokens": 26324,
           "tool_calls": [
             "plan_queries",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -1570,8 +1584,7 @@
             "short-term-memory.mdx"
           ],
           "sources": [
-            "short-term-memory.mdx",
-            "middleware/built-in.mdx"
+            "short-term-memory.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
@@ -1582,14 +1595,10 @@
             "strategy": true,
             "max_tokens": true
           },
-          "latency_s": 47.8,
-          "tokens": 30289,
+          "latency_s": 81.8,
+          "tokens": 14924,
           "tool_calls": [
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
+            "plan_queries",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -1603,20 +1612,15 @@
             "multi-agent/handoffs-customer-support.mdx"
           ],
           "sources": [
-            "multi-agent/custom-workflow.mdx",
-            "short-term-memory.mdx",
-            "middleware/custom.mdx",
-            "multi-agent/handoffs-customer-support.mdx",
-            "context-engineering.mdx",
-            "agents.mdx",
-            "sql-agent.mdx",
-            "multi-agent/skills-sql-assistant.mdx",
-            "multi-agent/subagents-personal-assistant.mdx",
-            "tools.mdx",
             "multi-agent/handoffs.mdx",
-            "middleware/built-in.mdx"
+            "multi-agent/custom-workflow.mdx",
+            "middleware/custom.mdx",
+            "short-term-memory.mdx",
+            "models.mdx",
+            "middleware/built-in.mdx",
+            "event-streaming.mdx"
           ],
-          "hit": true,
+          "hit": false,
           "expect_not_found": false,
           "not_found": false,
           "review": "通过",
@@ -1626,14 +1630,10 @@
             "request.state": true,
             "request.override": true
           },
-          "latency_s": 72.8,
-          "tokens": 54552,
+          "latency_s": 77.3,
+          "tokens": 28657,
           "tool_calls": [
             "plan_queries",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -1656,25 +1656,34 @@
             "multi-agent/subagents-personal-assistant.mdx"
           ],
           "sources": [
-            "multi-agent/router-knowledge-base.mdx",
+            "multi-agent/index.mdx",
             "multi-agent/subagents-personal-assistant.mdx",
+            "agents.mdx",
+            "short-term-memory.mdx",
             "multi-agent/subagents.mdx",
-            "event-streaming.mdx",
-            "multi-agent/handoffs.mdx",
-            "structured-output.mdx"
+            "middleware/built-in.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
           "not_found": false,
           "review": "通过",
           "point_hit": {
-            "sub-agent": true,
+            "sub-agent": false,
             "final message": false,
             "supervisor_complete.ts": false
           },
-          "latency_s": 126.2,
-          "tokens": 69759,
+          "latency_s": 107.6,
+          "tokens": 82226,
           "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -1712,56 +1721,26 @@
             "context-engineering.mdx"
           ],
           "sources": [
-            "sql-agent.mdx",
-            "multi-agent/router-knowledge-base.mdx",
-            "multi-agent/handoffs-customer-support.mdx",
-            "deepagents-retrieval.mdx",
-            "multi-agent/custom-workflow.mdx",
-            "short-term-memory.mdx",
             "middleware/custom.mdx",
-            "multi-agent/skills-sql-assistant.mdx",
-            "models.mdx",
             "structured-output.mdx",
             "context-engineering.mdx",
-            "middleware/built-in.mdx"
+            "tools.mdx",
+            "models.mdx",
+            "messages.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
-          "not_found": false,
+          "not_found": true,
           "review": "通过",
           "point_hit": {
             "Command": true,
             "wrap_model_call|wrapModelCall": true,
             "wrap_tool_call|wrapToolCall": true
           },
-          "latency_s": 126.9,
-          "tokens": 91840,
+          "latency_s": 48.2,
+          "tokens": 22271,
           "tool_calls": [
             "plan_queries",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -1778,10 +1757,10 @@
             "multi-agent/router-knowledge-base.mdx"
           ],
           "sources": [
-            "deepagents-retrieval.mdx",
-            "sql-agent.mdx",
+            "multi-agent/router-knowledge-base.mdx",
             "multi-agent/custom-workflow.mdx",
-            "multi-agent/router-knowledge-base.mdx"
+            "overview.mdx",
+            "deepagents-retrieval.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
@@ -1793,8 +1772,8 @@
             "operator.add": true,
             "AgentOutput": true
           },
-          "latency_s": 51.8,
-          "tokens": 19083,
+          "latency_s": 46.7,
+          "tokens": 16408,
           "tool_calls": [
             "plan_queries",
             "search_docs",
@@ -1817,20 +1796,22 @@
           "sources": [
             "streaming.mdx",
             "agents.mdx",
-            "context-engineering.mdx"
+            "short-term-memory.mdx",
+            "long-term-memory.mdx",
+            "middleware/built-in.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
           "not_found": false,
-          "review": "通过",
+          "review": "存疑",
           "point_hit": {
             "thread_id": true,
             "checkpointer": true,
             "InMemorySaver": true,
             "configurable": true
           },
-          "latency_s": 135.5,
-          "tokens": 28225,
+          "latency_s": 140.1,
+          "tokens": 19199,
           "tool_calls": [
             "plan_queries",
             "search_docs",
@@ -1841,10 +1822,6 @@
             "search_docs",
             "search_docs",
             "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "review_answer",
             "review_answer"
           ]
         },
@@ -1854,8 +1831,7 @@
             "multi-agent/index.mdx"
           ],
           "sources": [
-            "multi-agent/index.mdx",
-            "multi-agent/router-knowledge-base.mdx"
+            "multi-agent/index.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
@@ -1867,12 +1843,10 @@
             "stateful agent": false,
             "handoff": true
           },
-          "latency_s": 38.8,
-          "tokens": 20121,
+          "latency_s": 39.6,
+          "tokens": 14943,
           "tool_calls": [
             "plan_queries",
-            "search_docs",
-            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -1890,10 +1864,12 @@
           "sources": [
             "event-streaming.mdx",
             "streaming.mdx",
-            "human-in-the-loop.mdx",
-            "short-term-memory.mdx",
+            "multi-agent/custom-workflow.mdx",
+            "quickstart.mdx",
             "agents.mdx",
-            "tools.mdx"
+            "middleware/built-in.mdx",
+            "short-term-memory.mdx",
+            "models.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
@@ -1902,11 +1878,11 @@
           "point_hit": {
             "InMemorySaver": true,
             "thread_id": true,
-            "stream_events": false,
-            "transformers": false
+            "stream_events": true,
+            "transformers": true
           },
-          "latency_s": 105.9,
-          "tokens": 24915,
+          "latency_s": 154.8,
+          "tokens": 67085,
           "tool_calls": [
             "plan_queries",
             "search_docs",
@@ -1918,7 +1894,20 @@
             "search_docs",
             "search_docs",
             "search_docs",
-            "review_answer"
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "review_answer",
+            "search_docs",
+            "search_docs",
+            "search_docs"
           ]
         },
         {
@@ -1930,27 +1919,25 @@
           "sources": [
             "structured-output.mdx",
             "multi-agent/index.mdx",
-            "multi-agent/router-knowledge-base.mdx",
             "short-term-memory.mdx",
-            "context-engineering.mdx",
-            "multi-agent/router.mdx",
+            "multi-agent/router-knowledge-base.mdx",
+            "quickstart.mdx",
             "streaming.mdx"
           ],
-          "hit": true,
+          "hit": false,
           "expect_not_found": false,
           "not_found": false,
-          "review": "存疑",
+          "review": "通过",
           "point_hit": {
             "Structured output": false,
             "schema": true,
             "invoke": true,
             "thread_id": true
           },
-          "latency_s": 70.4,
-          "tokens": 13799,
+          "latency_s": 42.7,
+          "tokens": 12107,
           "tool_calls": [
             "plan_queries",
-            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -1965,13 +1952,11 @@
             "multi-agent/skills.mdx"
           ],
           "sources": [
-            "multi-agent/subagents-personal-assistant.mdx",
-            "multi-agent/subagents.mdx",
-            "multi-agent/index.mdx",
+            "overview.mdx",
             "multi-agent/skills-sql-assistant.mdx",
             "multi-agent/skills.mdx",
-            "multi-agent/handoffs-customer-support.mdx",
-            "multi-agent/router-knowledge-base.mdx"
+            "multi-agent/subagents.mdx",
+            "agents.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
@@ -1984,10 +1969,11 @@
             "load_skill": true,
             "create_agent|createAgent": true
           },
-          "latency_s": 69.8,
-          "tokens": 28371,
+          "latency_s": 69.3,
+          "tokens": 25534,
           "tool_calls": [
             "plan_queries",
+            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -2009,31 +1995,25 @@
             "multi-agent/skills-sql-assistant.mdx",
             "multi-agent/skills.mdx",
             "sql-agent.mdx",
-            "short-term-memory.mdx",
-            "models.mdx",
-            "middleware/custom.mdx"
+            "structured-output.mdx",
+            "middleware/custom.mdx",
+            "agents.mdx",
+            "middleware/built-in.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
           "not_found": false,
           "review": "通过",
           "point_hit": {
-            "tool-calling": false,
+            "tool-calling": true,
             "sqlite3": true,
             "load_skill": true,
             "custom agent state": true
           },
-          "latency_s": 88.6,
-          "tokens": 75316,
+          "latency_s": 102.0,
+          "tokens": 35803,
           "tool_calls": [
             "plan_queries",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -2058,21 +2038,22 @@
           ],
           "sources": [
             "models.mdx",
+            "tools.mdx",
             "messages.mdx",
             "structured-output.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
           "not_found": false,
-          "review": "存疑",
+          "review": "通过",
           "point_hit": {
             "HumanMessage": true,
             "source_type: \"id\"": true,
             "model_with_tools.invoke": true,
             "configurable": true
           },
-          "latency_s": 81.2,
-          "tokens": 53108,
+          "latency_s": 55.5,
+          "tokens": 20240,
           "tool_calls": [
             "plan_queries",
             "search_docs",
@@ -2084,15 +2065,7 @@
             "search_docs",
             "search_docs",
             "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "review_answer",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs"
+            "review_answer"
           ]
         },
         {
@@ -2102,24 +2075,28 @@
             "short-term-memory.mdx"
           ],
           "sources": [
-            "short-term-memory.mdx",
             "long-term-memory.mdx",
+            "multi-agent/custom-workflow.mdx",
+            "multi-agent/handoffs-customer-support.mdx",
+            "deepagents-retrieval.mdx",
+            "multi-agent/handoffs.mdx",
+            "event-streaming.mdx",
+            "context-engineering.mdx",
             "tools.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
           "not_found": false,
-          "review": "通过",
+          "review": "存疑",
           "point_hit": {
             "runtime": true,
             "ToolRuntime": true,
             "runtime.store": true
           },
-          "latency_s": 63.8,
-          "tokens": 32088,
+          "latency_s": 75.4,
+          "tokens": 56283,
           "tool_calls": [
-            "search_docs",
-            "search_docs",
+            "plan_queries",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -2141,8 +2118,10 @@
             "deepagents-retrieval.mdx"
           ],
           "sources": [
+            "knowledge-base.mdx",
+            "multi-agent/custom-workflow.mdx",
             "deepagents-retrieval.mdx",
-            "knowledge-base.mdx"
+            "agents.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
@@ -2151,11 +2130,11 @@
           "point_hit": {
             "Hybrid RAG": true,
             "Agentic RAG": true,
-            "Self-Correction": true,
-            "Document": true
+            "Self-Correction": false,
+            "Document": false
           },
-          "latency_s": 197.2,
-          "tokens": 122253,
+          "latency_s": 98.8,
+          "tokens": 65842,
           "tool_calls": [
             "plan_queries",
             "search_docs",
@@ -2187,19 +2166,6 @@
             "search_docs",
             "search_docs",
             "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "review_answer",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -2216,12 +2182,11 @@
             "structured-output.mdx"
           ],
           "sources": [
-            "models.mdx",
-            "overview.mdx",
-            "multi-agent/handoffs-customer-support.mdx",
-            "middleware/custom.mdx",
             "structured-output.mdx",
-            "middleware/built-in.mdx"
+            "middleware/built-in.mdx",
+            "tools.mdx",
+            "middleware/custom.mdx",
+            "context-engineering.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
@@ -2230,13 +2195,20 @@
           "point_hit": {
             "dynamic tool selection": false,
             "create_agent|createAgent": true,
-            "toolStrategy": false,
-            "zod": true
+            "toolStrategy": true,
+            "zod": false
           },
-          "latency_s": 54.9,
-          "tokens": 16287,
+          "latency_s": 72.0,
+          "tokens": 31401,
           "tool_calls": [
             "plan_queries",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -2251,19 +2223,23 @@
             "models.mdx"
           ],
           "sources": [
-            "quickstart.mdx",
-            "models.mdx"
+            "models.mdx",
+            "quickstart.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
           "not_found": false,
-          "review": "通过",
+          "review": "存疑",
           "point_hit": {
             "init_chat_model|initChatModel": true
           },
-          "latency_s": 47.5,
-          "tokens": 6408,
+          "latency_s": 68.2,
+          "tokens": 15270,
           "tool_calls": [
+            "plan_queries",
+            "search_docs",
+            "search_docs",
+            "search_docs",
             "search_docs",
             "search_docs",
             "review_answer"
@@ -2275,10 +2251,9 @@
             "middleware/built-in.mdx"
           ],
           "sources": [
-            "middleware/built-in.mdx",
-            "context-engineering.mdx",
             "short-term-memory.mdx",
-            "models.mdx"
+            "context-engineering.mdx",
+            "middleware/built-in.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
@@ -2290,11 +2265,9 @@
             "middleware": true,
             "trigger": true
           },
-          "latency_s": 48.5,
-          "tokens": 15429,
+          "latency_s": 43.1,
+          "tokens": 10416,
           "tool_calls": [
-            "plan_queries",
-            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -2309,32 +2282,34 @@
             "overview.mdx"
           ],
           "sources": [
-            "agents.mdx",
-            "multi-agent/custom-workflow.mdx",
             "overview.mdx",
             "middleware/built-in.mdx",
+            "quickstart.mdx",
             "sql-agent.mdx",
             "short-term-memory.mdx",
+            "agents.mdx",
             "middleware/custom.mdx",
+            "structured-output.mdx",
             "multi-agent/skills-sql-assistant.mdx",
-            "context-engineering.mdx",
-            "event-streaming.mdx",
-            "multi-agent/subagents.mdx",
-            "quickstart.mdx"
+            "multi-agent/router-knowledge-base.mdx",
+            "tools.mdx",
+            "event-streaming.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
           "not_found": false,
-          "review": "通过",
+          "review": "存疑",
           "point_hit": {
             "create_agent": true,
             "init_chat_model": false,
             "content_blocks": true
           },
-          "latency_s": 51.3,
-          "tokens": 28087,
+          "latency_s": 95.6,
+          "tokens": 28002,
           "tool_calls": [
             "plan_queries",
+            "search_docs",
+            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -2351,11 +2326,14 @@
             "agents.mdx"
           ],
           "sources": [
-            "context-engineering.mdx",
-            "agents.mdx",
-            "streaming.mdx",
             "tools.mdx",
-            "middleware/custom.mdx"
+            "quickstart.mdx",
+            "multi-agent/handoffs.mdx",
+            "streaming.mdx",
+            "agents.mdx",
+            "human-in-the-loop.mdx",
+            "context-engineering.mdx",
+            "short-term-memory.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
@@ -2367,10 +2345,11 @@
             "context_schema|contextSchema": true,
             "runtime.context": true
           },
-          "latency_s": 74.5,
-          "tokens": 36336,
+          "latency_s": 51.2,
+          "tokens": 20493,
           "tool_calls": [
             "plan_queries",
+            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -2388,29 +2367,43 @@
             "multi-agent/router-knowledge-base.mdx"
           ],
           "sources": [
-            "multi-agent/router-knowledge-base.mdx",
-            "multi-agent/subagents-personal-assistant.mdx",
-            "multi-agent/index.mdx",
-            "overview.mdx",
-            "structured-output.mdx",
             "multi-agent/router.mdx",
+            "multi-agent/router-knowledge-base.mdx",
             "multi-agent/subagents.mdx",
-            "multi-agent/custom-workflow.mdx"
+            "overview.mdx",
+            "multi-agent/index.mdx",
+            "multi-agent/subagents-personal-assistant.mdx",
+            "middleware/built-in.mdx",
+            "multi-agent/skills-sql-assistant.mdx",
+            "middleware/custom.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
           "not_found": false,
-          "review": "通过",
+          "review": "存疑",
           "point_hit": {
             "create_agent|createAgent": true,
             "StateGraph": true,
             "StateSchema": false,
             "Send": true
           },
-          "latency_s": 74.6,
-          "tokens": 27538,
+          "latency_s": 118.7,
+          "tokens": 75587,
           "tool_calls": [
             "plan_queries",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -2428,21 +2421,38 @@
             "tools.mdx"
           ],
           "sources": [
+            "middleware/custom.mdx",
+            "human-in-the-loop.mdx",
+            "multi-agent/subagents-personal-assistant.mdx",
+            "streaming.mdx",
+            "middleware/built-in.mdx",
             "tools.mdx",
-            "models.mdx"
+            "agents.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
           "not_found": false,
-          "review": "通过",
+          "review": "存疑",
           "point_hit": {
-            "create_agent": true,
-            ".implement(...)": false
+            "create_agent|createAgent": true,
+            ".implement": true
           },
-          "latency_s": 58.2,
-          "tokens": 22146,
+          "latency_s": 152.4,
+          "tokens": 50740,
           "tool_calls": [
             "plan_queries",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -2462,13 +2472,18 @@
             "quickstart.mdx"
           ],
           "sources": [
+            "quickstart.mdx",
             "models.mdx",
-            "middleware/custom.mdx",
             "middleware/built-in.mdx",
-            "multi-agent/subagents.mdx",
-            "overview.mdx"
+            "sql-agent.mdx",
+            "agents.mdx",
+            "multi-agent/skills-sql-assistant.mdx",
+            "overview.mdx",
+            "streaming.mdx",
+            "tools.mdx",
+            "context-engineering.mdx"
           ],
-          "hit": false,
+          "hit": true,
           "expect_not_found": false,
           "not_found": false,
           "review": "通过",
@@ -2477,63 +2492,8 @@
             "agent.invoke": true,
             "content_blocks": true
           },
-          "latency_s": 40.4,
-          "tokens": 13494,
-          "tool_calls": [
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "review_answer"
-          ]
-        },
-        {
-          "question": "LangChain 如何部署到阿里云函数计算并配置触发器？",
-          "expected_sources": [],
-          "sources": [
-            "install.mdx",
-            "multi-agent/skills-sql-assistant.mdx",
-            "knowledge-base.mdx",
-            "multi-agent/router-knowledge-base.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": true,
-          "not_found": true,
-          "review": "通过",
-          "point_hit": {},
-          "latency_s": 44.7,
-          "tokens": 17626,
-          "tool_calls": [
-            "plan_queries",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "search_docs",
-            "review_answer"
-          ]
-        },
-        {
-          "question": "LangChain 与 AutoGen 在多智能体编排上的核心差异是什么？",
-          "expected_sources": [],
-          "sources": [
-            "multi-agent/subagents-personal-assistant.mdx",
-            "multi-agent/handoffs-customer-support.mdx",
-            "multi-agent/index.mdx",
-            "multi-agent/custom-workflow.mdx"
-          ],
-          "hit": true,
-          "expect_not_found": true,
-          "not_found": true,
-          "review": "通过",
-          "point_hit": {},
-          "latency_s": 50.8,
-          "tokens": 16355,
+          "latency_s": 76.7,
+          "tokens": 21142,
           "tool_calls": [
             "plan_queries",
             "search_docs",
@@ -2553,28 +2513,59 @@
             "middleware/custom.mdx"
           ],
           "sources": [
+            "sql-agent.mdx",
             "short-term-memory.mdx",
             "middleware/custom.mdx",
-            "middleware/built-in.mdx",
-            "human-in-the-loop.mdx",
-            "models.mdx"
+            "tools.mdx",
+            "middleware/built-in.mdx"
           ],
           "hit": true,
           "expect_not_found": false,
           "not_found": false,
-          "review": "通过",
+          "review": "存疑",
           "point_hit": {
-            "AgentMiddleware": true,
-            "hook_config": true,
+            "AgentMiddleware": false,
+            "hook_config": false,
             "before_model": true,
             "jump_to": true
           },
-          "latency_s": 67.3,
-          "tokens": 32309,
+          "latency_s": 127.3,
+          "tokens": 53096,
           "tool_calls": [
+            "plan_queries",
             "search_docs",
             "search_docs",
             "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "review_answer",
+            "search_docs",
+            "search_docs"
+          ]
+        },
+        {
+          "question": "LangChain 如何部署到阿里云函数计算并配置触发器？",
+          "expected_sources": [],
+          "sources": [
+            "streaming.mdx"
+          ],
+          "hit": true,
+          "expect_not_found": true,
+          "not_found": true,
+          "review": "通过",
+          "point_hit": {},
+          "latency_s": 37.3,
+          "tokens": 11987,
+          "tool_calls": [
+            "plan_queries",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -2599,9 +2590,10 @@
           "not_found": true,
           "review": "通过",
           "point_hit": {},
-          "latency_s": 47.6,
-          "tokens": 7493,
+          "latency_s": 55.6,
+          "tokens": 7819,
           "tool_calls": [
+            "plan_queries",
             "search_docs",
             "search_docs",
             "search_docs",
@@ -2618,12 +2610,47 @@
           "hit": true,
           "expect_not_found": true,
           "not_found": true,
+          "review": "存疑",
+          "point_hit": {},
+          "latency_s": 87.8,
+          "tokens": 9733,
+          "tool_calls": [
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "review_answer",
+            "search_docs"
+          ]
+        },
+        {
+          "question": "LangChain 与 AutoGen 在多智能体编排上的核心差异是什么？",
+          "expected_sources": [],
+          "sources": [
+            "multi-agent/handoffs-customer-support.mdx",
+            "multi-agent/router-knowledge-base.mdx",
+            "sql-agent.mdx",
+            "multi-agent/handoffs.mdx",
+            "multi-agent/subagents-personal-assistant.mdx",
+            "multi-agent/index.mdx",
+            "multi-agent/subagents.mdx"
+          ],
+          "hit": true,
+          "expect_not_found": true,
+          "not_found": true,
           "review": "通过",
           "point_hit": {},
-          "latency_s": 59.4,
-          "tokens": 7263,
+          "latency_s": 57.8,
+          "tokens": 22843,
           "tool_calls": [
             "plan_queries",
+            "search_docs",
+            "search_docs",
+            "search_docs",
+            "search_docs",
             "search_docs",
             "search_docs",
             "search_docs",
