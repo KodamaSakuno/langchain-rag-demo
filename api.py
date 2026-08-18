@@ -7,7 +7,7 @@ from langchain_core.messages import AIMessage, ToolMessage
 from pydantic import BaseModel, Field
 
 from agent import build_agent
-from config import EMBEDDING_BACKEND, EMBEDDING_BASE_URL, EMBEDDING_MODEL, RETRIEVAL_SCORE_THRESHOLD
+from config import DEMO_ACCESS_CODE, EMBEDDING_BACKEND, EMBEDDING_BASE_URL, EMBEDDING_MODEL, RETRIEVAL_SCORE_THRESHOLD
 
 app = FastAPI(title="LangChain 文档 RAG 助手")
 
@@ -74,6 +74,12 @@ class QueryRequest(BaseModel):
     question: str = Field(..., min_length=1, max_length=2000, description="用户问题")
     thread_id: str | None = Field(None, description="会话 ID，相同 ID 保持多轮上下文；不传则每次新建")
     multi_agent: bool | None = Field(None, description="是否启用审校员 subagent；不传或 false 为关")
+    access_code: str | None = Field(None, description="访问码；服务端设置了 DEMO_ACCESS_CODE 时必传")
+
+
+def _check_access(code: str | None):
+    if DEMO_ACCESS_CODE and code != DEMO_ACCESS_CODE:
+        raise HTTPException(status_code=403, detail="需要有效的访问码（demo 防滥用）")
 
 
 class QueryResponse(BaseModel):
@@ -89,6 +95,7 @@ class QueryResponse(BaseModel):
 
 @app.post("/query", response_model=QueryResponse)
 def query(req: QueryRequest):
+    _check_access(req.access_code)
     thread_id = req.thread_id or uuid.uuid4().hex
     use_multi_agent = bool(req.multi_agent)  # None/False 都视为关，由前端复选框显式开启
     selected = agent_reviewed if use_multi_agent else agent
@@ -119,18 +126,21 @@ def root():
         "message": "LangChain 文档 RAG 助手（Agent 模式）",
         "store": store.get_stats(),
         "models": {"chat": chat_provider, "embedding": f"{EMBEDDING_MODEL} ({EMBEDDING_BACKEND})"},
-        "retrieval": {"score_threshold": RETRIEVAL_SCORE_THRESHOLD}
+        "retrieval": {"score_threshold": RETRIEVAL_SCORE_THRESHOLD},
+        "access_gate": bool(DEMO_ACCESS_CODE),  # 前端据此决定是否提示输入访问码
     }
 
 
 @app.get("/debug/embedding", include_in_schema=False)
-def debug_embedding():
+def debug_embedding(code: str | None = None):
     """部署自检：真实调用一次 embedding 接口，验证网络可达与配置正确。
 
     排查部署环境问题用（如 Lambda 上怀疑连不上 embedding API 时），
     一条 curl 即可定位，不用等业务接口报错。
     """
     import time
+
+    _check_access(code)
 
     # hybrid store 包了一层，从内部的向量 store 取 embedding 函数
     emb = getattr(store, "embedding_function", None)

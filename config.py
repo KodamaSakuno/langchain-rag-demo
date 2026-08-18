@@ -43,3 +43,6 @@ MEMORY_BACKEND = os.getenv("MEMORY_BACKEND", "memory").lower()
 WARMUP = os.getenv("WARMUP", "1") == "1"
 # pgvector 连接池：Lambda 单实例串行处理请求，池开大会打爆托管库连接数
 PG_POOL_SIZE = int(os.getenv("PG_POOL_SIZE", "5"))
+# 公开 demo 的访问码：设置后 /query 与 /debug/embedding 需带码访问，防简历 URL 泄露被刷 token；
+# 不设置则不启用（本地开发无感）
+DEMO_ACCESS_CODE = os.getenv("DEMO_ACCESS_CODE")

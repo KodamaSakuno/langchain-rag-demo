@@ -40,6 +40,7 @@
         <h3>1. 查询文档（多轮对话）</h3>
         <div id="query-result"></div>
         <input type="text" id="question" placeholder="例如：如何给 agent 添加短期记忆？">
+        <input type="password" id="access-code" placeholder="访问码" style="width: 8rem; margin-right: 0.5rem; display: none;">
         <button onclick="askQuestion()">提问</button>
         <button class="btn-secondary" onclick="newSession()">新会话</button>
         <label class="hint" style="display: inline-flex; align-items: center; gap: 0.3rem; margin-left: 0.5rem; cursor: pointer; white-space: nowrap;">
@@ -72,6 +73,10 @@
     const maToggle = document.getElementById("multi-agent-toggle");
     maToggle.checked = localStorage.getItem("rag_multi_agent") === "1";
 
+    // 访问码：服务端开启 DEMO_ACCESS_CODE 时才显示输入框；localStorage 记忆
+    const codeInput = document.getElementById("access-code");
+    codeInput.value = localStorage.getItem("rag_access_code") || "";
+
     function toggleMultiAgent() {
         localStorage.setItem("rag_multi_agent", maToggle.checked ? "1" : "0");
     }
@@ -102,6 +107,7 @@
             document.getElementById("emb-model").textContent = data.models.embedding;
             document.getElementById("store-backend").textContent = data.store.backend;
             document.getElementById("score-threshold").textContent = data.retrieval?.score_threshold ?? "-";
+            codeInput.style.display = data.access_gate ? "inline-block" : "none";
             if (data.store.total_chunks === 0) {
                 result.innerHTML = `<p class="error">⚠️ 索引为空，查询不可用。请先运行：<code>python3 ingest.py && python3 indexer.py</code></p>`;
             } else {
@@ -122,10 +128,12 @@
         result.innerHTML = "<p class='loading'>正在检索本地文档并生成回答...</p>";
 
         try {
+            const code = codeInput.value.trim();
+            localStorage.setItem("rag_access_code", code);
             const res = await fetch(`${API_BASE}/query`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ question: q, thread_id: threadId, multi_agent: maToggle.checked })
+                body: JSON.stringify({ question: q, thread_id: threadId, multi_agent: maToggle.checked, access_code: code || undefined })
             });
             const data = await res.json();
             if (res.ok) {

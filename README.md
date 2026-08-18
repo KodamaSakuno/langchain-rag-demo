@@ -174,6 +174,14 @@ docker compose exec app python3 indexer.py   # 首次：建库（向量入 Postg
 
 镜像用 `requirements-docker.txt`（不含 torch/chroma），体积几百 MB。向量表与记忆表首次运行自动创建。访问 `http://<服务器IP>:8000/ui/` 打开前端。
 
+### 公开 demo 防滥用
+
+把 demo URL 放简历等公开渠道时，建议开启访问码并限制并发，防止 URL 泄露后被刷 token：
+
+- `DEMO_ACCESS_CODE=<随机串>`：设置后 `/query` 与 `/debug/embedding` 需带码访问（前端自动出现访问码输入框），本地开发不设则无感
+- Lambda 侧把预留并发（reserved concurrency）调到 2：即使访问码泄露，调用量也有硬上限
+- embedding/LLM 供应商后台设消费上限或余额告警，作为最后兜底
+
 ## 常见问题
 
 - **首次运行很慢/下载大文件**：`bge-m3` 模型约 2.2GB，下载到 `~/.cache/huggingface`，只发生一次。
