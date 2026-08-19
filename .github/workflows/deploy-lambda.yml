@@ -50,7 +50,9 @@ jobs:
         with:
           context: .
           file: Dockerfile.lambda
-          push: true
+          # Lambda 不接受 OCI media type / 清单列表，必须关 provenance 并用 Docker v2 格式
+          provenance: false
+          outputs: type=image,oci-mediatypes=false,push=true
           tags: |
             ${{ steps.ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
             ${{ steps.ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:latest
