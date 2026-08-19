@@ -58,5 +58,6 @@ jobs:
         run: |
           aws lambda update-function-code \
             --function-name "$LAMBDA_FUNCTION" \
-            --image-uri "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+            --image-uri "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" > /dev/null
           aws lambda wait function-updated --function-name "$LAMBDA_FUNCTION"
+          echo "Function $LAMBDA_FUNCTION updated to $IMAGE_TAG"
