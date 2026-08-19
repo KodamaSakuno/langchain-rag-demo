@@ -1,6 +1,6 @@
-# LangChain 本地文档 RAG
+# LangChain 文档 RAG
 
-基于 LangChain 的本地文档检索增强生成（RAG）Demo：把 LangChain 官方文档（MDX）切分、向量化后存入本地 Chroma，配合 LLM 回答技术问题。
+基于 LangChain 的文档检索增强生成（RAG）Demo：把 LangChain 官方文档（MDX）切分、向量化后存入向量库（本地 Chroma 或 PGVector），配合 LLM 回答技术问题。
 
 - **分块**：`ingest.py` 针对 MDX 优化——清理 frontmatter/import/JSX 噪音，按标题层级维护路径，代码块原子化不截断
 - **嵌入**：本地 HuggingFace `BAAI/bge-m3`（多语言，1024 维），零 API 成本

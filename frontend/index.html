@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LangChain 本地文档 RAG</title>
+    <title>LangChain 文档 RAG 问答</title>
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; max-width: 800px; margin: 0 auto; padding: 2rem; background: #f5f5f5; }
         h1 { color: #1a1a1a; }
@@ -39,7 +39,7 @@
     </style>
 </head>
 <body>
-    <h1>LangChain 本地文档 RAG</h1>
+    <h1>LangChain 文档 RAG 问答</h1>
 
     <div class="card">
         <h3>1. 查询文档（多轮对话）</h3>
@@ -138,7 +138,7 @@
         if (!q) return;
 
         const result = document.getElementById("query-result");
-        result.innerHTML = "<p class='loading'>正在检索本地文档并生成回答...</p>";
+        result.innerHTML = "<p class='loading'>正在检索文档并生成回答...</p>";
 
         try {
             const code = codeInput.value.trim();
