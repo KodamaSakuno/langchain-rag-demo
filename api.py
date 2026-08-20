@@ -1,3 +1,4 @@
+import threading
 import uuid
 from typing import Any
 
@@ -18,8 +19,20 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-agent, agent_reviewed, chat_provider, store = build_agent()
-print(f"服务启动 | Chat: {chat_provider} | Embedding: {EMBEDDING_MODEL} ({EMBEDDING_BACKEND}) | 模式: Agent")
+# 惰性构建：Lambda 冷启动时 /ui 等静态路由不应被 agent 构建（建库连接、checkpointer 建表）拖累；
+# 首个需要 agent/store 的请求才触发构建。加锁防并发请求重复构建（Lambda 预留并发 >1 或 uvicorn 线程池）。
+_runtime = None
+_runtime_lock = threading.Lock()
+
+
+def get_runtime():
+    global _runtime
+    if _runtime is None:
+        with _runtime_lock:
+            if _runtime is None:
+                _runtime = build_agent()
+                print(f"Agent 已构建 | Chat: {_runtime[2]} | Embedding: {EMBEDDING_MODEL} ({EMBEDDING_BACKEND})")
+    return _runtime
 
 
 def _extract_token_usage(messages: list) -> dict[str, Any]:
@@ -96,6 +109,7 @@ class QueryResponse(BaseModel):
 @app.post("/query", response_model=QueryResponse)
 def query(req: QueryRequest):
     _check_access(req.access_code)
+    agent, agent_reviewed, chat_provider, _store = get_runtime()
     thread_id = req.thread_id or uuid.uuid4().hex
     use_multi_agent = bool(req.multi_agent)  # None/False 都视为关，由前端复选框显式开启
     selected = agent_reviewed if use_multi_agent else agent
@@ -122,6 +136,7 @@ def query(req: QueryRequest):
 
 @app.get("/")
 def root():
+    _agent, _agent_reviewed, chat_provider, store = get_runtime()
     return {
         "message": "LangChain 文档 RAG 助手（Agent 模式）",
         "store": store.get_stats(),
@@ -141,6 +156,8 @@ def debug_embedding(code: str | None = None):
     import time
 
     _check_access(code)
+
+    _agent, _agent_reviewed, _chat_provider, store = get_runtime()
 
     # hybrid store 包了一层，从内部的向量 store 取 embedding 函数
     emb = getattr(store, "embedding_function", None)
